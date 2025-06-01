@@ -156,7 +156,8 @@ def filter_poincare_points(points_mask: np.typing.ArrayLike,
 
     return points_mask
 
-def poincare_index(orientation_field: cv2.typing.MatLike, weights: cv2.typing.MatLike) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:
+def poincare_index(orientation_field: cv2.typing.MatLike, weights: cv2.typing.MatLike, 
+                   weights_min_power: float = 0.2, close_error: float = 0.5 * np.pi) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:
     """
     Returns:
         cores_mask, deltas_mask
@@ -183,8 +184,8 @@ def poincare_index(orientation_field: cv2.typing.MatLike, weights: cv2.typing.Ma
             
             poincare_index_map[y, x] = angles_diff
 
-    core_mask = np.isclose(poincare_index_map, +np.pi, atol=np.pi * 0.5) & (weights > 0.2)
-    delta_mask = np.isclose(poincare_index_map, -np.pi, atol=np.pi * 0.5) & (weights > 0.2)
+    core_mask = np.isclose(poincare_index_map, +np.pi, atol=close_error) & (weights > weights_min_power)
+    delta_mask = np.isclose(poincare_index_map, -np.pi, atol=close_error) & (weights > weights_min_power)
 
     core_mask = filter_poincare_points(core_mask, weights)
     delta_mask = filter_poincare_points(delta_mask, weights)

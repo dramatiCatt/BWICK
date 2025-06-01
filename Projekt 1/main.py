@@ -48,7 +48,7 @@ x, y = np.meshgrid(np.arange(columns), np.arange(rows))
 plt.tight_layout()
 
 # POINCARE INDEX
-cores_mask, deltas_mask = fpa.poincare_index(fingerprint_O, fingerprint_W)
+cores_mask, deltas_mask = fpa.poincare_index(fingerprint_O, fingerprint_W, weights_min_power=0.2, close_error=0.5 * np.pi)
 
 print(np.count_nonzero(cores_mask), np.count_nonzero(deltas_mask))
 
@@ -90,8 +90,6 @@ cv2.imshow("Orientation Field", overlay)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-# TODO: Policzyć Orientation Field dla 16x16 bloków i na nich operować nie na pełnym obrazie (zniweczy szum i pozwoli na lepszy obraz poprzez rysowanie lini)
 # TODO: pod liniami by było widać analizowany obraz
-# TODO: Podzielić na funkcje
 # TODO: Zrobić z tego API
 # TODO: Użyć numby lub coś z cudą
