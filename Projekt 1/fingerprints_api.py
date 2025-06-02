@@ -192,6 +192,28 @@ def poincare_index(orientation_field: cv2.typing.MatLike, weights: cv2.typing.Ma
 
     return core_mask, delta_mask
 
+def weight_least_square(values: cv2.typing.MatLike, weights: cv2.typing.MatLike, polymonial_term: int = 4) -> cv2.typing.MatLike:
+    rows, columns = values.shape
+    Y, X = np.mgrid[0: rows, 0: columns]
+    
+    x = X.flatten()
+    y = Y.flatten()
+    v = values.flatten()
+    w = weights.flatten()
+    
+    A = []
+    for i in range(polymonial_term + 1):
+        for j in range(polymonial_term + 1 - i):
+            A.append((x ** i) * (y ** j))
+    A = np.vstack(A).T
+    
+    W_sqrt = np.sqrt(w)
+    A_weighted = A * W_sqrt[:, np.newaxis]
+    V_weighted = v * W_sqrt
+    
+    coeffs, *_ = np.linalg.lstsq(A_weighted, V_weighted, rcond=None)
+    return coeffs
+
 def calculate_point_charge(all_points_y: np.typing.ArrayLike, 
                            all_points_x: np.typing.ArrayLike,
                            rows: int,
@@ -218,7 +240,7 @@ def calculate_point_charge(all_points_y: np.typing.ArrayLike,
         point_PC[..., 0] = np.where(mask, re_charge_func(dy, r), 0)
         point_PC[..., 1] = np.where(mask, im_charge_func(dx, r), 0)
 
-        point_weight = 1 - np.clip(r / points_R, 0, 1)
+        point_weight = 1 - np.minimum(r, points_R) / points_R
 
         points_charges.append(point_PC)
         points_weights.append(point_weight)
@@ -226,12 +248,16 @@ def calculate_point_charge(all_points_y: np.typing.ArrayLike,
     return points_charges, points_weights
 
 def point_charge_orientation_field(orientation_field: cv2.typing.MatLike,
-                         cores_mask: cv2.typing.MatLike, 
-                         deltas_mask: cv2.typing.MatLike, 
-                         cores_R: int = 80, deltas_R: int = 40) -> cv2.typing.MatLike:
+                                   weights: cv2.typing.MatLike,
+                                   cores_mask: cv2.typing.MatLike, 
+                                   deltas_mask: cv2.typing.MatLike, 
+                                   cores_R: int = 80, deltas_R: int = 40) -> cv2.typing.MatLike:
     O2 = 2 * orientation_field
     cos2O = np.cos(O2)
     sin2O = np.sin(O2)
+
+    coeffs_cos = weight_least_square(cos2O, weights)
+    coeffs_sin = weight_least_square(sin2O, weights)
 
     PR_PI = np.stack((cos2O, sin2O), axis=-1)
 
@@ -239,12 +265,14 @@ def point_charge_orientation_field(orientation_field: cv2.typing.MatLike,
 
     yy, xx = np.meshgrid(np.arange(rows), np.arange(columns), indexing='ij')
 
-    cores_charges, cores_weights = calculate_point_charge(yy, xx, rows, columns, cores_mask, cores_R, lambda dy, r: dy / r, lambda dx, r: -dx / r)
-    deltas_charges, deltas_weights = calculate_point_charge(yy, xx, rows, columns, deltas_mask, deltas_R, lambda dy, r: -dy / r, lambda dx, r: dx / r)
+    cores_charges, cores_weights = calculate_point_charge(yy, xx, rows, columns, cores_mask, cores_R, 
+                                                          lambda dy, r: dy / r, lambda dx, r: -dx / r)
+    deltas_charges, deltas_weights = calculate_point_charge(yy, xx, rows, columns, deltas_mask, deltas_R, 
+                                                            lambda dy, r: -dy / r, lambda dx, r: -dx / r)
 
     points_charges = [*cores_charges, *deltas_charges]
     points_weights = [*cores_weights, *deltas_weights]
-
+    
     model_weights = np.maximum(1 - np.sum(points_weights, axis=0), 0)
 
     weights_stack = np.stack(points_weights, axis=0)
@@ -253,9 +281,7 @@ def point_charge_orientation_field(orientation_field: cv2.typing.MatLike,
     combined = weights_stack[..., np.newaxis] * charges_stack
     U = model_weights[..., np.newaxis] * PR_PI + np.sum(combined, axis=0)
 
-    RE, IM = U[..., 0], U[..., 1]
-
-    return 0.5 * np.arctan2(RE, IM)
+    return 0.5 * np.arctan2(U[..., 1], U[..., 0])
 
 def draw_orientation_field(img: cv2.typing.MatLike, 
                            orientation_field: cv2.typing.MatLike, 
