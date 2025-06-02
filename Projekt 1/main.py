@@ -54,8 +54,16 @@ plt.axis("equal")
 
 plt.show()
 
+# POLYMONIAL MODEL OF ORIENTATION FIELD
+PR, PI = fpa.polymonial_orientation_field(fingerprint_O, fingerprint_W, 4)
+fingerprint_PO = 0.5 * np.arctan2(PI, PR)
+
+# POINTS CHARGES
+cores_charges = fpa.get_points_charges(fingerprint_O, fingerprint_PO, fingerprint_W, cores_mask, 80)
+deltas_charges = fpa.get_points_charges(fingerprint_O, fingerprint_PO, fingerprint_W, deltas_mask, 40)
+
 # POINT CHARGE
-final_O = fpa.point_charge_orientation_field(fingerprint_O, fingerprint_W, cores_mask, deltas_mask)
+final_O = fpa.point_charge_orientation_field(PR, PI, fingerprint_O, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
 
 plt.figure(figsize=(5, 5))
 

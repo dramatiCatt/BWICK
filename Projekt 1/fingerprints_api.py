@@ -192,20 +192,25 @@ def poincare_index(orientation_field: cv2.typing.MatLike, weights: cv2.typing.Ma
 
     return core_mask, delta_mask
 
-def weight_least_square(values: cv2.typing.MatLike, weights: cv2.typing.MatLike, polymonial_term: int = 4) -> cv2.typing.MatLike:
+def build_polymonial_basis(Xs: np.typing.ArrayLike, Ys: np.typing.ArrayLike, degree: int = 4) -> cv2.typing.MatLike:
+    x = Xs.flatten()
+    y = Ys.flatten()
+
+    terms = []
+    for i in range(degree + 1):
+        for j in range(degree + 1 - i):
+            terms.append((x ** i) * (y ** j))
+
+    return np.stack(terms, axis=1)
+
+def weight_least_square(values: cv2.typing.MatLike, weights: cv2.typing.MatLike, polymonial_degree: int = 4) -> cv2.typing.MatLike:
     rows, columns = values.shape
-    Y, X = np.mgrid[0: rows, 0: columns]
-    
-    x = X.flatten()
-    y = Y.flatten()
+    X, Y = np.meshgrid(np.arange(columns), np.arange(rows))
+
     v = values.flatten()
     w = weights.flatten()
-    
-    A = []
-    for i in range(polymonial_term + 1):
-        for j in range(polymonial_term + 1 - i):
-            A.append((x ** i) * (y ** j))
-    A = np.vstack(A).T
+
+    A = build_polymonial_basis(X, Y, polymonial_degree)
     
     W_sqrt = np.sqrt(w)
     A_weighted = A * W_sqrt[:, np.newaxis]
@@ -214,11 +219,74 @@ def weight_least_square(values: cv2.typing.MatLike, weights: cv2.typing.MatLike,
     coeffs, *_ = np.linalg.lstsq(A_weighted, V_weighted, rcond=None)
     return coeffs
 
-def calculate_point_charge(all_points_y: np.typing.ArrayLike, 
-                           all_points_x: np.typing.ArrayLike,
+def eval_polymonial(Xs, Ys, coeffs, degree):
+    A = build_polymonial_basis(Xs, Ys, degree)
+    result = A @ coeffs
+    return result.reshape((-1,))
+
+def polymonial_orientation_field(orientation_field: cv2.typing.MatLike, 
+                                 weights: cv2.typing.MatLike,
+                                 polymonial_degree: int = 4) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:
+    """
+    Returns:
+        PR, PI
+    """
+    O2 = 2 * orientation_field
+    sin2O = np.sin(O2)
+    cos2O = np.cos(O2)
+
+    sin2O_coeffs = weight_least_square(sin2O, weights, polymonial_degree)
+    cos2O_coeffs = weight_least_square(cos2O, weights, polymonial_degree)
+
+    rows, columns = orientation_field.shape
+
+    X, Y = np.meshgrid(np.arange(columns), np.arange(rows))
+    X = X.flatten()
+    Y = Y.flatten()
+
+    PR = eval_polymonial(X, Y, sin2O_coeffs, polymonial_degree).reshape(rows, columns)
+    PI = eval_polymonial(X, Y, cos2O_coeffs, polymonial_degree).reshape(rows, columns)
+    return PR, PI
+
+def get_point_influence(Xs, Ys, xc, yc, max_R):
+    r = np.sqrt((Xs - xc)**2 + (Ys - yc)**2) + 1e-10
+    return 1 - np.minimum(r, max_R) / max_R
+
+def get_point_charge(Xs, Ys, orientation_field, polymonial_orientation_field, weights, xc, yc, max_R):
+    phi = get_point_influence(Xs, Ys, xc, yc, max_R)
+    diffrence = orientation_field - polymonial_orientation_field
+
+    num = np.sum(weights * phi * diffrence)
+    denom = np.sum(weights * phi**2)
+
+    if denom == 0:
+        return 0.0
+    return num / denom
+
+def get_points_charges(orientation_field, polymonial_orientation_field, weights, points_mask, max_R):
+    rows, columns = orientation_field.shape
+
+    Xs, Ys = np.meshgrid(np.arange(columns), np.arange(rows))
+    
+    charges = []
+    for xc, yc in np.argwhere(points_mask):
+        circle_mask = (Xs - xc)**2 + (Ys - yc)**2 <= max_R**2
+        
+        indexes = np.where(circle_mask)
+
+        q = get_point_charge(Xs[indexes], Ys[indexes], 
+                             orientation_field[indexes], 
+                             polymonial_orientation_field[indexes], 
+                             weights[indexes], xc, yc, max_R)
+        charges.append(q)
+    return charges
+
+def calculate_point_charge(Xs: np.typing.ArrayLike,
+                           Ys: np.typing.ArrayLike, 
                            rows: int,
                            columns: int, 
                            points_mask: cv2.typing.MatLike, 
+                           points_electricity,
                            points_R: float, 
                            re_charge_func: typing.Callable[[float, float], float], 
                            im_charge_func: typing.Callable[[float, float], float]) -> tuple[list, list]:
@@ -230,15 +298,15 @@ def calculate_point_charge(all_points_y: np.typing.ArrayLike,
     points_weights = []
 
     for py, px in np.argwhere(points_mask):
-        dy = all_points_y - py
-        dx = all_points_x - px
+        dy = Ys - py
+        dx = Xs - px
         r = np.sqrt(dx**2 + dy**2) + 1e-10
 
         mask = r <= points_R
 
         point_PC = np.zeros((rows, columns, 2))
-        point_PC[..., 0] = np.where(mask, re_charge_func(dy, r), 0)
-        point_PC[..., 1] = np.where(mask, im_charge_func(dx, r), 0)
+        point_PC[..., 0] = np.where(mask, re_charge_func(dy, r) * points_electricity[len(points_charges)], 0)
+        point_PC[..., 1] = np.where(mask, im_charge_func(dx, r) * points_electricity[len(points_charges)], 0)
 
         point_weight = 1 - np.minimum(r, points_R) / points_R
 
@@ -247,27 +315,24 @@ def calculate_point_charge(all_points_y: np.typing.ArrayLike,
 
     return points_charges, points_weights
 
-def point_charge_orientation_field(orientation_field: cv2.typing.MatLike,
-                                   weights: cv2.typing.MatLike,
-                                   cores_mask: cv2.typing.MatLike, 
-                                   deltas_mask: cv2.typing.MatLike, 
+def point_charge_orientation_field(PR,
+                                   PI,
+                                   orientation_field: cv2.typing.MatLike,
+                                   cores_mask: cv2.typing.MatLike,
+                                   deltas_mask: cv2.typing.MatLike,
+                                   cores_charges,
+                                   deltas_charges,
                                    cores_R: int = 80, deltas_R: int = 40) -> cv2.typing.MatLike:
-    O2 = 2 * orientation_field
-    cos2O = np.cos(O2)
-    sin2O = np.sin(O2)
-
-    coeffs_cos = weight_least_square(cos2O, weights)
-    coeffs_sin = weight_least_square(sin2O, weights)
-
-    PR_PI = np.stack((cos2O, sin2O), axis=-1)
+    
+    PR_PI = np.stack((PR, PI), axis=-1)
 
     rows, columns = orientation_field.shape
 
-    yy, xx = np.meshgrid(np.arange(rows), np.arange(columns), indexing='ij')
+    Ys, Xs = np.meshgrid(np.arange(rows), np.arange(columns), indexing='ij')
 
-    cores_charges, cores_weights = calculate_point_charge(yy, xx, rows, columns, cores_mask, cores_R, 
+    cores_charges, cores_weights = calculate_point_charge(Ys, Xs, rows, columns, cores_mask, cores_charges, cores_R, 
                                                           lambda dy, r: dy / r, lambda dx, r: -dx / r)
-    deltas_charges, deltas_weights = calculate_point_charge(yy, xx, rows, columns, deltas_mask, deltas_R, 
+    deltas_charges, deltas_weights = calculate_point_charge(Ys, Xs, rows, columns, deltas_mask, deltas_charges, deltas_R, 
                                                             lambda dy, r: -dy / r, lambda dx, r: -dx / r)
 
     points_charges = [*cores_charges, *deltas_charges]
