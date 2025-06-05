@@ -23,6 +23,30 @@ def normalize_img(img: cv2.typing.MatLike) -> cv2.typing.MatLike:
     minI = np.min(intensity)
     return ((intensity - minI) / (maxI - minI))
 
+def binarize_img(img: cv2.typing.MatLike, box_size: int = 5) -> cv2.typing.MatLike:
+    binarized = np.zeros_like(img)
+
+    rows = img.shape[0]
+    columns = img.shape[1]
+
+    small_rows = rows // box_size
+    small_columns = columns // box_size
+
+    for y in range(small_rows):
+        for x in range(small_columns):
+            # Get box values
+            box = img[y * box_size:min(y * box_size + box_size, rows), x * box_size:min(x * box_size + box_size, columns)]
+            local_threshold = np.mean(box)
+            box_mask = box >= local_threshold
+            binarized_box = np.where(box_mask, 1, 0)
+            binarized[y * box_size:min(y * box_size + box_size, rows), x * box_size:min(x * box_size + box_size, columns)] = binarized_box
+
+    return binarized
+
+def skeletonize_img(img: cv2.typing.MatLike) -> cv2.typing.MatLike:
+    img_u8 = cv2.normalize(img, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
+    return cv2.ximgproc.thinning(img_u8, thinningType=cv2.ximgproc.THINNING_GUOHALL)
+
 def gradient_orientation_field(normalized_img: cv2.typing.MatLike, 
                                sum_kernel_size: int = 3, 
                                blur_kernel_size: int = 5, 
@@ -96,6 +120,52 @@ def average_orientation_field(orientation_field: cv2.typing.MatLike,
             small_weights[i, j] = 0.5 * np.mean(weight_block)
 
     return small_orientation_field, small_weights
+
+def generate_gabor_kernels(ksize=21, sigma=5.0, lambd=10.0, gamma=0.5, psi=0, num_angles=16):
+    angles = np.linspace(0, np.pi, num_angles, endpoint=False)
+    kernels = []
+    for theta in angles:
+        kernel = cv2.getGaborKernel((ksize, ksize), sigma, theta, lambd, gamma, psi, ktype=cv2.CV_64F)
+        kernels.append(kernel)
+    return angles, kernels
+
+def directional_filtering(img, orientation_field, weights, block_size=16):
+    rows = img.shape[0]
+    columns = img.shape[1]
+    dfi = np.zeros_like(img, dtype=np.float64)
+
+    angles, kernels = generate_gabor_kernels()
+
+    for y in range(0, rows, block_size):
+        for x in range(0, columns, block_size):
+            y_end = min(y + block_size, rows)
+            x_end = min(x + block_size, columns)
+
+            block_orientation = orientation_field[y:y_end, x:x_end]
+            mean_theta = np.mean(block_orientation)
+
+            block_weights = weights[y:y_end, x:x_end]
+            mean_weight = np.mean(block_weights)
+
+            if mean_weight < 0.1:
+                # pomiń bardzo niestabilne obszary
+                continue
+
+            angle_diffs = np.abs(np.angle(np.exp(1j * (angles - mean_theta))))
+            kernel_idx = np.argmin(angle_diffs)
+            kernel = kernels[kernel_idx]
+
+            block = img[y:y_end, x:x_end]
+
+            k_half = kernel.shape[0] // 2
+            padded_block = cv2.copyMakeBorder(block, k_half, k_half, k_half, k_half, borderType=cv2.BORDER_REFLECT)
+            filtered = cv2.filter2D(padded_block, -1, kernel)
+            filtered_block = filtered[k_half:k_half + y_end - y, k_half:k_half + x_end - x]
+
+            # uwzględnij niezawodność: ważenie liniowe
+            dfi[y:y_end, x:x_end] = filtered_block[..., np.newaxis] * mean_weight + dfi[y:y_end, x:x_end] * (1 - mean_weight)
+
+    return dfi.squeeze()
 
 def filter_clusters(coords: cv2.typing.MatLike, strengths: cv2.typing.MatLike = None, radius: int = 20) -> cv2.typing.MatLike:
     """
@@ -376,9 +446,12 @@ def draw_orientation_field(img: cv2.typing.MatLike,
     line_length - długość linii
     """
     # Upewnij się, że obraz jest w kolorze (do rysowania)
-    img_color = img.copy()
-    if img_color.shape[2] == 1:
-        img_color = np.repeat(img_color, 3, axis=2)
+    if img is None:
+        img_color = np.ones((orientation_field.shape[0] * step, orientation_field.shape[1] * step))
+    else:
+        img_color = img.copy()
+        if img_color.shape[2] == 1:
+            img_color = np.repeat(img_color, 3, axis=2)
 
     rows, cols = orientation_field.shape
     for y in range(0, rows):
@@ -403,3 +476,47 @@ def draw_orientation_field(img: cv2.typing.MatLike,
             cv2.line(img_color, pt1, pt2, color, thickness, lineType=cv2.LINE_AA)
 
     return img_color
+
+def get_fingerprint_data(img: cv2.typing.MatLike, 
+                         binarize_box_size: int = 16, 
+                         gradient_blur_size: int = 5, 
+                         gradient_blur_power: float = 5,
+                         poincare_index_min_weight: float = 0.68,
+                         poincare_close_error: float = 0) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike]:
+    """
+    Returns:
+        binarized, skeleton, orientation_field, weight, cores_mask, deltas_mask
+    """
+    
+    # NORMALIZE FINGERPRINT
+    normalized = normalize_img(img)
+
+    # BINARIZE FINGERPRINT
+    binarized = binarize_img(normalized, binarize_box_size)
+
+    # SKELETONIZE FINGERPRINT
+    skeleton = skeletonize_img(binarized)
+
+    # CALCULATE ORIENTATION FIELD
+    orientation_field, weight = gradient_orientation_field(normalized, 3, gradient_blur_size, gradient_blur_power)
+
+    mask = weight > 0
+    orientation_field = np.where(mask, orientation_field, 0)
+    skeleton = np.where(mask, skeleton, 0)
+
+    # POINCARE INDEX
+    cores_mask, deltas_mask = poincare_index(orientation_field, weight, weights_min_power=poincare_index_min_weight, close_error=poincare_close_error)
+
+    # POLYMONIAL MODEL OF ORIENTATION FIELD
+    # PR, PI = fpa.polymonial_orientation_field(fingerprint_O, fingerprint_W, 4)
+
+    # fingerprint_PO = 0.5 * np.arctan2(PI, PR)
+
+    # POINTS CHARGES
+    # cores_charges = fpa.get_points_charges(fingerprint_O, PR, PI, fingerprint_W, cores_mask, 80)
+    # deltas_charges = fpa.get_points_charges(fingerprint_O, PR, PI, fingerprint_W, deltas_mask, 40)
+
+    # POINT CHARGE
+    # final_O = fpa.point_charge_orientation_field(PR, PI, fingerprint_O, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
+
+    return binarized, skeleton, orientation_field, weight, cores_mask, deltas_mask

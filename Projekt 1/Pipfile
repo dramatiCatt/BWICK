@@ -10,6 +10,8 @@ imgui = "*"
 pygame = "*"
 matplotlib = "*"
 scipy = "*"
+opencv-contrib-python = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
