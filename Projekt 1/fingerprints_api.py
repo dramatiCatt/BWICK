@@ -21,8 +21,7 @@ def normalize_img(img: cv2.typing.MatLike) -> cv2.typing.MatLike:
     intensity = grayscale_img(img)
     maxI = np.max(intensity)
     minI = np.min(intensity)
-
-    return ((intensity - minI) / (maxI - minI)) * 255
+    return ((intensity - minI) / (maxI - minI))
 
 def gradient_orientation_field(normalized_img: cv2.typing.MatLike, 
                                sum_kernel_size: int = 3, 
@@ -60,7 +59,15 @@ def gradient_orientation_field(normalized_img: cv2.typing.MatLike,
     k[cond_zero] = 0.0
 
     orientation_field += k * np.pi
-    orientation_field = cv2.GaussianBlur(orientation_field, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
+
+    cos2O = np.cos(2 * orientation_field)
+    sin2O = np.sin(2 * orientation_field)
+
+    cos2O = cv2.GaussianBlur(cos2O, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
+    sin2O = cv2.GaussianBlur(sin2O, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
+
+    # orientation_field = cv2.GaussianBlur(orientation_field, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
+    orientation_field = 0.5 * np.arctan2(sin2O, cos2O)
 
     weights = (sum_gx_sqr_sub_gy_sqr ** 2 + 4 * sum_gxgy ** 2) / (sum_gx_sqr_sum_gy_sqr ** 2 + 1e-10)
     weights = cv2.GaussianBlur(weights, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
@@ -252,9 +259,9 @@ def get_point_influence(Xs, Ys, xc, yc, max_R):
     r = np.sqrt((Xs - xc)**2 + (Ys - yc)**2) + 1e-10
     return 1 - np.minimum(r, max_R) / max_R
 
-def get_point_charge(Xs, Ys, orientation_field, polymonial_orientation_field, weights, xc, yc, max_R):
+def get_point_charge(Xs, Ys, orientation_field, PR, PI, weights, xc, yc, max_R):
     phi = get_point_influence(Xs, Ys, xc, yc, max_R)
-    diffrence = orientation_field - polymonial_orientation_field
+    diffrence = np.pow(PR - np.cos(2 * orientation_field), 2) + np.pow(PI - np.sin(2 * orientation_field), 2)
 
     num = np.sum(weights * phi * diffrence)
     denom = np.sum(weights * phi**2)
@@ -263,7 +270,7 @@ def get_point_charge(Xs, Ys, orientation_field, polymonial_orientation_field, we
         return 0.0
     return num / denom
 
-def get_points_charges(orientation_field, polymonial_orientation_field, weights, points_mask, max_R):
+def get_points_charges(orientation_field, PR, PI, weights, points_mask, max_R):
     rows, columns = orientation_field.shape
 
     Xs, Ys = np.meshgrid(np.arange(columns), np.arange(rows))
@@ -272,11 +279,12 @@ def get_points_charges(orientation_field, polymonial_orientation_field, weights,
     for xc, yc in np.argwhere(points_mask):
         circle_mask = (Xs - xc)**2 + (Ys - yc)**2 <= max_R**2
         
-        indexes = np.where(circle_mask)
+        indexes = np.nonzero(circle_mask)
 
         q = get_point_charge(Xs[indexes], Ys[indexes], 
                              orientation_field[indexes], 
-                             polymonial_orientation_field[indexes], 
+                             PR[indexes],
+                             PI[indexes], 
                              weights[indexes], xc, yc, max_R)
         charges.append(q)
     return charges
@@ -297,7 +305,7 @@ def calculate_point_charge(Xs: np.typing.ArrayLike,
     points_charges = []
     points_weights = []
 
-    for py, px in np.argwhere(points_mask):
+    for px, py in np.argwhere(points_mask):
         dy = Ys - py
         dx = Xs - px
         r = np.sqrt(dx**2 + dy**2) + 1e-10
@@ -320,8 +328,8 @@ def point_charge_orientation_field(PR,
                                    orientation_field: cv2.typing.MatLike,
                                    cores_mask: cv2.typing.MatLike,
                                    deltas_mask: cv2.typing.MatLike,
-                                   cores_charges,
-                                   deltas_charges,
+                                   cores_electricity,
+                                   deltas_electricity,
                                    cores_R: int = 80, deltas_R: int = 40) -> cv2.typing.MatLike:
     
     PR_PI = np.stack((PR, PI), axis=-1)
@@ -330,15 +338,17 @@ def point_charge_orientation_field(PR,
 
     Ys, Xs = np.meshgrid(np.arange(rows), np.arange(columns), indexing='ij')
 
-    cores_charges, cores_weights = calculate_point_charge(Ys, Xs, rows, columns, cores_mask, cores_charges, cores_R, 
+    cores_charges, cores_weights = calculate_point_charge(Ys, Xs, rows, columns, cores_mask, cores_electricity, cores_R, 
                                                           lambda dy, r: dy / r, lambda dx, r: -dx / r)
-    deltas_charges, deltas_weights = calculate_point_charge(Ys, Xs, rows, columns, deltas_mask, deltas_charges, deltas_R, 
+    deltas_charges, deltas_weights = calculate_point_charge(Ys, Xs, rows, columns, deltas_mask, deltas_electricity, deltas_R, 
                                                             lambda dy, r: -dy / r, lambda dx, r: -dx / r)
 
     points_charges = [*cores_charges, *deltas_charges]
     points_weights = [*cores_weights, *deltas_weights]
-    
+
     model_weights = np.maximum(1 - np.sum(points_weights, axis=0), 0)
+
+    show_img(model_weights, "Model Weights")
 
     weights_stack = np.stack(points_weights, axis=0)
     charges_stack = np.stack(points_charges, axis=0)
@@ -346,10 +356,14 @@ def point_charge_orientation_field(PR,
     combined = weights_stack[..., np.newaxis] * charges_stack
     U = model_weights[..., np.newaxis] * PR_PI + np.sum(combined, axis=0)
 
+    show_img(U[..., 0], "U RE")
+    show_img(U[..., 1], "U IM")
+
     return 0.5 * np.arctan2(U[..., 1], U[..., 0])
 
 def draw_orientation_field(img: cv2.typing.MatLike, 
-                           orientation_field: cv2.typing.MatLike, 
+                           orientation_field: cv2.typing.MatLike,
+                           weights: cv2.typing.MatLike,
                            step: int = 16, line_length: float = 10, 
                            color: tuple[float, float, float] = (0, 255, 0), 
                            thickness: float = 1) -> cv2.typing.MatLike:
@@ -363,10 +377,15 @@ def draw_orientation_field(img: cv2.typing.MatLike,
     """
     # Upewnij się, że obraz jest w kolorze (do rysowania)
     img_color = img.copy()
+    if img_color.shape[2] == 1:
+        img_color = np.repeat(img_color, 3, axis=2)
 
     rows, cols = orientation_field.shape
     for y in range(0, rows):
         for x in range(0, cols):
+            if weights[y, x] == 0:
+                continue
+
             angle = orientation_field[y, x]
 
             # Środek bloku w obrazie

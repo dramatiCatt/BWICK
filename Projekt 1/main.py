@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 
 import fingerprints_api as fpa
 
+# TODO: Użyć numby lub coś z cudą
+
 data_folder_path = "../Data/Odciski/DB1_B"
 
 # LOAD FINGERPRINT
@@ -23,16 +25,15 @@ fingerprint_norm = fpa.normalize_img(fingerprint)
 
 # CALCULATE ORIENTATION FIELD
 # CALCULATE CORSE ORIENTATION FIELD
-fingerprint_O, fingerprint_W = fpa.gradient_orientation_field(fingerprint_norm)
-# fingerprint_O, fingerprint_W = fpa.average_orientation_field(fingerprint_O, fingerprint_W, block_size=4)
+fingerprint_O, fingerprint_W = fpa.gradient_orientation_field(fingerprint_norm, 3, 5, 5)
 
-# fpa.show_img(fingerprint_O, title="Fingerprint Orientation", scaleX=16, scaleY=16)
-# fpa.show_img(fingerprint_W, title="Fingerprint Weights", scaleX=16, scaleY=16)
+mask = fingerprint_W > 0
+fingerprint_O = np.where(mask, fingerprint_O, 0)
 
 plt.figure(figsize=(10, 5))
 
 # POINCARE INDEX
-cores_mask, deltas_mask = fpa.poincare_index(fingerprint_O, fingerprint_W, weights_min_power=0.77, close_error=0.1 * np.pi)
+cores_mask, deltas_mask = fpa.poincare_index(fingerprint_O, fingerprint_W, weights_min_power=0.65, close_error=0)
 
 print(np.count_nonzero(cores_mask), np.count_nonzero(deltas_mask))
 
@@ -54,38 +55,72 @@ plt.axis("equal")
 
 plt.show()
 
-# POLYMONIAL MODEL OF ORIENTATION FIELD
-PR, PI = fpa.polymonial_orientation_field(fingerprint_O, fingerprint_W, 4)
-fingerprint_PO = 0.5 * np.arctan2(PI, PR)
-
-# POINTS CHARGES
-cores_charges = fpa.get_points_charges(fingerprint_O, fingerprint_PO, fingerprint_W, cores_mask, 80)
-deltas_charges = fpa.get_points_charges(fingerprint_O, fingerprint_PO, fingerprint_W, deltas_mask, 40)
-
-# POINT CHARGE
-final_O = fpa.point_charge_orientation_field(PR, PI, fingerprint_O, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
-
-plt.figure(figsize=(5, 5))
-
 plt.subplot(1, 1, 1)
-plt.imshow(final_O, cmap='gray')
-plt.title("Orientation Field")
+plt.imshow(fingerprint_W, cmap='gray')
+plt.title("Weights")
 plt.tight_layout()
 plt.axis("equal")
 plt.show()
 
-final_O, _ = fpa.average_orientation_field(final_O, fingerprint_W, block_size=16)
+plt.subplot(1, 1, 1)
+plt.imshow(np.cos(2 * fingerprint_O), cmap='gray')
+plt.title("cos 2O")
+plt.tight_layout()
+plt.axis("equal")
+plt.show()
+
+plt.subplot(1, 1, 1)
+plt.imshow(np.sin(2 * fingerprint_O), cmap='gray')
+plt.title("sin 2O")
+plt.tight_layout()
+plt.axis("equal")
+plt.show()
+
+# POLYMONIAL MODEL OF ORIENTATION FIELD
+# PR, PI = fpa.polymonial_orientation_field(fingerprint_O, fingerprint_W, 4)
+
+# plt.subplot(1, 1, 1)
+# plt.imshow(PR, cmap='gray')
+# plt.title("PR")
+# plt.tight_layout()
+# plt.axis("equal")
+# plt.show()
+
+# plt.subplot(1, 1, 1)
+# plt.imshow(PI, cmap='gray')
+# plt.title("PI")
+# plt.tight_layout()
+# plt.axis("equal")
+# plt.show()
+
+# fingerprint_PO = 0.5 * np.arctan2(PI, PR)
+
+# POINTS CHARGES
+# cores_charges = fpa.get_points_charges(fingerprint_O, PR, PI, fingerprint_W, cores_mask, 80)
+# print(cores_charges)
+# deltas_charges = fpa.get_points_charges(fingerprint_O, PR, PI, fingerprint_W, deltas_mask, 40)
+# print(deltas_charges)
+
+# POINT CHARGE
+# final_O = fpa.point_charge_orientation_field(PR, PI, fingerprint_O, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
+
+# plt.figure(figsize=(5, 5))
+
+# plt.subplot(1, 1, 1)
+# plt.imshow(final_O, cmap='gray')
+# plt.title("Orientation Field")
+# plt.tight_layout()
+# plt.axis("equal")
+# plt.show()
+
+# final_O, _ = fpa.average_orientation_field(final_O, fingerprint_W, block_size=16)
 fingerprint_O, fingerprint_W = fpa.average_orientation_field(fingerprint_O, fingerprint_W, block_size=16)
 
-overlay = fpa.draw_orientation_field(fingerprint_norm, fingerprint_O, step=16, line_length=14)
-cv2.imshow("Orientation Field 1", overlay)
+overlay = fpa.draw_orientation_field(fingerprint_norm, fingerprint_O, fingerprint_W, step=16, line_length=14)
+fpa.show_img(overlay, title="Orientation Field 1")
 
-overlay = fpa.draw_orientation_field(fingerprint_norm, final_O, step=16, line_length=14)
-cv2.imshow("Orientation Field 2", overlay)
+# overlay = fpa.draw_orientation_field(fingerprint, final_O, step=16, line_length=14)
+# fpa.show_img(overlay, title="Orientation Field 2")
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-# TODO: pod liniami by było widać analizowany obraz
-# TODO: Zrobić z tego API
-# TODO: Użyć numby lub coś z cudą
