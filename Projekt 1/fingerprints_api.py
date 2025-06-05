@@ -431,6 +431,42 @@ def point_charge_orientation_field(PR,
 
     return 0.5 * np.arctan2(U[..., 1], U[..., 0])
 
+def extract_minutiae(skeleton):
+    """
+    Ekstrahuje punkty minutiae (zakończenia i rozwidlenia) z binarnego obrazu szkieletowego.
+
+    Parametry:
+        skeleton (np.ndarray): Obraz szkieletu (wartości 0 lub 255)
+
+    Zwraca:
+        List[Dict]: Lista punktów minutiae w postaci słowników {'x', 'y', 'type'}
+    """
+
+    # Upewnij się, że mamy wartości 0 i 1 (a nie 0 i 255)
+    skel = (skeleton > 0).astype(np.uint8)
+
+    # Definiujemy kernel do zliczania sąsiadów (bez środka)
+    kernel = np.array([[1, 1, 1],
+                       [1, 0, 1],
+                       [1, 1, 1]], dtype=np.uint8)
+
+    # Zastosuj konwolucję w celu zliczenia aktywnych sąsiadów
+    neighbor_count = cv2.filter2D(skel, ddepth=-1, kernel=kernel, borderType=cv2.BORDER_CONSTANT)
+
+    minutiae = []
+
+    rows, cols = skel.shape
+    for y in range(1, rows - 1):
+        for x in range(1, cols - 1):
+            if skel[y, x] == 1:
+                count = neighbor_count[y, x]
+                if count == 1:
+                    minutiae.append({'x': x, 'y': y, 'type': 'ending'})
+                elif count == 3:
+                    minutiae.append({'x': x, 'y': y, 'type': 'bifurcation'})
+
+    return minutiae
+
 def draw_orientation_field(img: cv2.typing.MatLike, 
                            orientation_field: cv2.typing.MatLike,
                            weights: cv2.typing.MatLike,

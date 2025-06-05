@@ -20,15 +20,22 @@ binarized, skeleton, orientation_field, weight, cores_mask, deltas_mask = fpa.ge
 
 print(np.count_nonzero(cores_mask), np.count_nonzero(deltas_mask))
 
+minutae = fpa.extract_minutiae(skeleton)
+
+endings_mask = [[m['x'], m['y']] for m in minutae if m['type'] == 'ending']
+bifurcation_mask = [[m['x'], m['y']] for m in minutae if m['type'] == 'bifurcation']
+
 small_orientation_field, small_weight = fpa.average_orientation_field(orientation_field, weight, block_size=8)
 
 plt.figure(figsize=(5, 5))
 
-plt.imshow(orientation_field, cmap='gray')
+plt.imshow(skeleton, cmap='gray')
 plt.scatter(*np.where(cores_mask)[::-1], color='red', label='Core', s=10)
 plt.scatter(*np.where(deltas_mask)[::-1], color='blue', label='Delta', s=10)
+plt.scatter(np.array(endings_mask)[..., 0], np.array(endings_mask)[..., 1], color='green', label='Ending', s=10)
+plt.scatter(np.array(bifurcation_mask)[..., 0], np.array(bifurcation_mask)[..., 1], color='violet', label='Bifurcation', s=10)
 plt.legend()
-plt.title("Singular Points (Poincare Index)")
+plt.title("Singular Points (Poincare Index) And Minuates")
 plt.tight_layout()
 plt.axis("equal")
 plt.show()
