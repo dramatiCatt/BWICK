@@ -96,7 +96,7 @@ def gradient_orientation_field(normalized_img: cv2.typing.MatLike,
     weights = (sum_gx_sqr_sub_gy_sqr ** 2 + 4 * sum_gxgy ** 2) / (sum_gx_sqr_sum_gy_sqr ** 2 + 1e-10)
     weights = cv2.GaussianBlur(weights, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
 
-    return orientation_field, weights
+    return (orientation_field + np.pi) % np.pi, weights
 
 def average_orientation_field(orientation_field: cv2.typing.MatLike, 
                               weights: cv2.typing.MatLike, 
@@ -120,6 +120,30 @@ def average_orientation_field(orientation_field: cv2.typing.MatLike,
             small_weights[i, j] = 0.5 * np.mean(weight_block)
 
     return small_orientation_field, small_weights
+
+def crop_largest_reliable_region(reliability_map: cv2.typing.MatLike, threshold: float = 0.3) -> tuple[int, int, int, int]:
+    """
+    Returns:
+        start_y, end_y, start_x, end_x
+    """
+
+    mask = (reliability_map > threshold).astype(np.uint8)
+
+    # Denoising: otwarcie morfologiczne
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    clean_mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+
+    # kontur
+    contours, _ = cv2.findContours(clean_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    if not contours:
+        raise ValueError("Brak obszarów powyżej progu wiarygodności")
+    
+    # Największy kontur
+    largest = max(contours, key=cv2.contourArea)
+    x, y, w, h = cv2.boundingRect(largest)
+
+    return y, y + h, x, x + w
 
 def generate_gabor_kernels(ksize=21, sigma=5.0, lambd=10.0, gamma=0.5, psi=0, num_angles=16):
     angles = np.linspace(0, np.pi, num_angles, endpoint=False)
@@ -233,8 +257,8 @@ def filter_poincare_points(points_mask: np.typing.ArrayLike,
 
     return points_mask
 
-def poincare_index(orientation_field: cv2.typing.MatLike, weights: cv2.typing.MatLike, 
-                   weights_min_power: float = 0.2, close_error: float = 0.5 * np.pi) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:
+def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, 
+                   min_reliability: float = 0.2, close_error: float = 0.5 * np.pi) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:
     """
     Returns:
         cores_mask, deltas_mask
@@ -261,13 +285,16 @@ def poincare_index(orientation_field: cv2.typing.MatLike, weights: cv2.typing.Ma
             
             poincare_index_map[y, x] = angles_diff
 
-    core_mask = np.isclose(poincare_index_map, +np.pi, atol=close_error) & (weights > weights_min_power)
-    delta_mask = np.isclose(poincare_index_map, -np.pi, atol=close_error) & (weights > weights_min_power)
+    core_mask = poincare_index_map > np.pi - close_error
+    delta_mask = poincare_index_map < -np.pi + close_error
 
-    core_mask = filter_poincare_points(core_mask, weights)
-    delta_mask = filter_poincare_points(delta_mask, weights)
+    reliable_core_mask = core_mask & (reliability_map > min_reliability)
+    reliable_delta_mask = core_mask & (reliability_map > min_reliability)
 
-    return core_mask, delta_mask
+    # core_mask = filter_poincare_points(core_mask, weights)
+    # delta_mask = filter_poincare_points(delta_mask, weights)
+
+    return reliable_core_mask, reliable_delta_mask
 
 def build_polymonial_basis(Xs: np.typing.ArrayLike, Ys: np.typing.ArrayLike, degree: int = 4) -> cv2.typing.MatLike:
     x = Xs.flatten()
@@ -409,16 +436,14 @@ def point_charge_orientation_field(PR,
     Ys, Xs = np.meshgrid(np.arange(rows), np.arange(columns), indexing='ij')
 
     cores_charges, cores_weights = calculate_point_charge(Ys, Xs, rows, columns, cores_mask, cores_electricity, cores_R, 
-                                                          lambda dy, r: dy / r, lambda dx, r: -dx / r)
+                                                          lambda dy, r: dy / r, lambda dx, r: dx / r)
     deltas_charges, deltas_weights = calculate_point_charge(Ys, Xs, rows, columns, deltas_mask, deltas_electricity, deltas_R, 
-                                                            lambda dy, r: -dy / r, lambda dx, r: -dx / r)
+                                                            lambda dy, r: dy / r, lambda dx, r: -dx / r)
 
     points_charges = [*cores_charges, *deltas_charges]
     points_weights = [*cores_weights, *deltas_weights]
 
     model_weights = np.maximum(1 - np.sum(points_weights, axis=0), 0)
-
-    show_img(model_weights, "Model Weights")
 
     weights_stack = np.stack(points_weights, axis=0)
     charges_stack = np.stack(points_charges, axis=0)
@@ -426,12 +451,14 @@ def point_charge_orientation_field(PR,
     combined = weights_stack[..., np.newaxis] * charges_stack
     U = model_weights[..., np.newaxis] * PR_PI + np.sum(combined, axis=0)
 
-    show_img(U[..., 0], "U RE")
-    show_img(U[..., 1], "U IM")
-
     return 0.5 * np.arctan2(U[..., 1], U[..., 0])
 
-def extract_minutiae(skeleton):
+MINUTIAE_ENDING = 'ending'
+MINUTIAE_BIFURCATION = 'bifurcation'
+
+def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike | None = None,
+                     orientation_field: cv2.typing.MatLike | None = None, border: int = 10,
+                     reliability_threshold: float = 0.5) -> list[dict]:
     """
     Ekstrahuje punkty minutiae (zakończenia i rozwidlenia) z binarnego obrazu szkieletowego.
 
@@ -458,12 +485,36 @@ def extract_minutiae(skeleton):
     rows, cols = skel.shape
     for y in range(1, rows - 1):
         for x in range(1, cols - 1):
-            if skel[y, x] == 1:
-                count = neighbor_count[y, x]
-                if count == 1:
-                    minutiae.append({'x': x, 'y': y, 'type': 'ending'})
-                elif count == 3:
-                    minutiae.append({'x': x, 'y': y, 'type': 'bifurcation'})
+            if skel[y, x] != 1:
+                continue
+
+            # Filtracja krawędzi
+            if x < border or x >= cols - border or y < border or y >= rows - border:
+                continue
+            
+            # Filtracja reliability
+            if reliability_map is not None:
+                if reliability_map[y, x] < reliability_threshold:
+                    continue
+
+            count = neighbor_count[y, x]
+            if count == 1:
+                m_type = MINUTIAE_ENDING
+            elif count == 3:
+                m_type = MINUTIAE_BIFURCATION
+            else:
+                continue
+
+            minutia = {
+                'x': x,
+                'y': y,
+                'type': m_type
+            }
+
+            if orientation_field is not None:
+                minutia['orientation'] = float(orientation_field[y, x])
+                
+            minutiae.append(minutia)
 
     return minutiae
 
@@ -517,15 +568,25 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
                          binarize_box_size: int = 16, 
                          gradient_blur_size: int = 5, 
                          gradient_blur_power: float = 5,
-                         poincare_index_min_weight: float = 0.68,
+                         poincare_index_min_reliability: float = 0.68,
                          poincare_close_error: float = 0) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike]:
     """
     Returns:
-        binarized, skeleton, orientation_field, weight, cores_mask, deltas_mask
+        binarized, skeleton, orientation_field, reliability_map, cores_mask, deltas_mask
     """
     
     # NORMALIZE FINGERPRINT
     normalized = normalize_img(img)
+
+    # CALCULATE ORIENTATION FIELD
+    orientation_field, reliability_map = gradient_orientation_field(normalized, 3, gradient_blur_size, gradient_blur_power)
+
+    # GET LARGEST RELIABLE REGION
+    start_y, end_y, start_x, end_x = crop_largest_reliable_region(reliability_map, 0.3)
+
+    normalized = normalized[start_y:end_y, start_x:end_x]
+    orientation_field = orientation_field[start_y:end_y, start_x:end_x]
+    reliability_map = reliability_map[start_y:end_y, start_x:end_x]
 
     # BINARIZE FINGERPRINT
     binarized = binarize_img(normalized, binarize_box_size)
@@ -533,26 +594,21 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
     # SKELETONIZE FINGERPRINT
     skeleton = skeletonize_img(binarized)
 
-    # CALCULATE ORIENTATION FIELD
-    orientation_field, weight = gradient_orientation_field(normalized, 3, gradient_blur_size, gradient_blur_power)
-
-    mask = weight > 0
+    mask = reliability_map > 0
     orientation_field = np.where(mask, orientation_field, 0)
     skeleton = np.where(mask, skeleton, 0)
 
     # POINCARE INDEX
-    cores_mask, deltas_mask = poincare_index(orientation_field, weight, weights_min_power=poincare_index_min_weight, close_error=poincare_close_error)
+    cores_mask, deltas_mask = poincare_index(orientation_field, reliability_map, poincare_index_min_reliability, poincare_close_error)
 
     # POLYMONIAL MODEL OF ORIENTATION FIELD
-    # PR, PI = fpa.polymonial_orientation_field(fingerprint_O, fingerprint_W, 4)
+    # PR, PI = polymonial_orientation_field(orientation_field, reliability_map, 4)
 
-    # fingerprint_PO = 0.5 * np.arctan2(PI, PR)
+    # # POINTS CHARGES
+    # cores_charges = get_points_charges(orientation_field, PR, PI, reliability_map, cores_mask, 80)
+    # deltas_charges = get_points_charges(orientation_field, PR, PI, reliability_map, deltas_mask, 40)
 
-    # POINTS CHARGES
-    # cores_charges = fpa.get_points_charges(fingerprint_O, PR, PI, fingerprint_W, cores_mask, 80)
-    # deltas_charges = fpa.get_points_charges(fingerprint_O, PR, PI, fingerprint_W, deltas_mask, 40)
+    # # POINT CHARGE
+    # final_O = point_charge_orientation_field(PR, PI, orientation_field, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
 
-    # POINT CHARGE
-    # final_O = fpa.point_charge_orientation_field(PR, PI, fingerprint_O, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
-
-    return binarized, skeleton, orientation_field, weight, cores_mask, deltas_mask
+    return binarized, skeleton, orientation_field, reliability_map, cores_mask, deltas_mask
