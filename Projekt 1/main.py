@@ -12,9 +12,7 @@ data_folder_path = "../Data/Odciski/DB1_B"
 # LOAD FINGERPRINT
 fingerprint = fpa.load_img(f"{data_folder_path}/101_2.tif")
 
-binarized, skeleton, orientation_field, reliability_map, cores_mask, deltas_mask = fpa.get_fingerprint_data(fingerprint, 16, 5, 5, 0.5, 0.4 * np.pi)
-
-print(np.count_nonzero(cores_mask), np.count_nonzero(deltas_mask))
+binarized, skeleton, contour, border_contour, orientation_field, reliability_map, core_point, delta_point = fpa.get_fingerprint_data(fingerprint, 16, 5, 5, 0.5, 0.4 * np.pi, 40)
 
 minutae = fpa.extract_minutiae(skeleton, reliability_map, orientation_field, 16, 0.5)
 
@@ -26,8 +24,10 @@ small_orientation_field, small_weight = fpa.average_orientation_field(orientatio
 plt.figure(figsize=(5, 5))
 
 plt.imshow(skeleton, cmap='gray')
-plt.scatter(*np.where(cores_mask)[::-1], color='blue', label='Core', s=10, marker='+')
-plt.scatter(*np.where(deltas_mask)[::-1], color='red', label='Delta', s=10, marker='.')
+if core_point is not None:
+    plt.scatter(core_point[1], core_point[0], color='blue', label='Core', s=10, marker='+')
+if delta_point is not None:
+    plt.scatter(delta_point[1], delta_point[0], color='red', label='Delta', s=10, marker='.')
 plt.scatter(np.array(endings_mask)[..., 0], np.array(endings_mask)[..., 1], color='green', label='Ending', s=10, marker=markers.TICKLEFT)
 plt.scatter(np.array(bifurcation_mask)[..., 0], np.array(bifurcation_mask)[..., 1], color='violet', label='Bifurcation', s=10,  marker='1')
 plt.legend()
@@ -36,14 +36,14 @@ plt.tight_layout()
 plt.axis("equal")
 plt.show()
 
-fpa.show_img(binarized, "Binarized")
+# fpa.show_img(binarized, "Binarized")
 
-fpa.show_img(skeleton, "Skeleton")
+# fpa.show_img(skeleton, "Skeleton")
 
-fpa.show_img(reliability_map, "Reliability")
+# fpa.show_img(reliability_map, "Reliability")
 
-overlay = fpa.draw_orientation_field(None, small_orientation_field, small_weight, step=8, line_length=6)
-fpa.show_img(overlay, title="Orientation Field 1")
+# overlay = fpa.draw_orientation_field(None, small_orientation_field, small_weight, step=8, line_length=6)
+# fpa.show_img(overlay, title="Orientation Field 1")
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

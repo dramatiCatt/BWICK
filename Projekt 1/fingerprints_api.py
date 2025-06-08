@@ -84,13 +84,11 @@ def gradient_orientation_field(normalized_img: cv2.typing.MatLike,
 
     orientation_field += k * np.pi
 
-    cos2O = np.cos(2 * orientation_field)
-    sin2O = np.sin(2 * orientation_field)
+    orientation_field_2 = 2 * orientation_field
 
-    cos2O = cv2.GaussianBlur(cos2O, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
-    sin2O = cv2.GaussianBlur(sin2O, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
+    cos2O = cv2.GaussianBlur(np.cos(orientation_field_2), (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
+    sin2O = cv2.GaussianBlur(np.sin(orientation_field_2), (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
 
-    # orientation_field = cv2.GaussianBlur(orientation_field, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
     orientation_field = 0.5 * np.arctan2(sin2O, cos2O)
 
     weights = (sum_gx_sqr_sub_gy_sqr ** 2 + 4 * sum_gxgy ** 2) / (sum_gx_sqr_sum_gy_sqr ** 2 + 1e-10)
@@ -121,10 +119,10 @@ def average_orientation_field(orientation_field: cv2.typing.MatLike,
 
     return small_orientation_field, small_weights
 
-def crop_largest_reliable_region(reliability_map: cv2.typing.MatLike, threshold: float = 0.3) -> tuple[int, int, int, int]:
+def get_largest_reliable_region(reliability_map: cv2.typing.MatLike, threshold: float = 0.3) -> np.ndarray:
     """
     Returns:
-        start_y, end_y, start_x, end_x
+        array of contour points
     """
 
     mask = (reliability_map > threshold).astype(np.uint8)
@@ -140,9 +138,26 @@ def crop_largest_reliable_region(reliability_map: cv2.typing.MatLike, threshold:
         raise ValueError("Brak obszarów powyżej progu wiarygodności")
     
     # Największy kontur
-    largest = max(contours, key=cv2.contourArea)
-    x, y, w, h = cv2.boundingRect(largest)
+    return max(contours, key=cv2.contourArea).squeeze()
 
+def get_reliable_region_border(contour: np.ndarray, border_size: int = 16) -> np.ndarray:
+    center = np.array([contour[..., 0].mean(), contour[..., 1].mean()])
+
+    border_contour = np.zeros_like(contour)
+    for i in range(len(contour)):
+        direction = center - contour[i]
+        direction /= np.sqrt(direction[0] ** 2 + direction[1] ** 2)
+
+        border_contour[i] = contour[i] + direction * border_size
+    return border_contour
+
+def get_reliable_region_rectangle(contour: np.ndarray) -> tuple[int, int, int, int]:
+    """
+    Returns:
+        start_y, end_y, start_x, end_x
+    """
+
+    x, y, w, h = cv2.boundingRect(contour)
     return y, y + h, x, x + w
 
 def generate_gabor_kernels(ksize=21, sigma=5.0, lambd=10.0, gamma=0.5, psi=0, num_angles=16):
@@ -191,7 +206,7 @@ def directional_filtering(img, orientation_field, weights, block_size=16):
 
     return dfi.squeeze()
 
-def filter_clusters(coords: cv2.typing.MatLike, strengths: cv2.typing.MatLike = None, radius: int = 20) -> cv2.typing.MatLike:
+def filter_clusters(coords: cv2.typing.MatLike, strengths: cv2.typing.MatLike = None, radius: int = 20) -> np.ndarray:
     """
     Redukuje skupiska punktów — zostawia tylko jeden punkt w promieniu `radius`.
     
@@ -231,37 +246,101 @@ def filter_clusters(coords: cv2.typing.MatLike, strengths: cv2.typing.MatLike = 
             removed[n] = True  # oznacz wszystko w pobliżu jako usunięte
         removed[i] = False  # ale siebie samego zostawiamy
 
-    return kept
+    return np.array(kept)
 
-def filter_poincare_points(points_mask: np.typing.ArrayLike, 
-                           weights: cv2.typing.MatLike, 
-                           maximum_box_size: int = 15, border_size: int = 16) -> cv2.typing.MatLike:
-    from scipy.ndimage import maximum_filter
+def filter_poincare_points(points_mask: cv2.typing.MatLike, 
+                           points_scores: cv2.typing.MatLike,
+                           reliability_map: cv2.typing.MatLike,
+                           contour_border: np.ndarray | None = None,
+                           min_reliability: float = 0.3,
+                           border_size: int = 16,
+                           near_radius: int = 20) -> cv2.typing.MatLike:
 
-    points_map = np.where(points_mask, weights, 0)
-    points_max = maximum_filter(points_map, size=maximum_box_size)
-    points_mask = (points_map == points_max) & (points_map > 0)
+    filtered_points_mask = points_mask & (reliability_map > min_reliability)
 
-    points_mask[:border_size, :] = False
-    points_mask[-border_size:, :] = False
-    points_mask[:, :border_size] = False
-    points_mask[:, -border_size:] = False
+    filtered_points_mask[:border_size, :] = False
+    filtered_points_mask[-border_size:, :] = False
+    filtered_points_mask[:, :border_size] = False
+    filtered_points_mask[:, -border_size:] = False
 
-    points_yx = np.argwhere(points_mask)
-    points_strengths = weights[points_mask]
-
-    filtered_points = filter_clusters(points_yx, strengths=points_strengths, radius=20)
+    points_yx = np.argwhere(filtered_points_mask)
+    best_points_score = np.min(points_scores)
     for py, px in points_yx:
-        if not any(item == (py, px) for item in filtered_points):
-            points_mask[py, px] = False
+        filtered_points_mask[py, px] = points_scores[py, px] == best_points_score
 
-    return points_mask
+    points_yx = np.argwhere(filtered_points_mask)
+    points_reliability = reliability_map[filtered_points_mask]
+    filtered_points = filter_clusters(points_yx, strengths=points_reliability, radius=near_radius)
+    for py, px in points_yx:
+        if not any(y == py and x == px for y, x in filtered_points):
+            filtered_points_mask[py, px] = False
+
+    if contour_border is not None:
+        points_yx = np.argwhere(filtered_points_mask)
+        for py, px in points_yx:
+            inside = cv2.pointPolygonTest(contour_border, (px.astype(float), py.astype(float)), False)
+            filtered_points_mask[py, px] = inside >= 0
+
+    return filtered_points_mask
+
+def get_best_core(cores_mask: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, radius: int = 30) -> np.ndarray | None:
+    h, w = reliability_map.shape
+    center = np.array([w // 2, h // 2])
+
+    best_score = -np.inf
+    best_point = None
+
+    for pt in np.argwhere(cores_mask):
+        y, x = pt
+        dist_to_center = np.linalg.norm(np.array([x, y]) - center)
+
+        y0 = max(0, y - radius)
+        y1 = min(h, y + radius)
+        x0 = max(0, x - radius)
+        x1 = min(w, x + radius)
+        region = reliability_map[y0:y1, x0:x1]
+
+        avg_reliability = np.mean(region)
+        score = avg_reliability - 0.01 * dist_to_center
+
+        if score > best_score:
+            best_score = score
+            best_point = pt
+    
+    return best_point
+
+def get_best_delta(deltas_mask: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, radius: int = 30) -> np.ndarray | None:
+    h, w = reliability_map.shape
+
+    best_score = -np.inf
+    best_point = None
+
+    for pt in np.argwhere(deltas_mask):
+        y, x = pt
+
+        y0 = max(0, y - radius)
+        y1 = min(h, y + radius)
+        x0 = max(0, x - radius)
+        x1 = min(w, x + radius)
+        region = reliability_map[y0:y1, x0:x1]
+        avg_reliability = np.mean(region)
+
+        vertical_bias = y / h
+
+        score = avg_reliability + 0.2 * vertical_bias
+
+        if score > best_score:
+            best_score = score
+            best_point = pt
+
+    return best_point
 
 def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, 
-                   min_reliability: float = 0.2, close_error: float = 0.5 * np.pi) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:
+                   contour_border: np.ndarray | None = None,
+                   min_reliability: float = 0.2, close_error: float = 0.5 * np.pi) -> tuple[np.ndarray | None, np.ndarray | None]:
     """
     Returns:
-        cores_mask, deltas_mask
+        core_point, delta_point
     """
     poincare_index_map = np.zeros_like(orientation_field)
     rows, columns = orientation_field.shape
@@ -285,16 +364,19 @@ def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.t
             
             poincare_index_map[y, x] = angles_diff
 
-    core_mask = poincare_index_map > np.pi - close_error
-    delta_mask = poincare_index_map < -np.pi + close_error
+    cores_mask = poincare_index_map > np.pi - close_error
+    deltas_mask = poincare_index_map < -np.pi + close_error
 
-    reliable_core_mask = core_mask & (reliability_map > min_reliability)
-    reliable_delta_mask = core_mask & (reliability_map > min_reliability)
+    cores_scores = np.abs(np.pi - poincare_index_map)
+    deltas_scores = np.abs(-np.pi + poincare_index_map)
 
-    # core_mask = filter_poincare_points(core_mask, weights)
-    # delta_mask = filter_poincare_points(delta_mask, weights)
+    cores_mask = filter_poincare_points(cores_mask, cores_scores, reliability_map, contour_border, min_reliability, 16, 40)
+    deltas_mask = filter_poincare_points(deltas_mask, deltas_scores, reliability_map, contour_border, min_reliability, 16, 40)
 
-    return reliable_core_mask, reliable_delta_mask
+    core_point = get_best_core(cores_mask, reliability_map, 30)
+    delta_point = get_best_delta(deltas_mask, reliability_map, 30)
+
+    return core_point, delta_point
 
 def build_polymonial_basis(Xs: np.typing.ArrayLike, Ys: np.typing.ArrayLike, degree: int = 4) -> cv2.typing.MatLike:
     x = Xs.flatten()
@@ -569,10 +651,11 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
                          gradient_blur_size: int = 5, 
                          gradient_blur_power: float = 5,
                          poincare_index_min_reliability: float = 0.68,
-                         poincare_close_error: float = 0) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike]:
+                         poincare_close_error: float = 0,
+                         contour_border_size: int = 16) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, np.ndarray | None, np.ndarray | None]:
     """
     Returns:
-        binarized, skeleton, orientation_field, reliability_map, cores_mask, deltas_mask
+        binarized, skeleton, contour, border_contour, orientation_field, reliability_map, core_point, delta_point, contour
     """
     
     # NORMALIZE FINGERPRINT
@@ -582,7 +665,13 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
     orientation_field, reliability_map = gradient_orientation_field(normalized, 3, gradient_blur_size, gradient_blur_power)
 
     # GET LARGEST RELIABLE REGION
-    start_y, end_y, start_x, end_x = crop_largest_reliable_region(reliability_map, 0.3)
+    contour = get_largest_reliable_region(reliability_map, 0.3)
+    start_y, end_y, start_x, end_x = get_reliable_region_rectangle(contour)
+
+    contour[..., 0] -= start_x
+    contour[..., 1] -= start_y
+
+    border_contour = get_reliable_region_border(contour, contour_border_size)
 
     normalized = normalized[start_y:end_y, start_x:end_x]
     orientation_field = orientation_field[start_y:end_y, start_x:end_x]
@@ -599,7 +688,7 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
     skeleton = np.where(mask, skeleton, 0)
 
     # POINCARE INDEX
-    cores_mask, deltas_mask = poincare_index(orientation_field, reliability_map, poincare_index_min_reliability, poincare_close_error)
+    core_point, delta_point = poincare_index(orientation_field, reliability_map, border_contour, poincare_index_min_reliability, poincare_close_error)
 
     # POLYMONIAL MODEL OF ORIENTATION FIELD
     # PR, PI = polymonial_orientation_field(orientation_field, reliability_map, 4)
@@ -611,4 +700,4 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
     # # POINT CHARGE
     # final_O = point_charge_orientation_field(PR, PI, orientation_field, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
 
-    return binarized, skeleton, orientation_field, reliability_map, cores_mask, deltas_mask
+    return binarized, skeleton, contour, border_contour, orientation_field, reliability_map, core_point, delta_point
