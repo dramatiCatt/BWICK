@@ -1,6 +1,9 @@
 import cv2
 import numpy as np
 import typing
+import json
+import matplotlib.pyplot as plt
+import matplotlib.markers as markers
 
 def load_img(img_path: str) -> cv2.typing.MatLike:
     return cv2.imread(img_path)
@@ -630,7 +633,10 @@ def normalize_minutiae(minutiae: list[dict], core: np.ndarray, core_angle: float
     
     return normalized
 
-def get_core_angle(core: np.ndarray, orientation_field: cv2.typing.MatLike, avg_window_size: int = 5) -> float:
+def get_core_angle(core: np.ndarray | None, orientation_field: cv2.typing.MatLike, avg_window_size: int = 5) -> float:
+    if core is None:
+        return 0
+
     h, w = orientation_field.shape
     half = avg_window_size // 2
 
@@ -695,10 +701,11 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
                          gradient_blur_size: int = 5, 
                          gradient_blur_power: float = 5,
                          poincare_index_min_reliability: float = 0.68,
-                         poincare_close_error: float = 0) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, np.ndarray | None, np.ndarray | None]:
+                         poincare_close_error: float = 0,
+                         show_debug_graphics: bool = False) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, np.ndarray | None, np.ndarray | None, float, list[dict]]:
     """
     Returns:
-        binarized, skeleton, contour, orientation_field, reliability_map, core_point, delta_point, minutae
+        core_point, delta_point, core_angle, minutae
     """
     
     # NORMALIZE FINGERPRINT
@@ -736,7 +743,7 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
 
     # NORMALIZE MINUTAE
     core_angle = get_core_angle(core_point, orientation_field, 5)
-    minutiae = normalize_minutiae(minutiae, core_point, core_angle)
+    normalized_minutiae = normalize_minutiae(minutiae, core_point, core_angle)
 
     # POLYMONIAL MODEL OF ORIENTATION FIELD
     # PR, PI = polymonial_orientation_field(orientation_field, reliability_map, 4)
@@ -748,4 +755,105 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
     # POINT CHARGE
     # final_O = point_charge_orientation_field(PR, PI, orientation_field, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
 
-    return binarized, skeleton, contour, orientation_field, reliability_map, core_point, delta_point, minutiae
+    if show_debug_graphics:
+        show_img(img, "Original")
+
+        show_img(normalized, "Normalized")
+
+        show_img(binarized, "Binarized")
+
+        show_img(skeleton, "Skeleton")
+
+        show_img(reliability_map, "Reliability")
+
+        skeleton_color = cv2.cvtColor(skeleton, cv2.COLOR_GRAY2RGB)
+        cv2.drawContours(skeleton_color, [contour], -1, (0, 255, 0), thickness=1)
+        show_img(skeleton_color, "Contour")
+
+        small_orientation_field, small_weight = average_orientation_field(orientation_field, reliability_map, block_size=8)
+        overlay = draw_orientation_field(None, small_orientation_field, small_weight, step=8, line_length=6)
+        show_img(overlay, title="Orientation Field")
+
+        endings_mask = [m[MINUTIAE_POS] for m in minutiae if m[MINUTIAE_TYPE] == MINUTIAE_ENDING]
+        bifurcation_mask = [m[MINUTIAE_POS] for m in minutiae if m[MINUTIAE_TYPE] == MINUTIAE_BIFURCATION] 
+
+        plt.figure(figsize=(10, 5))
+
+        plt.subplot(1, 2, 1)
+        plt.imshow(skeleton, cmap='gray')
+        if core_point is not None:
+            plt.scatter(core_point[1], core_point[0], color='blue', label='Core', s=15)
+        if delta_point is not None:
+            plt.scatter(delta_point[1], delta_point[0], color='red', label='Delta', s=15)
+        plt.legend()
+        plt.title("Singular Points (Poincare Index)")
+        # plt.tight_layout()
+        # plt.axis("equal")
+
+        plt.subplot(1, 2, 2)
+        plt.imshow(skeleton, cmap='gray')
+        plt.scatter(np.array(endings_mask)[..., 1], np.array(endings_mask)[..., 0], color='green', label='Ending', s=15)
+        plt.scatter(np.array(bifurcation_mask)[..., 1], np.array(bifurcation_mask)[..., 0], color='violet', label='Bifurcation', s=15)
+        plt.legend()
+        plt.title("Minutiae")
+        # plt.tight_layout()
+        # plt.axis("equal")
+
+        plt.show()
+
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    return normalized_minutiae, core_point, delta_point, core_angle
+
+TEMPLATE_MINUTIAE = 'minutiae'
+TEMPLATE_CORE = 'core'
+TEMPLATE_DELTA = 'delta'
+TEMPLATE_ANGLE = 'angle'
+
+def save_fingerprint_template(path: str, minutiae: list[dict], 
+                              core_point: np.ndarray | None,
+                              delta_point: np.ndarray | None,
+                              core_angle: float) -> None:
+    template = {
+        TEMPLATE_MINUTIAE: [
+            {
+                MINUTIAE_POS: np.round(m[MINUTIAE_POS], 2).tolist(),
+                MINUTIAE_ANGLE: np.round(m[MINUTIAE_ANGLE], 4),
+                MINUTIAE_RELIABILITY: np.round(m[MINUTIAE_RELIABILITY], 4),
+                MINUTIAE_TYPE: m[MINUTIAE_TYPE]
+            } for m in minutiae
+        ]
+    }
+
+    if core_point is not None:
+        template[TEMPLATE_CORE] = np.round(core_point, 2).tolist()
+
+    if delta_point is not None:
+        template[TEMPLATE_DELTA] = np.round(delta_point, 2).tolist()
+
+    template[TEMPLATE_ANGLE] = np.round(core_angle, 4)
+
+    with open(path, 'w') as f:
+        json.dump(template, f, indent=4)
+
+def load_fingerprint_template(path: str) -> tuple[list[dict], np.ndarray | None, np.ndarray | None, float]:
+    with open(path, 'r') as f:
+        data = json.load(f)
+
+    minutiae = [
+        {
+            MINUTIAE_POS: np.array(m[MINUTIAE_POS]),
+            MINUTIAE_ANGLE: m[MINUTIAE_ANGLE],
+            MINUTIAE_RELIABILITY: m[MINUTIAE_RELIABILITY],
+            MINUTIAE_TYPE: m[MINUTIAE_TYPE]
+        } for m in data[TEMPLATE_MINUTIAE]
+    ]
+
+    core_point = data.get(TEMPLATE_CORE)
+    core_point = core_point if core_point is None else np.array(core_point)
+
+    delta_point = data.get(TEMPLATE_DELTA)
+    delta_point = delta_point if delta_point is None else np.array(delta_point)
+
+    return minutiae, core_point, delta_point, data[TEMPLATE_ANGLE]
