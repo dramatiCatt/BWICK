@@ -336,8 +336,8 @@ def get_best_delta(deltas_mask: cv2.typing.MatLike, reliability_map: cv2.typing.
     return best_point
 
 def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, 
-                   contour_border: np.ndarray | None = None,
-                   min_reliability: float = 0.2, close_error: float = 0.5 * np.pi) -> tuple[np.ndarray | None, np.ndarray | None]:
+                   contour_border: np.ndarray | None = None, min_reliability: float = 0.2, 
+                   close_error: float = 0.5 * np.pi) -> tuple[np.ndarray | None, np.ndarray | None]:
     """
     Returns:
         core_point, delta_point
@@ -537,9 +537,14 @@ def point_charge_orientation_field(PR,
 
 MINUTIAE_ENDING = 'ending'
 MINUTIAE_BIFURCATION = 'bifurcation'
+MINUTIAE_POS = 'pos'
+MINUTIAE_TYPE = 'type'
+MINUTIAE_ANGLE = 'angle'
+MINUTIAE_RELIABILITY = 'reliability'
 
-def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike | None = None,
-                     orientation_field: cv2.typing.MatLike | None = None, border: int = 10,
+def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike,
+                     orientation_field: cv2.typing.MatLike, 
+                     border_contour: np.ndarray | None = None, border: int = 10,
                      reliability_threshold: float = 0.5) -> list[dict]:
     """
     Ekstrahuje punkty minutiae (zakończenia i rozwidlenia) z binarnego obrazu szkieletowego.
@@ -548,7 +553,7 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
         skeleton (np.ndarray): Obraz szkieletu (wartości 0 lub 255)
 
     Zwraca:
-        List[Dict]: Lista punktów minutiae w postaci słowników {'x', 'y', 'type'}
+        List[Dict]: Lista punktów minutiae w postaci słowników {'pos', 'type', 'orientation', 'reliability'}
     """
 
     # Upewnij się, że mamy wartości 0 i 1 (a nie 0 i 255)
@@ -575,8 +580,13 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
                 continue
             
             # Filtracja reliability
-            if reliability_map is not None:
-                if reliability_map[y, x] < reliability_threshold:
+            if reliability_map[y, x] < reliability_threshold:
+                continue
+
+            # Filtracja po konturze
+            if border_contour is not None:
+                inside = cv2.pointPolygonTest(border_contour, [x, y], False)
+                if inside < 0:
                     continue
 
             count = neighbor_count[y, x]
@@ -587,18 +597,52 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
             else:
                 continue
 
-            minutia = {
-                'x': x,
-                'y': y,
-                'type': m_type
-            }
-
-            if orientation_field is not None:
-                minutia['orientation'] = float(orientation_field[y, x])
-                
-            minutiae.append(minutia)
+            minutiae.append({
+                MINUTIAE_POS: np.array([y, x]),
+                MINUTIAE_ANGLE: float(orientation_field[y, x]),
+                MINUTIAE_RELIABILITY: float(reliability_map[y, x]),
+                MINUTIAE_TYPE: m_type
+            })
 
     return minutiae
+
+def normalize_minutiae(minutiae: list[dict], core: np.ndarray, core_angle: float) -> list[dict]:
+    normalized = []
+    cos_a = np.cos(-core_angle)
+    sin_a = np.sin(-core_angle)
+
+    for m in minutiae:
+        dp = m[MINUTIAE_POS] - core
+
+        # Obrót
+        x_new = dp[1] * cos_a - dp[0] * sin_a
+        y_new = dp[1] * sin_a + dp[0] * cos_a
+
+        # Korekta kąta
+        angle_new = (m[MINUTIAE_ANGLE] - core_angle) % np.pi
+
+        normalized.append({
+            MINUTIAE_POS: np.array([y_new, x_new]),
+            MINUTIAE_ANGLE: angle_new,
+            MINUTIAE_RELIABILITY: m[MINUTIAE_RELIABILITY],
+            MINUTIAE_TYPE: m[MINUTIAE_TYPE]
+        })
+    
+    return normalized
+
+def get_core_angle(core: np.ndarray, orientation_field: cv2.typing.MatLike, avg_window_size: int = 5) -> float:
+    h, w = orientation_field.shape
+    half = avg_window_size // 2
+
+    x0, x1 = max(0, core[1] - half), min(w, core[1] + half + 1)
+    y0, y1 = max(0, core[0] - half), min(h, core[0] + half + 1)
+    region = orientation_field[y0:y1, x0:x1]
+
+    cos_vals = np.cos(2 * region)
+    sin_vals = np.sin(2 * region)
+
+    mean_angle = 0.5 * np.arctan2(np.mean(sin_vals), np.mean(cos_vals))
+    return mean_angle
 
 def draw_orientation_field(img: cv2.typing.MatLike, 
                            orientation_field: cv2.typing.MatLike,
@@ -651,11 +695,10 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
                          gradient_blur_size: int = 5, 
                          gradient_blur_power: float = 5,
                          poincare_index_min_reliability: float = 0.68,
-                         poincare_close_error: float = 0,
-                         contour_border_size: int = 16) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, np.ndarray | None, np.ndarray | None]:
+                         poincare_close_error: float = 0) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, cv2.typing.MatLike, np.ndarray | None, np.ndarray | None]:
     """
     Returns:
-        binarized, skeleton, contour, border_contour, orientation_field, reliability_map, core_point, delta_point, contour
+        binarized, skeleton, contour, orientation_field, reliability_map, core_point, delta_point, minutae
     """
     
     # NORMALIZE FINGERPRINT
@@ -670,8 +713,6 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
 
     contour[..., 0] -= start_x
     contour[..., 1] -= start_y
-
-    border_contour = get_reliable_region_border(contour, contour_border_size)
 
     normalized = normalized[start_y:end_y, start_x:end_x]
     orientation_field = orientation_field[start_y:end_y, start_x:end_x]
@@ -688,16 +729,23 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
     skeleton = np.where(mask, skeleton, 0)
 
     # POINCARE INDEX
-    core_point, delta_point = poincare_index(orientation_field, reliability_map, border_contour, poincare_index_min_reliability, poincare_close_error)
+    core_point, delta_point = poincare_index(orientation_field, reliability_map, get_reliable_region_border(contour, 40), poincare_index_min_reliability, poincare_close_error)
+
+    # MINUTAE
+    minutiae = extract_minutiae(skeleton, reliability_map, orientation_field, get_reliable_region_border(contour, 16), 16, 0.5)
+
+    # NORMALIZE MINUTAE
+    core_angle = get_core_angle(core_point, orientation_field, 5)
+    minutiae = normalize_minutiae(minutiae, core_point, core_angle)
 
     # POLYMONIAL MODEL OF ORIENTATION FIELD
     # PR, PI = polymonial_orientation_field(orientation_field, reliability_map, 4)
 
-    # # POINTS CHARGES
+    # POINTS CHARGES
     # cores_charges = get_points_charges(orientation_field, PR, PI, reliability_map, cores_mask, 80)
     # deltas_charges = get_points_charges(orientation_field, PR, PI, reliability_map, deltas_mask, 40)
 
-    # # POINT CHARGE
+    # POINT CHARGE
     # final_O = point_charge_orientation_field(PR, PI, orientation_field, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
 
-    return binarized, skeleton, contour, border_contour, orientation_field, reliability_map, core_point, delta_point
+    return binarized, skeleton, contour, orientation_field, reliability_map, core_point, delta_point, minutiae
