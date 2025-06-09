@@ -286,25 +286,37 @@ def filter_poincare_points(points_mask: cv2.typing.MatLike,
 
     return filtered_points_mask
 
-def get_best_core(cores_mask: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, radius: int = 30) -> np.ndarray | None:
+def get_best_poincare_point(points_mask: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, 
+                            get_score: typing.Callable[[float, np.ndarray, np.ndarray, np.ndarray], float], 
+                            radius: int = 30) -> np.ndarray | None:
+    """_summary_
+
+    Args:
+        points_mask (cv2.typing.MatLike): _description_
+        reliability_map (cv2.typing.MatLike): _description_
+        get_score (typing.Callable[[np.ndarray, np.ndarray, np.ndarray], float]): avg_reliability, position, center, image_size
+        radius (int, optional): _description_. Defaults to 30.
+
+    Returns:
+        np.ndarray | None: _description_
+    """
     h, w = reliability_map.shape
     center = np.array([w // 2, h // 2])
 
     best_score = -np.inf
     best_point = None
 
-    for pt in np.argwhere(cores_mask):
+    for pt in np.argwhere(points_mask):
         y, x = pt
-        dist_to_center = np.linalg.norm(np.array([x, y]) - center)
 
         y0 = max(0, y - radius)
         y1 = min(h, y + radius)
         x0 = max(0, x - radius)
         x1 = min(w, x + radius)
         region = reliability_map[y0:y1, x0:x1]
-
         avg_reliability = np.mean(region)
-        score = avg_reliability - 0.01 * dist_to_center
+        
+        score = get_score(avg_reliability, np.array([x, y]), center, np.array([w, h]))
 
         if score > best_score:
             best_score = score
@@ -312,31 +324,19 @@ def get_best_core(cores_mask: cv2.typing.MatLike, reliability_map: cv2.typing.Ma
     
     return best_point
 
+def get_best_core(cores_mask: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, radius: int = 30) -> np.ndarray | None:
+    def get_score(avg_reliability: float, pos: np.ndarray, center: np.ndarray, img_size: np.ndarray) -> float:
+        dist_to_center = np.linalg.norm(pos - center)
+        return avg_reliability - 0.01 * dist_to_center
+    
+    return get_best_poincare_point(cores_mask, reliability_map, get_score, radius)
+
 def get_best_delta(deltas_mask: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, radius: int = 30) -> np.ndarray | None:
-    h, w = reliability_map.shape
-
-    best_score = -np.inf
-    best_point = None
-
-    for pt in np.argwhere(deltas_mask):
-        y, x = pt
-
-        y0 = max(0, y - radius)
-        y1 = min(h, y + radius)
-        x0 = max(0, x - radius)
-        x1 = min(w, x + radius)
-        region = reliability_map[y0:y1, x0:x1]
-        avg_reliability = np.mean(region)
-
-        vertical_bias = y / h
-
-        score = avg_reliability + 0.2 * vertical_bias
-
-        if score > best_score:
-            best_score = score
-            best_point = pt
-
-    return best_point
+    def get_score(avg_reliability: float, pos: np.ndarray, center: np.ndarray, img_size: np.ndarray) -> float:
+        vertical_bias = pos[1] / img_size[1]
+        return avg_reliability + 0.2 * vertical_bias
+    
+    return get_best_poincare_point(deltas_mask, reliability_map, get_score, radius)
 
 def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, 
                    contour_border: np.ndarray | None = None, min_reliability: float = 0.2, 
@@ -538,6 +538,23 @@ def point_charge_orientation_field(PR,
 
     return 0.5 * np.arctan2(U[..., 1], U[..., 0])
 
+def get_point_mean_angle(point: np.ndarray | None, orientation_field: cv2.typing.MatLike, avg_window_size: int = 5) -> float:
+    if point is None:
+        return 0
+
+    h, w = orientation_field.shape
+    half = avg_window_size // 2
+
+    x0, x1 = max(0, point[1] - half), min(w, point[1] + half + 1)
+    y0, y1 = max(0, point[0] - half), min(h, point[0] + half + 1)
+    region = orientation_field[y0:y1, x0:x1]
+
+    cos_vals = np.cos(2 * region)
+    sin_vals = np.sin(2 * region)
+
+    mean_angle = 0.5 * np.arctan2(np.mean(sin_vals), np.mean(cos_vals))
+    return mean_angle
+
 MINUTIAE_ENDING = 'ending'
 MINUTIAE_BIFURCATION = 'bifurcation'
 MINUTIAE_POS = 'pos'
@@ -602,7 +619,7 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
 
             minutiae.append({
                 MINUTIAE_POS: np.array([y, x]),
-                MINUTIAE_ANGLE: float(orientation_field[y, x]),
+                MINUTIAE_ANGLE: get_point_mean_angle(np.array([y, x]), orientation_field, 5),
                 MINUTIAE_RELIABILITY: float(reliability_map[y, x]),
                 MINUTIAE_TYPE: m_type
             })
@@ -614,12 +631,20 @@ def normalize_minutiae(minutiae: list[dict], core: np.ndarray, core_angle: float
     cos_a = np.cos(-core_angle)
     sin_a = np.sin(-core_angle)
 
+    distances = [np.sqrt((m[MINUTIAE_POS][0] - core[0]) ** 2 + (m[MINUTIAE_POS][1] - core[1]) ** 2) for m in minutiae]
+    mean_dist = np.mean(distances)
+    scale = 100 / mean_dist if mean_dist > 0 else 1.0
+
     for m in minutiae:
         dp = m[MINUTIAE_POS] - core
 
         # Obrót
         x_new = dp[1] * cos_a - dp[0] * sin_a
         y_new = dp[1] * sin_a + dp[0] * cos_a
+        
+        # Skalowanie
+        x_new *= scale
+        y_new *= scale
 
         # Korekta kąta
         angle_new = (m[MINUTIAE_ANGLE] - core_angle) % np.pi
@@ -632,23 +657,6 @@ def normalize_minutiae(minutiae: list[dict], core: np.ndarray, core_angle: float
         })
     
     return normalized
-
-def get_core_angle(core: np.ndarray | None, orientation_field: cv2.typing.MatLike, avg_window_size: int = 5) -> float:
-    if core is None:
-        return 0
-
-    h, w = orientation_field.shape
-    half = avg_window_size // 2
-
-    x0, x1 = max(0, core[1] - half), min(w, core[1] + half + 1)
-    y0, y1 = max(0, core[0] - half), min(h, core[0] + half + 1)
-    region = orientation_field[y0:y1, x0:x1]
-
-    cos_vals = np.cos(2 * region)
-    sin_vals = np.sin(2 * region)
-
-    mean_angle = 0.5 * np.arctan2(np.mean(sin_vals), np.mean(cos_vals))
-    return mean_angle
 
 def draw_orientation_field(img: cv2.typing.MatLike, 
                            orientation_field: cv2.typing.MatLike,
@@ -742,7 +750,7 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
     minutiae = extract_minutiae(skeleton, reliability_map, orientation_field, get_reliable_region_border(contour, 16), 16, 0.5)
 
     # NORMALIZE MINUTAE
-    core_angle = get_core_angle(core_point, orientation_field, 5)
+    core_angle = get_point_mean_angle(core_point, orientation_field, 5)
     normalized_minutiae = normalize_minutiae(minutiae, core_point, core_angle)
 
     # POLYMONIAL MODEL OF ORIENTATION FIELD
@@ -811,10 +819,9 @@ TEMPLATE_CORE = 'core'
 TEMPLATE_DELTA = 'delta'
 TEMPLATE_ANGLE = 'angle'
 
-def save_fingerprint_template(path: str, minutiae: list[dict], 
-                              core_point: np.ndarray | None,
-                              delta_point: np.ndarray | None,
-                              core_angle: float) -> None:
+def create_fingerprint_template(fingerprint_file_path: str) -> dict:
+    minutiae, core_point, delta_point, core_angle = get_fingerprint_data(load_img(fingerprint_file_path), 16, 5, 5, 0.5, 0.4 * np.pi, True)
+    
     template = {
         TEMPLATE_MINUTIAE: [
             {
@@ -825,35 +832,86 @@ def save_fingerprint_template(path: str, minutiae: list[dict],
             } for m in minutiae
         ]
     }
-
+    
     if core_point is not None:
         template[TEMPLATE_CORE] = np.round(core_point, 2).tolist()
-
+        
     if delta_point is not None:
         template[TEMPLATE_DELTA] = np.round(delta_point, 2).tolist()
-
+        
     template[TEMPLATE_ANGLE] = np.round(core_angle, 4)
+    
+    return template
 
-    with open(path, 'w') as f:
-        json.dump(template, f, indent=4)
-
-def load_fingerprint_template(path: str) -> tuple[list[dict], np.ndarray | None, np.ndarray | None, float]:
-    with open(path, 'r') as f:
-        data = json.load(f)
-
+def get_data_from_fingerprint_template(template: dict) -> tuple[list[dict], np.ndarray | None, np.ndarray | None, float]:
     minutiae = [
         {
             MINUTIAE_POS: np.array(m[MINUTIAE_POS]),
             MINUTIAE_ANGLE: m[MINUTIAE_ANGLE],
             MINUTIAE_RELIABILITY: m[MINUTIAE_RELIABILITY],
             MINUTIAE_TYPE: m[MINUTIAE_TYPE]
-        } for m in data[TEMPLATE_MINUTIAE]
+        } for m in template[TEMPLATE_MINUTIAE]
     ]
 
-    core_point = data.get(TEMPLATE_CORE)
+    core_point = template.get(TEMPLATE_CORE)
     core_point = core_point if core_point is None else np.array(core_point)
 
-    delta_point = data.get(TEMPLATE_DELTA)
+    delta_point = template.get(TEMPLATE_DELTA)
     delta_point = delta_point if delta_point is None else np.array(delta_point)
 
-    return minutiae, core_point, delta_point, data[TEMPLATE_ANGLE]
+    return minutiae, core_point, delta_point, template[TEMPLATE_ANGLE]
+
+def create_fingerprint_templates_collection(fingerprints_paths: list[str]) -> list[dict]:
+    templates = []
+    
+    for path in fingerprints_paths:            
+        templates.append(create_fingerprint_template(path))
+        
+    return templates
+
+def save_fingerprint_templates_collection(save_path: str, templates_collection: list[dict]) -> None:
+    with open(save_path, 'w') as f:
+        json.dump(templates_collection, f, indent=4)
+
+def load_fingerprint_templates_collection(file_path: str) -> list[dict]:
+    with open(file_path, 'r') as f:
+        data = json.load(f)  
+    return data
+
+def create_and_save_fingerprint_templates_collection(fingerprints_paths: list[str], save_path: str) -> list[dict]:
+    template = create_fingerprint_templates_collection(fingerprints_paths)
+    save_fingerprint_templates_collection(save_path, template)
+    return template
+    
+def compare_minutiae(minutiae_A: dict, minutiae_B: dict, dist_threshold: int = 15, angle_threshold: float = 0.26) -> bool:
+    if minutiae_A[MINUTIAE_TYPE] != minutiae_B[MINUTIAE_TYPE]:
+        return False
+    
+    dp = minutiae_A[MINUTIAE_POS] - minutiae_B[MINUTIAE_POS]
+    dist = np.sqrt(dp[0] ** 2 + dp[1] ** 2)
+    if dist > dist_threshold:
+        return False
+    
+    dtheta = np.abs(minutiae_A[MINUTIAE_ANGLE] - minutiae_B[MINUTIAE_ANGLE]) % np.pi
+    dtheta = min(dtheta, np.pi - dtheta)
+    if dtheta > angle_threshold:
+        return False
+    
+    return True
+
+def compare_minutiae_sets(minutiae_set_A: list[dict], minutiae_set_B: list[dict], 
+                          dist_threshold: int = 15, angle_threshold: float = 0.26) -> int:
+    matched = 0
+    used = set()
+
+    for m_A in minutiae_set_A:
+        for i, m_B in enumerate(minutiae_set_B):
+            if i in used:
+                continue
+            
+            if compare_minutiae(m_A, m_B, dist_threshold, angle_threshold):
+                matched += 1
+                used.add(i)
+                break
+    
+    return matched
