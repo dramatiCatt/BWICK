@@ -3,29 +3,37 @@ import numpy as np
 import typing
 import json
 import matplotlib.pyplot as plt
-import matplotlib.markers as markers
+import scipy
+import scipy.spatial
+from timer import timer
 
+@timer
 def load_img(img_path: str) -> cv2.typing.MatLike:
     return cv2.imread(img_path)
 
+@timer
 def get_img_size(img: cv2.typing.MatLike) -> tuple[int, int]:
     '''
     rows, columns
     '''
     return img.shape[0], img.shape[1]
 
+@timer
 def show_img(img: cv2.typing.MatLike, title: str = "Image", scaleX: float = 1, scaleY: float = 1) -> None:
     cv2.imshow(title, cv2.resize(img, None, fx=scaleX, fy=scaleY))
 
+@timer
 def grayscale_img(img: cv2.typing.MatLike) -> cv2.typing.MatLike:
     return cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)[..., np.newaxis]
 
+@timer
 def normalize_img(img: cv2.typing.MatLike) -> cv2.typing.MatLike:
     intensity = grayscale_img(img)
     maxI = np.max(intensity)
     minI = np.min(intensity)
     return ((intensity - minI) / (maxI - minI))
 
+@timer
 def binarize_img(img: cv2.typing.MatLike, box_size: int = 5) -> cv2.typing.MatLike:
     binarized = np.zeros_like(img)
 
@@ -46,10 +54,12 @@ def binarize_img(img: cv2.typing.MatLike, box_size: int = 5) -> cv2.typing.MatLi
 
     return binarized
 
+@timer
 def skeletonize_img(img: cv2.typing.MatLike) -> cv2.typing.MatLike:
     img_u8 = cv2.normalize(img, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
     return cv2.ximgproc.thinning(img_u8, thinningType=cv2.ximgproc.THINNING_GUOHALL)
 
+@timer
 def gradient_orientation_field(normalized_img: cv2.typing.MatLike, 
                                sum_kernel_size: int = 3, 
                                blur_kernel_size: int = 5, 
@@ -99,6 +109,7 @@ def gradient_orientation_field(normalized_img: cv2.typing.MatLike,
 
     return (orientation_field + np.pi) % np.pi, weights
 
+@timer
 def average_orientation_field(orientation_field: cv2.typing.MatLike, 
                               weights: cv2.typing.MatLike, 
                               block_size: int = 16) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:
@@ -122,6 +133,7 @@ def average_orientation_field(orientation_field: cv2.typing.MatLike,
 
     return small_orientation_field, small_weights
 
+@timer
 def get_largest_reliable_region(reliability_map: cv2.typing.MatLike, threshold: float = 0.3) -> np.ndarray:
     """
     Returns:
@@ -143,6 +155,7 @@ def get_largest_reliable_region(reliability_map: cv2.typing.MatLike, threshold: 
     # Największy kontur
     return max(contours, key=cv2.contourArea).squeeze()
 
+@timer
 def get_reliable_region_border(contour: np.ndarray, border_size: int = 16) -> np.ndarray:
     center = np.array([contour[..., 0].mean(), contour[..., 1].mean()])
 
@@ -154,6 +167,7 @@ def get_reliable_region_border(contour: np.ndarray, border_size: int = 16) -> np
         border_contour[i] = contour[i] + direction * border_size
     return border_contour
 
+@timer
 def get_reliable_region_rectangle(contour: np.ndarray) -> tuple[int, int, int, int]:
     """
     Returns:
@@ -163,6 +177,7 @@ def get_reliable_region_rectangle(contour: np.ndarray) -> tuple[int, int, int, i
     x, y, w, h = cv2.boundingRect(contour)
     return y, y + h, x, x + w
 
+@timer
 def generate_gabor_kernels(ksize=21, sigma=5.0, lambd=10.0, gamma=0.5, psi=0, num_angles=16):
     angles = np.linspace(0, np.pi, num_angles, endpoint=False)
     kernels = []
@@ -171,6 +186,7 @@ def generate_gabor_kernels(ksize=21, sigma=5.0, lambd=10.0, gamma=0.5, psi=0, nu
         kernels.append(kernel)
     return angles, kernels
 
+@timer
 def directional_filtering(img, orientation_field, weights, block_size=16):
     rows = img.shape[0]
     columns = img.shape[1]
@@ -209,6 +225,7 @@ def directional_filtering(img, orientation_field, weights, block_size=16):
 
     return dfi.squeeze()
 
+@timer
 def filter_clusters(coords: cv2.typing.MatLike, strengths: cv2.typing.MatLike = None, radius: int = 20) -> np.ndarray:
     """
     Redukuje skupiska punktów — zostawia tylko jeden punkt w promieniu `radius`.
@@ -251,6 +268,7 @@ def filter_clusters(coords: cv2.typing.MatLike, strengths: cv2.typing.MatLike = 
 
     return np.array(kept)
 
+@timer
 def filter_poincare_points(points_mask: cv2.typing.MatLike, 
                            points_scores: cv2.typing.MatLike,
                            reliability_map: cv2.typing.MatLike,
@@ -286,6 +304,7 @@ def filter_poincare_points(points_mask: cv2.typing.MatLike,
 
     return filtered_points_mask
 
+@timer
 def get_best_poincare_point(points_mask: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, 
                             get_score: typing.Callable[[float, np.ndarray, np.ndarray, np.ndarray], float], 
                             radius: int = 30) -> np.ndarray | None:
@@ -324,6 +343,7 @@ def get_best_poincare_point(points_mask: cv2.typing.MatLike, reliability_map: cv
     
     return best_point
 
+@timer
 def get_best_core(cores_mask: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, radius: int = 30) -> np.ndarray | None:
     def get_score(avg_reliability: float, pos: np.ndarray, center: np.ndarray, img_size: np.ndarray) -> float:
         dist_to_center = np.linalg.norm(pos - center)
@@ -331,6 +351,7 @@ def get_best_core(cores_mask: cv2.typing.MatLike, reliability_map: cv2.typing.Ma
     
     return get_best_poincare_point(cores_mask, reliability_map, get_score, radius)
 
+@timer
 def get_best_delta(deltas_mask: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, radius: int = 30) -> np.ndarray | None:
     def get_score(avg_reliability: float, pos: np.ndarray, center: np.ndarray, img_size: np.ndarray) -> float:
         vertical_bias = pos[1] / img_size[1]
@@ -338,6 +359,7 @@ def get_best_delta(deltas_mask: cv2.typing.MatLike, reliability_map: cv2.typing.
     
     return get_best_poincare_point(deltas_mask, reliability_map, get_score, radius)
 
+@timer
 def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, 
                    contour_border: np.ndarray | None = None, min_reliability: float = 0.2, 
                    close_error: float = 0.5 * np.pi) -> tuple[np.ndarray | None, np.ndarray | None]:
@@ -345,27 +367,26 @@ def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.t
     Returns:
         core_point, delta_point
     """
-    poincare_index_map = np.zeros_like(orientation_field)
+    poincare_index_map = np.zeros_like(orientation_field, dtype=np.float64)
     rows, columns = orientation_field.shape
+
+    offsets = [
+        (-1, -1), 
+        (0, -1), 
+        (1, -1), 
+        (1, 0), 
+        (1, 1), 
+        (0, 1),
+        (-1, 1), 
+        (-1, 0)
+    ]
 
     for y in range(1, rows - 1):
         for x in range(1, columns - 1):
-            angles = [
-                orientation_field[y - 1, x - 1],
-                orientation_field[y, x - 1],
-                orientation_field[y + 1, x - 1],
-                orientation_field[y + 1, x],
-                orientation_field[y + 1, x + 1],
-                orientation_field[y, x + 1],
-                orientation_field[y - 1, x + 1],
-                orientation_field[y - 1, x]
-            ]
+            angles = np.array([orientation_field[y + dy, x + dx] for dy, dx in offsets])
             
-            angles_diff = 0
-            for i in range(8):
-                angles_diff += (angles[(i + 1) % 8] - angles[i] + np.pi * 0.5) % np.pi - np.pi * 0.5
-            
-            poincare_index_map[y, x] = angles_diff
+            diffs = np.array([(angles[(i + 1) % 8] - angles[i] + np.pi * 0.5) % np.pi - np.pi * 0.5 for i in range(8)])
+            poincare_index_map[y, x] = np.sum(diffs)
 
     cores_mask = poincare_index_map > np.pi - close_error
     deltas_mask = poincare_index_map < -np.pi + close_error
@@ -381,6 +402,7 @@ def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.t
 
     return core_point, delta_point
 
+@timer
 def build_polymonial_basis(Xs: np.typing.ArrayLike, Ys: np.typing.ArrayLike, degree: int = 4) -> cv2.typing.MatLike:
     x = Xs.flatten()
     y = Ys.flatten()
@@ -392,6 +414,7 @@ def build_polymonial_basis(Xs: np.typing.ArrayLike, Ys: np.typing.ArrayLike, deg
 
     return np.stack(terms, axis=1)
 
+@timer
 def weight_least_square(values: cv2.typing.MatLike, weights: cv2.typing.MatLike, polymonial_degree: int = 4) -> cv2.typing.MatLike:
     rows, columns = values.shape
     X, Y = np.meshgrid(np.arange(columns), np.arange(rows))
@@ -408,11 +431,13 @@ def weight_least_square(values: cv2.typing.MatLike, weights: cv2.typing.MatLike,
     coeffs, *_ = np.linalg.lstsq(A_weighted, V_weighted, rcond=None)
     return coeffs
 
+@timer
 def eval_polymonial(Xs, Ys, coeffs, degree):
     A = build_polymonial_basis(Xs, Ys, degree)
     result = A @ coeffs
     return result.reshape((-1,))
 
+@timer
 def polymonial_orientation_field(orientation_field: cv2.typing.MatLike, 
                                  weights: cv2.typing.MatLike,
                                  polymonial_degree: int = 4) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:
@@ -437,10 +462,12 @@ def polymonial_orientation_field(orientation_field: cv2.typing.MatLike,
     PI = eval_polymonial(X, Y, cos2O_coeffs, polymonial_degree).reshape(rows, columns)
     return PR, PI
 
+@timer
 def get_point_influence(Xs, Ys, xc, yc, max_R):
     r = np.sqrt((Xs - xc)**2 + (Ys - yc)**2) + 1e-10
     return 1 - np.minimum(r, max_R) / max_R
 
+@timer
 def get_point_charge(Xs, Ys, orientation_field, PR, PI, weights, xc, yc, max_R):
     phi = get_point_influence(Xs, Ys, xc, yc, max_R)
     diffrence = np.pow(PR - np.cos(2 * orientation_field), 2) + np.pow(PI - np.sin(2 * orientation_field), 2)
@@ -452,6 +479,7 @@ def get_point_charge(Xs, Ys, orientation_field, PR, PI, weights, xc, yc, max_R):
         return 0.0
     return num / denom
 
+@timer
 def get_points_charges(orientation_field, PR, PI, weights, points_mask, max_R):
     rows, columns = orientation_field.shape
 
@@ -471,6 +499,7 @@ def get_points_charges(orientation_field, PR, PI, weights, points_mask, max_R):
         charges.append(q)
     return charges
 
+@timer
 def calculate_point_charge(Xs: np.typing.ArrayLike,
                            Ys: np.typing.ArrayLike, 
                            rows: int,
@@ -505,6 +534,7 @@ def calculate_point_charge(Xs: np.typing.ArrayLike,
 
     return points_charges, points_weights
 
+@timer
 def point_charge_orientation_field(PR,
                                    PI,
                                    orientation_field: cv2.typing.MatLike,
@@ -538,6 +568,7 @@ def point_charge_orientation_field(PR,
 
     return 0.5 * np.arctan2(U[..., 1], U[..., 0])
 
+@timer
 def get_point_mean_angle(point: np.ndarray | None, orientation_field: cv2.typing.MatLike, avg_window_size: int = 5) -> float:
     if point is None:
         return 0
@@ -557,11 +588,14 @@ def get_point_mean_angle(point: np.ndarray | None, orientation_field: cv2.typing
 
 MINUTIAE_ENDING = 'ending'
 MINUTIAE_BIFURCATION = 'bifurcation'
+MINUTIAE_TYPES_LIST = [MINUTIAE_ENDING, MINUTIAE_BIFURCATION]
+
 MINUTIAE_POS = 'pos'
 MINUTIAE_TYPE = 'type'
 MINUTIAE_ANGLE = 'angle'
 MINUTIAE_RELIABILITY = 'reliability'
 
+@timer
 def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike,
                      orientation_field: cv2.typing.MatLike, 
                      border_contour: np.ndarray | None = None, border: int = 10,
@@ -626,6 +660,7 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
 
     return minutiae
 
+@timer
 def normalize_minutiae(minutiae: list[dict], core: np.ndarray, core_angle: float) -> list[dict]:
     normalized = []
     cos_a = np.cos(-core_angle)
@@ -658,6 +693,7 @@ def normalize_minutiae(minutiae: list[dict], core: np.ndarray, core_angle: float
     
     return normalized
 
+@timer
 def draw_orientation_field(img: cv2.typing.MatLike, 
                            orientation_field: cv2.typing.MatLike,
                            weights: cv2.typing.MatLike,
@@ -704,6 +740,7 @@ def draw_orientation_field(img: cv2.typing.MatLike,
 
     return img_color
 
+@timer
 def get_fingerprint_data(img: cv2.typing.MatLike, 
                          binarize_box_size: int = 16, 
                          gradient_blur_size: int = 5, 
@@ -739,9 +776,8 @@ def get_fingerprint_data(img: cv2.typing.MatLike,
     # SKELETONIZE FINGERPRINT
     skeleton = skeletonize_img(binarized)
 
-    mask = reliability_map > 0
-    orientation_field = np.where(mask, orientation_field, 0)
-    skeleton = np.where(mask, skeleton, 0)
+    orientation_field[reliability_map <= 0] = 0
+    skeleton[reliability_map <= 0] = 0
 
     # POINCARE INDEX
     core_point, delta_point = poincare_index(orientation_field, reliability_map, get_reliable_region_border(contour, 40), poincare_index_min_reliability, poincare_close_error)
@@ -819,30 +855,37 @@ TEMPLATE_CORE = 'core'
 TEMPLATE_DELTA = 'delta'
 TEMPLATE_ANGLE = 'angle'
 
+@timer
 def create_fingerprint_template(fingerprint_file_path: str) -> dict:
     minutiae, core_point, delta_point, core_angle = get_fingerprint_data(load_img(fingerprint_file_path), 16, 5, 5, 0.5, 0.4 * np.pi)
+
+    template = {}
+
+    pos_array = np.round(np.array([m[MINUTIAE_POS] for m in minutiae]), 4)
+    angle_array = np.round(np.array([m[MINUTIAE_ANGLE] for m in minutiae]), 4)
+    reliability_array = np.round(np.array([m[MINUTIAE_RELIABILITY] for m in minutiae]), 4)
+    type_array = [m[MINUTIAE_TYPE] for m in minutiae]
+
+    template[TEMPLATE_MINUTIAE] = [
+        {
+            MINUTIAE_POS: pos_array[i].tolist(),
+            MINUTIAE_ANGLE: angle_array[i],
+            MINUTIAE_RELIABILITY: reliability_array[i],
+            MINUTIAE_TYPE: type_array[i]
+        } for i in range(len(minutiae))
+    ]
     
-    template = {
-        TEMPLATE_MINUTIAE: [
-            {
-                MINUTIAE_POS: np.round(m[MINUTIAE_POS], 2).tolist(),
-                MINUTIAE_ANGLE: np.round(m[MINUTIAE_ANGLE], 4),
-                MINUTIAE_RELIABILITY: np.round(m[MINUTIAE_RELIABILITY], 4),
-                MINUTIAE_TYPE: m[MINUTIAE_TYPE]
-            } for m in minutiae
-        ]
-    }
-    
-    if core_point is not None:
-        template[TEMPLATE_CORE] = np.round(core_point, 2).tolist()
-        
-    if delta_point is not None:
-        template[TEMPLATE_DELTA] = np.round(delta_point, 2).tolist()
-        
+    template[TEMPLATE_CORE] = [round(core_point[0], 4), round(core_point[1], 4)] if core_point is not None else None
+    template[TEMPLATE_DELTA] = [round(delta_point[0], 4), round(delta_point[1], 4)] if delta_point is not None else None        
+    template[TEMPLATE_ANGLE] = round(core_angle, 4)
+
+    template[TEMPLATE_CORE] = np.round(core_point, 4).tolist() if core_point is not None else None
+    template[TEMPLATE_DELTA] = np.round(delta_point, 4).tolist() if delta_point is not None else None        
     template[TEMPLATE_ANGLE] = np.round(core_angle, 4)
     
     return template
 
+@timer
 def get_data_from_fingerprint_template(template: dict) -> tuple[list[dict], np.ndarray | None, np.ndarray | None, float]:
     minutiae = [
         {
@@ -861,6 +904,7 @@ def get_data_from_fingerprint_template(template: dict) -> tuple[list[dict], np.n
 
     return minutiae, core_point, delta_point, template[TEMPLATE_ANGLE]
 
+@timer
 def create_fingerprint_templates_collection(fingerprints_paths: list[str]) -> list[dict]:
     templates = []
     
@@ -869,49 +913,64 @@ def create_fingerprint_templates_collection(fingerprints_paths: list[str]) -> li
         
     return templates
 
+@timer
 def save_fingerprint_templates_collection(save_path: str, templates_collection: list[dict]) -> None:
     with open(save_path, 'w') as f:
         json.dump(templates_collection, f, indent=4)
 
+@timer
 def load_fingerprint_templates_collection(file_path: str) -> list[dict]:
     with open(file_path, 'r') as f:
         data = json.load(f)  
     return data
 
+@timer
 def create_and_save_fingerprint_templates_collection(fingerprints_paths: list[str], save_path: str) -> list[dict]:
     template = create_fingerprint_templates_collection(fingerprints_paths)
     save_fingerprint_templates_collection(save_path, template)
     return template
-    
-def compare_minutiae(minutiae_A: dict, minutiae_B: dict, dist_threshold: int = 15, angle_threshold: float = 0.26) -> bool:
-    if minutiae_A[MINUTIAE_TYPE] != minutiae_B[MINUTIAE_TYPE]:
-        return False
-    
-    dp = minutiae_A[MINUTIAE_POS] - minutiae_B[MINUTIAE_POS]
-    dist = np.sqrt(dp[0] ** 2 + dp[1] ** 2)
-    if dist > dist_threshold:
-        return False
-    
-    dtheta = np.abs(minutiae_A[MINUTIAE_ANGLE] - minutiae_B[MINUTIAE_ANGLE]) % np.pi
-    dtheta = min(dtheta, np.pi - dtheta)
-    if dtheta > angle_threshold:
-        return False
-    
-    return True
 
+@timer
 def compare_minutiae_sets(minutiae_set_A: list[dict], minutiae_set_B: list[dict], 
                           dist_threshold: int = 15, angle_threshold: float = 0.26) -> int:
+    if not minutiae_set_A or not minutiae_set_B:
+        return 0
+
+    type_to_points_B = {}
+    trees: dict[str, scipy.spatial.KDTree] = {}
+
+    for t in MINUTIAE_TYPES_LIST:
+        points = np.array([m[MINUTIAE_POS] for m in minutiae_set_B if m[MINUTIAE_TYPE] == t])
+        angles = np.array([m[MINUTIAE_ANGLE] for m in minutiae_set_B if m[MINUTIAE_TYPE] == t])
+
+        if len(points) > 0:
+            trees[t] = scipy.spatial.KDTree(points)
+            type_to_points_B[t] = (points, angles)
+
     matched = 0
-    used = set()
+    used_indicies = {t: set() for t in MINUTIAE_TYPES_LIST}
 
     for m_A in minutiae_set_A:
-        for i, m_B in enumerate(minutiae_set_B):
-            if i in used:
+        t = m_A[MINUTIAE_TYPE]
+        if t not in trees:
+            continue
+
+        pos_A = m_A[MINUTIAE_POS]
+        angle_A = m_A[MINUTIAE_ANGLE]
+
+        indicies = trees[t].query_ball_point(pos_A, dist_threshold)
+        _, angles_B = type_to_points_B[t]
+
+        for idx in indicies:
+            if idx in used_indicies[t]:
                 continue
-            
-            if compare_minutiae(m_A, m_B, dist_threshold, angle_threshold):
+
+            dtheta = abs(angle_A - angles_B[idx]) % np.pi
+            dtheta = min(dtheta, np.pi - dtheta)
+
+            if dtheta <= angle_threshold:
                 matched += 1
-                used.add(i)
+                used_indicies[t].add(idx)
                 break
     
     return matched

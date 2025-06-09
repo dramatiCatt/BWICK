@@ -6,6 +6,7 @@ import sklearn as skl
 import time
 
 import fingerprints_api as fpa
+from timer import print_times
 
 # TODO: Użyć numby lub coś z cudą
 
@@ -52,7 +53,7 @@ else:
         fingerprints_templates_collections.append(fpa.load_fingerprint_templates_collection(path))
         
 
-AUTHENTICATION_THRESHOLD = 0.7
+AUTHENTICATION_THRESHOLD = 0.4
 MIN_MINUTIAE_TO_AUTHENTICATE = 20
 
 truth_table = np.zeros(shape=(FINGERPRINTS_NUM * TEST_IMG_PER_FINGERPRINT, FINGERPRINTS_NUM), dtype=bool)
@@ -76,25 +77,38 @@ for fingerprint_idx, test_fingerprints in enumerate(test_fingerprints_data_paths
 
             match_percent = best_match / len(test_template[fpa.TEMPLATE_MINUTIAE])
             print(f"Test {test_idx + 1} of Fingerprint {fingerprint_idx + 1} on Fingerprint {collection_idx + 1}: {best_match} matched minutiae ({match_percent * 100.0} %) matched in {end - start:.6f} seconds")
-            # if match_percent >= AUTHENTICATION_THRESHOLD:
-            #     print("Autoryzacja pozytywna poprzez procenty :)))")
-            # else:
-            #     print("Autoryzacja negatywna poprzez procenty :(((")
 
             if collection_idx == fingerprint_idx:
                 truth_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = True
             else:
                 truth_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = False
 
-            if best_match >= MIN_MINUTIAE_TO_AUTHENTICATE:
+            # if best_match >= MIN_MINUTIAE_TO_AUTHENTICATE:
+            #     result_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = True
+            #     # print("Autoryzacja pozytywna poprzez minimalne minucje :)))")
+            # else:
+            #     result_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = False
+            #     # print("Autoryzacja negatywna poprzez minimalne minucje :(((")
+
+            if match_percent >= AUTHENTICATION_THRESHOLD:
                 result_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = True
-                # print("Autoryzacja pozytywna poprzez minimalne minucje :)))")
+                # print("Autoryzacja pozytywna poprzez procenty :)))")
             else:
                 result_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = False
-                # print("Autoryzacja negatywna poprzez minimalne minucje :(((")
+                # print("Autoryzacja negatywna poprzez procenty :(((")
 
 truth_table = truth_table.flatten()
 result_table = result_table.flatten()
 
 print("Classification Stats:")
 print(skl.metrics.classification_report(truth_table, result_table, labels=[False, True], digits=4, zero_division=0.0))
+
+positive_num = np.count_nonzero(truth_table)
+negative_num = len(truth_table) - positive_num
+
+true_num = np.count_nonzero(result_table)
+false_num = len(result_table) - true_num
+
+print(f"True: {true_num}, False: {false_num}, Positive: {positive_num}, Negative: {negative_num}")
+
+# print_times()
