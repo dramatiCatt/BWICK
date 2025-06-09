@@ -2,6 +2,8 @@ import numpy as np
 import json
 import os
 import pathlib
+import sklearn as skl
+import time
 
 import fingerprints_api as fpa
 
@@ -11,7 +13,7 @@ data_folder_path = "../Data/Odciski/DB1_B"
 templates_folder_path = './Templates'
 
 # CREATE DATASET
-FORCE_CREATE_DATASET = True
+FORCE_CREATE_DATASET = False
 
 IMG_PER_FINGERPRINT = 8
 FINGERPRINTS_NUM = 10
@@ -51,21 +53,48 @@ else:
         
 
 AUTHENTICATION_THRESHOLD = 0.7
+MIN_MINUTIAE_TO_AUTHENTICATE = 20
+
+truth_table = np.zeros(shape=(FINGERPRINTS_NUM * TEST_IMG_PER_FINGERPRINT, FINGERPRINTS_NUM), dtype=bool)
+result_table = np.zeros_like(truth_table)
         
 for fingerprint_idx, test_fingerprints in enumerate(test_fingerprints_data_paths):
     for test_idx, test in enumerate(test_fingerprints):
         test_template = fpa.create_fingerprint_template(test)
         test_minutiae, _, _, _ = fpa.get_data_from_fingerprint_template(test_template)
         
-        best_match = 0
-        for template in fingerprints_templates_collections[fingerprint_idx]:
-            minutiae, _, _, _ = fpa.get_data_from_fingerprint_template(template)
-            matched = fpa.compare_minutiae_sets(test_minutiae, minutiae)
-            best_match = max(best_match, matched)
-        
-        match_percent = best_match / len(test_template[fpa.TEMPLATE_MINUTIAE])
-        print(f"Fingerprint {fingerprint_idx + 1} Test {test_idx + 1}: {best_match} matched minutiae ({match_percent * 100.0} %)")
-        if match_percent >= AUTHENTICATION_THRESHOLD:
-            print("Autoryzacja pozytywna :)))")
-        else:
-            print("Autoryzacja negatywna :(((")
+        for collection_idx, collection in enumerate(fingerprints_templates_collections):
+            start = time.perf_counter()
+
+            best_match = 0
+            for template in collection:
+                minutiae, _, _, _ = fpa.get_data_from_fingerprint_template(template)
+                matched = fpa.compare_minutiae_sets(test_minutiae, minutiae)
+                best_match = max(best_match, matched)
+
+            end = time.perf_counter()
+
+            match_percent = best_match / len(test_template[fpa.TEMPLATE_MINUTIAE])
+            print(f"Test {test_idx + 1} of Fingerprint {fingerprint_idx + 1} on Fingerprint {collection_idx + 1}: {best_match} matched minutiae ({match_percent * 100.0} %) matched in {end - start:.6f} seconds")
+            # if match_percent >= AUTHENTICATION_THRESHOLD:
+            #     print("Autoryzacja pozytywna poprzez procenty :)))")
+            # else:
+            #     print("Autoryzacja negatywna poprzez procenty :(((")
+
+            if collection_idx == fingerprint_idx:
+                truth_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = True
+            else:
+                truth_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = False
+
+            if best_match >= MIN_MINUTIAE_TO_AUTHENTICATE:
+                result_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = True
+                # print("Autoryzacja pozytywna poprzez minimalne minucje :)))")
+            else:
+                result_table[fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx, collection_idx] = False
+                # print("Autoryzacja negatywna poprzez minimalne minucje :(((")
+
+truth_table = truth_table.flatten()
+result_table = result_table.flatten()
+
+print("Classification Stats:")
+print(skl.metrics.classification_report(truth_table, result_table, labels=[False, True], digits=4, zero_division=0.0))

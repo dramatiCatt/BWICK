@@ -820,7 +820,7 @@ TEMPLATE_DELTA = 'delta'
 TEMPLATE_ANGLE = 'angle'
 
 def create_fingerprint_template(fingerprint_file_path: str) -> dict:
-    minutiae, core_point, delta_point, core_angle = get_fingerprint_data(load_img(fingerprint_file_path), 16, 5, 5, 0.5, 0.4 * np.pi, True)
+    minutiae, core_point, delta_point, core_angle = get_fingerprint_data(load_img(fingerprint_file_path), 16, 5, 5, 0.5, 0.4 * np.pi)
     
     template = {
         TEMPLATE_MINUTIAE: [
