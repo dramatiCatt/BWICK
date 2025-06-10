@@ -5,8 +5,8 @@ import pathlib
 import sklearn as skl
 import time
 
-import fingerprints_api as fpa
-from timer import print_times
+import fingerpy as fpa
+from timer import print_times, enable_timers, diable_timers
 
 # TODO: Użyć numby lub coś z cudą
 
@@ -111,4 +111,5 @@ false_num = len(result_table) - true_num
 
 print(f"True: {true_num}, False: {false_num}, Positive: {positive_num}, Negative: {negative_num}")
 
-# print_times()
+# enable_timers()
+print_times()
