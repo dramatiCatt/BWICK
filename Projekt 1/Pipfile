@@ -12,6 +12,7 @@ matplotlib = "*"
 scipy = "*"
 opencv-contrib-python = "*"
 scikit-learn = "*"
+numba = "*"
 
 [dev-packages]
 

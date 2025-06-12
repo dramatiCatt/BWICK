@@ -4,6 +4,7 @@ import numpy as np
 from .math import get_point_mean_angle
 from scipy.spatial import KDTree
 from typing import Self
+import numba
 
 MINUTIAE_ENDING = 'ending'
 MINUTIAE_BIFURCATION = 'bifurcation'
@@ -22,8 +23,8 @@ class Minutiae():
         self._reliability = reliability
         self._type_name = type_name
 
-    @timer
     @classmethod
+    @timer
     def from_data(cls, data: dict) -> Self:
         return cls(
             np.array(data[cls.MINUTIAE_POS]),
@@ -41,20 +42,26 @@ class Minutiae():
             self.MINUTIAE_TYPE: self._type_name
         }
 
+    @staticmethod
     @timer
-    def normalized(self, core, core_angle, cos_a, sin_a, scale) -> Self:
-        dp = self._pos - core
-        new_pos = np.zeros_like(self._pos)
+    @numba.njit
+    def _normalized_numba(pos: np.ndarray, core: np.ndarray, angle: float, core_angle: float, 
+                          cos_a: float, sin_a: float, scale: float) -> tuple[np.ndarray, float]:
+        dp = pos - core
+        new_pos = np.zeros_like(pos, dtype=np.float64)
 
-        # Obrot
-        new_pos[1] = dp[1] * cos_a - dp[0] * sin_a # x
-        new_pos[0] = dp[1] * sin_a + dp[0] * cos_a # y
+        new_pos[1] = dp[1] * cos_a - dp[0] * sin_a
+        new_pos[0] = dp[1] * sin_a + dp[0] * cos_a
 
-        # Skalowanie
         new_pos *= scale
 
-        # Korekta kąta
-        new_angle = (self.angle - core_angle) % np.pi
+        new_angle = (angle - core_angle) % np.pi
+
+        return new_pos, new_angle
+
+    @timer
+    def normalized(self, core: np.ndarray, core_angle: float, cos_a: float, sin_a: float, scale: float) -> Self:
+        new_pos, new_angle = self._normalized_numba(self.pos, core, self.angle, core_angle, cos_a, sin_a, scale)
 
         return Minutiae(
             new_pos,
@@ -63,23 +70,23 @@ class Minutiae():
             self._type_name
         )
 
-    @timer
     @property
+    @timer
     def pos(self) -> np.ndarray:
         return self._pos
 
-    @timer
     @property
+    @timer
     def angle(self) -> float:
         return self._angle
 
-    @timer
     @property
+    @timer
     def reliability(self) -> float:
         return self._reliability
 
-    @timer
     @property
+    @timer
     def type_name(self):
         return self._type_name
 

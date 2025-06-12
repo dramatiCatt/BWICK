@@ -1,7 +1,7 @@
+from __future__ import annotations
 import cv2
 import numpy as np
 from typing import Self
-from __future__ import annotations
 import json
 from timer import timer
 from .utils import imgprocessing as img, orientation as orient, contour as ctour, poincare, minutiae as minuti, math
@@ -19,23 +19,23 @@ class FingerprintTemplate():
         self._delta_point = delta_point
         self._core_angle = core_angle
 
-    @timer
     @classmethod
+    @timer
     def from_img(cls, img: cv2.typing.MatLike) -> Self:
         return cls.from_fingerprint(Fingerprint(img))
 
-    @timer
     @classmethod
+    @timer
     def from_img_file(cls, img_path: str) -> Self:
         return cls.from_img(img.load_img(img_path))
 
-    @timer
     @classmethod
+    @timer
     def from_fingerprint(cls, fingerprint: 'Fingerprint') -> Self:
         return fingerprint.generate_template()
 
-    @timer
     @classmethod
+    @timer
     def from_data(cls, data: dict) -> Self:
         minutiae = [minuti.Minutiae.from_data(m) for m in data[cls.TEMPLATE_MINUTIAE]]
 
@@ -52,8 +52,8 @@ class FingerprintTemplate():
             data[cls.TEMPLATE_ANGLE]
         )
 
-    @timer
     @classmethod
+    @timer
     def from_data_file(cls, data_path: str) -> Self:
         with open(data_path, 'r') as f:
             return cls.from_data(json.load(f))
@@ -67,23 +67,23 @@ class FingerprintTemplate():
             self.TEMPLATE_ANGLE: np.round(self._core_angle, 4)
         }
 
-    @timer
     @property
+    @timer
     def minutiae(self) -> list[minuti.Minutiae]:
         return self._minutiae
     
-    @timer
     @property
+    @timer
     def core(self) -> np.ndarray | None:
         return self._core_point
     
-    @timer
     @property
+    @timer
     def delta(self) -> np.ndarray | None:
         return self._delta_point
     
-    @timer
     @property
+    @timer
     def angle(self) -> float:
         return self._core_angle
 
@@ -123,8 +123,8 @@ class Fingerprint():
         self._original_img = img
         self._preprocess()
 
-    @timer
     @classmethod
+    @timer
     def from_file(cls, img_path: str) -> Self:
         return cls(img.load_img(img_path))
     
@@ -187,38 +187,38 @@ class Fingerprint():
         # final_O = point_charge_orientation_field(PR, PI, orientation_field, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
         pass
 
-    @timer
     @property
+    @timer
     def original_img(self) -> cv2.typing.MatLike:
         return self._original_img
 
-    @timer
     @property
+    @timer
     def normalized(self) -> cv2.typing.MatLike:
         return self._normalized
     
-    @timer
     @property
+    @timer
     def binarized(self) -> cv2.typing.MatLike:
         return self._binarized
     
-    @timer
     @property
+    @timer
     def skeleton(self) -> cv2.typing.MatLike:
         return self._skeleton
     
-    @timer
     @property
+    @timer
     def orientation_field(self) -> cv2.typing.MatLike:
         return self._orientation_field
     
-    @timer
     @property
+    @timer
     def reliability_map(self) -> cv2.typing.MatLike:
         return self._reliability_map
     
-    @timer
     @property
+    @timer
     def contour(self) -> cv2.typing.MatLike:
         return self._contour
 

@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from .math import weight_least_square, eval_polymonial
 from .point_charge import calculate_point_charge
+import numba
 
 @timer
 def gradient_orientation_field(normalized_img: cv2.typing.MatLike, 
@@ -114,6 +115,7 @@ def point_charge_orientation_field(PR,
     return 0.5 * np.arctan2(U[..., 1], U[..., 0])
 
 @timer
+@numba.njit
 def average_orientation_field(orientation_field: cv2.typing.MatLike, 
                               weights: cv2.typing.MatLike, 
                               block_size: int = 16) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:

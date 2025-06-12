@@ -2,6 +2,7 @@ from timer import timer
 import cv2
 import numpy as np
 from .math import generate_gabor_kernels
+import numba
 
 @timer
 def load_img(img_path: str) -> cv2.typing.MatLike:
@@ -30,6 +31,7 @@ def normalize_img(img: cv2.typing.MatLike) -> cv2.typing.MatLike:
     return ((intensity - minI) / (maxI - minI))
 
 @timer
+@numba.njit
 def binarize_img(img: cv2.typing.MatLike, box_size: int = 5) -> cv2.typing.MatLike:
     binarized = np.zeros_like(img)
 
@@ -41,12 +43,19 @@ def binarize_img(img: cv2.typing.MatLike, box_size: int = 5) -> cv2.typing.MatLi
 
     for y in range(small_rows):
         for x in range(small_columns):
+            y_start = y * box_size
+            y_end = min(y_start + box_size, rows)
+            x_start = x * box_size
+            x_end = min(x_start + box_size, columns)
+
             # Get box values
-            box = img[y * box_size:min(y * box_size + box_size, rows), x * box_size:min(x * box_size + box_size, columns)]
+            box = img[y_start:y_end, x_start:x_end]
+
             local_threshold = np.mean(box)
             box_mask = box >= local_threshold
             binarized_box = np.where(box_mask, 1, 0)
-            binarized[y * box_size:min(y * box_size + box_size, rows), x * box_size:min(x * box_size + box_size, columns)] = binarized_box
+
+            binarized[y_start:y_end, x_start:x_end] = binarized_box
 
     return binarized
 
@@ -67,7 +76,7 @@ def crop_img(img: cv2.typing.MatLike, left: int, right: int, top: int, bottom: i
     return img[start_y:end_y, start_x:end_x]
 
 @timer
-def directional_filtering(img, orientation_field, weights, block_size=16):
+def directional_filtering(img: cv2.typing.MatLike, orientation_field: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, block_size: int=16):
     rows = img.shape[0]
     columns = img.shape[1]
     dfi = np.zeros_like(img, dtype=np.float64)
@@ -82,11 +91,10 @@ def directional_filtering(img, orientation_field, weights, block_size=16):
             block_orientation = orientation_field[y:y_end, x:x_end]
             mean_theta = np.mean(block_orientation)
 
-            block_weights = weights[y:y_end, x:x_end]
-            mean_weight = np.mean(block_weights)
+            block_reliability = reliability_map[y:y_end, x:x_end]
+            mean_reliability = np.mean(block_reliability)
 
-            if mean_weight < 0.1:
-                # pomiń bardzo niestabilne obszary
+            if mean_reliability < 0.1:
                 continue
 
             angle_diffs = np.abs(np.angle(np.exp(1j * (angles - mean_theta))))
@@ -100,7 +108,6 @@ def directional_filtering(img, orientation_field, weights, block_size=16):
             filtered = cv2.filter2D(padded_block, -1, kernel)
             filtered_block = filtered[k_half:k_half + y_end - y, k_half:k_half + x_end - x]
 
-            # uwzględnij niezawodność: ważenie liniowe
-            dfi[y:y_end, x:x_end] = filtered_block[..., np.newaxis] * mean_weight + dfi[y:y_end, x:x_end] * (1 - mean_weight)
+            dfi[y:y_end, x:x_end] = filtered_block[..., np.newaxis] * mean_reliability + dfi[y:y_end, x:x_end] * (1 - mean_reliability)
 
     return dfi.squeeze()

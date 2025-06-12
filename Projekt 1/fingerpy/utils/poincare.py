@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import typing
 from .math import filter_clusters
+import numba
 
 @timer
 def filter_poincare_points(points_mask: cv2.typing.MatLike, 
@@ -96,6 +97,27 @@ def get_best_delta(deltas_mask: cv2.typing.MatLike, reliability_map: cv2.typing.
     return get_best_poincare_point(deltas_mask, reliability_map, get_score, radius)
 
 @timer
+@numba.njit
+def get_poincare_index_map(orientation_field: cv2.typing.MatLike, offsets: np.ndarray) -> np.ndarray:
+    poincare_index_map = np.zeros_like(orientation_field, dtype=np.float64)
+
+    rows, columns = orientation_field.shape
+
+    for y in range(1, rows - 1):
+        for x in range(1, columns - 1):
+            angles_local = np.empty(len(offsets), dtype=orientation_field.dtype)
+            for i, (dy, dx) in enumerate(offsets):
+                angles_local[i] = orientation_field[y + dy, x + dx]
+
+            diffs = np.empty(8, dtype=angles_local.dtype)
+            for i in range(8):
+                diffs[i] = (angles_local[(i + 1) % 8] - angles_local[i] + np.pi * 0.5) % np.pi - np.pi * 0.5
+
+            poincare_index_map[y, x] = np.sum(diffs)
+    
+    return poincare_index_map
+
+@timer
 def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, 
                    contour_border: np.ndarray | None = None, min_reliability: float = 0.2, 
                    close_error: float = 0.5 * np.pi) -> tuple[np.ndarray | None, np.ndarray | None]:
@@ -103,26 +125,18 @@ def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.t
     Returns:
         core_point, delta_point
     """
-    poincare_index_map = np.zeros_like(orientation_field, dtype=np.float64)
-    rows, columns = orientation_field.shape
+    offsets = np.array([
+        [-1, -1], 
+        [ 0, -1], 
+        [ 1, -1], 
+        [ 1,  0], 
+        [ 1,  1], 
+        [ 0,  1],
+        [-1,  1], 
+        [-1,  0]
+    ])
 
-    offsets = [
-        (-1, -1), 
-        (0, -1), 
-        (1, -1), 
-        (1, 0), 
-        (1, 1), 
-        (0, 1),
-        (-1, 1), 
-        (-1, 0)
-    ]
-
-    for y in range(1, rows - 1):
-        for x in range(1, columns - 1):
-            angles = np.array([orientation_field[y + dy, x + dx] for dy, dx in offsets])
-            
-            diffs = np.array([(angles[(i + 1) % 8] - angles[i] + np.pi * 0.5) % np.pi - np.pi * 0.5 for i in range(8)])
-            poincare_index_map[y, x] = np.sum(diffs)
+    poincare_index_map = get_poincare_index_map(orientation_field, offsets)
 
     cores_mask = poincare_index_map > np.pi - close_error
     deltas_mask = poincare_index_map < -np.pi + close_error

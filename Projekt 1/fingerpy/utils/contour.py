@@ -1,6 +1,7 @@
 from timer import timer
 import cv2
 import numpy as np
+import numba
 
 @timer
 def get_largest_reliable_region(reliability_map: cv2.typing.MatLike, threshold: float = 0.3) -> np.ndarray:
@@ -25,13 +26,20 @@ def get_largest_reliable_region(reliability_map: cv2.typing.MatLike, threshold: 
     return max(contours, key=cv2.contourArea).squeeze()
 
 @timer
+@numba.njit
 def get_reliable_region_border(contour: np.ndarray, border_size: int = 16) -> np.ndarray:
-    center = np.array([contour[..., 0].mean(), contour[..., 1].mean()])
+    center = np.array([contour[..., 0].mean(), contour[..., 1].mean()], dtype=np.float64)
 
-    border_contour = np.zeros_like(contour)
+    border_contour = np.zeros_like(contour, dtype=contour.dtype)
     for i in range(len(contour)):
         direction = center - contour[i]
-        direction /= np.sqrt(direction[0] ** 2 + direction[1] ** 2)
+        
+        magnitude = np.sqrt(direction[0] ** 2 + direction[1] ** 2)
+        
+        if magnitude != 0:
+            direction /= magnitude
+        else:
+            direction = np.zeros_like(direction)
 
         border_contour[i] = contour[i] + direction * border_size
     return border_contour

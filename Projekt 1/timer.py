@@ -10,6 +10,7 @@ _timer_metrics = {
 
 def timer(func):
     def wrapper(*args, **kwargs):
+        global _timer_enable
         if not _timer_enable:
             return func(*args, **kwargs)
         
@@ -28,19 +29,25 @@ def timer(func):
     return wrapper
 
 def _increment_function_time(func_name: str, duration: float) -> None:
+    global _timer_metrics
     _timer_metrics["func_times"][func_name]["executed"] += 1
     _timer_metrics["func_times"][func_name]["total_time"] += duration
 
 def _add_timer_overhead(duration: float) -> None:
+    global _timer_metrics
     _timer_metrics["overhead_time"] += duration
 
 def enable_timers() -> None:
+    global _timer_enable
     _timer_enable = True
 
 def diable_timers() -> None:
+    global _timer_enable
     _timer_enable = False
 
 def print_times() -> None:
+    global _timer_enable, _timer_metrics
+
     if not _timer_enable:
         print("Timer is disabled.")
         return
