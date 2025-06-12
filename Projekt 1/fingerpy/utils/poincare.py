@@ -12,7 +12,8 @@ def filter_poincare_points(points_mask: cv2.typing.MatLike,
                            contour_border: np.ndarray | None = None,
                            min_reliability: float = 0.3,
                            border_size: int = 16,
-                           near_radius: int = 20) -> cv2.typing.MatLike:
+                           near_radius: int = 20,
+                           points_score_offset: float = 0.0) -> cv2.typing.MatLike:
 
     filtered_points_mask = points_mask & (reliability_map > min_reliability)
 
@@ -22,16 +23,17 @@ def filter_poincare_points(points_mask: cv2.typing.MatLike,
     filtered_points_mask[:, -border_size:] = False
 
     points_yx = np.argwhere(filtered_points_mask)
-    best_points_score = np.min(points_scores)
+    best_points_score = np.min(points_scores[filtered_points_mask])
     for py, px in points_yx:
-        filtered_points_mask[py, px] = points_scores[py, px] == best_points_score
+        filtered_points_mask[py, px] = points_scores[py, px] <= best_points_score + points_score_offset
 
     points_yx = np.argwhere(filtered_points_mask)
     points_reliability = reliability_map[filtered_points_mask]
     filtered_points = filter_clusters(points_yx, strengths=points_reliability, radius=near_radius)
-    for py, px in points_yx:
-        if not any(y == py and x == px for y, x in filtered_points):
-            filtered_points_mask[py, px] = False
+    filtered_cluster_points_mask = np.zeros_like(filtered_points_mask, dtype=bool)
+    for y, x in filtered_points:
+        filtered_cluster_points_mask[int(y), int(x)] = True
+    filtered_points_mask = filtered_cluster_points_mask
 
     if contour_border is not None:
         points_yx = np.argwhere(filtered_points_mask)
@@ -119,7 +121,8 @@ def get_poincare_index_map(orientation_field: cv2.typing.MatLike, offsets: np.nd
 
 @timer
 def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, 
-                   contour_border: np.ndarray | None = None, min_reliability: float = 0.2, 
+                   contour_border: np.ndarray | None = None, min_core_reliability: float = 0.5,
+                   min_delta_reliability: float = 0.6, 
                    close_error: float = 0.5 * np.pi) -> tuple[np.ndarray | None, np.ndarray | None]:
     """
     Returns:
@@ -144,8 +147,8 @@ def poincare_index(orientation_field: cv2.typing.MatLike, reliability_map: cv2.t
     cores_scores = np.abs(np.pi - poincare_index_map)
     deltas_scores = np.abs(-np.pi + poincare_index_map)
 
-    cores_mask = filter_poincare_points(cores_mask, cores_scores, reliability_map, contour_border, min_reliability, 16, 40)
-    deltas_mask = filter_poincare_points(deltas_mask, deltas_scores, reliability_map, contour_border, min_reliability, 16, 40)
+    cores_mask = filter_poincare_points(cores_mask, cores_scores, reliability_map, contour_border, min_core_reliability, 16, 40, 0.1 * np.pi)
+    deltas_mask = filter_poincare_points(deltas_mask, deltas_scores, reliability_map, contour_border, min_delta_reliability, 16, 40, 0.1 * np.pi)
 
     core_point = get_best_core(cores_mask, reliability_map, 30)
     delta_point = get_best_delta(deltas_mask, reliability_map, 30)

@@ -1,10 +1,11 @@
 from __future__ import annotations
 import cv2
+import matplotlib.pyplot as plt
 import numpy as np
 from typing import Self
 import json
 from timer import timer
-from .utils import imgprocessing as img, orientation as orient, contour as ctour, poincare, minutiae as minuti, math
+from .utils import imgprocessing as img, orientation as orient, contour as ctour, poincare, minutiae as minuti, math, point_charge
 
 class FingerprintTemplate():
     TEMPLATE_MINUTIAE = 'minutiae'
@@ -88,34 +89,31 @@ class FingerprintTemplate():
         return self._core_angle
 
     @timer
-    def show_points(self) -> None:
-        # endings_mask = [m[MINUTIAE_POS] for m in minutiae if m[MINUTIAE_TYPE] == MINUTIAE_ENDING]
-        # bifurcation_mask = [m[MINUTIAE_POS] for m in minutiae if m[MINUTIAE_TYPE] == MINUTIAE_BIFURCATION] 
+    def show_points(self, img: cv2.typing.MatLike | None = None, stop: bool = True) -> None:
+        endings_mask = [m.pos for m in self._minutiae if m.type_name == minuti.MINUTIAE_ENDING]
+        bifurcation_mask = [m.pos for m in self._minutiae if m.type_name == minuti.MINUTIAE_BIFURCATION]
 
-        # plt.figure(figsize=(10, 5))
+        plt.figure(figsize=(10, 5))
 
-        # plt.subplot(1, 2, 1)
-        # plt.imshow(skeleton, cmap='gray')
-        # if core_point is not None:
-        #     plt.scatter(core_point[1], core_point[0], color='blue', label='Core', s=15)
-        # if delta_point is not None:
-        #     plt.scatter(delta_point[1], delta_point[0], color='red', label='Delta', s=15)
-        # plt.legend()
-        # plt.title("Singular Points (Poincare Index)")
-        # # plt.tight_layout()
-        # # plt.axis("equal")
+        plt.subplot(1, 2, 1)
+        if img is not None:
+            plt.imshow(img, cmap='gray')
+        if self._core_point is not None:
+            plt.scatter(self._core_point[1], self._core_point[0], color='blue', label='Core', s=15)
+        if self._delta_point is not None:
+            plt.scatter(self._delta_point[1], self._delta_point[0], color='red', label='Delta', s=15)
+        plt.legend()
+        plt.title("Singular Points (Poincare Index)")
 
-        # plt.subplot(1, 2, 2)
-        # plt.imshow(skeleton, cmap='gray')
-        # plt.scatter(np.array(endings_mask)[..., 1], np.array(endings_mask)[..., 0], color='green', label='Ending', s=15)
-        # plt.scatter(np.array(bifurcation_mask)[..., 1], np.array(bifurcation_mask)[..., 0], color='violet', label='Bifurcation', s=15)
-        # plt.legend()
-        # plt.title("Minutiae")
-        # # plt.tight_layout()
-        # # plt.axis("equal")
+        plt.subplot(1, 2, 2)
+        # if img is not None:
+        #     plt.imshow(img, cmap='gray')
+        plt.scatter(np.array(endings_mask)[..., 1], np.array(endings_mask)[..., 0], color='green', label='Ending', s=15)
+        plt.scatter(np.array(bifurcation_mask)[..., 1], np.array(bifurcation_mask)[..., 0], color='violet', label='Bifurcation', s=15)
+        plt.legend()
+        plt.title("Minutiae")
 
-        # plt.show()
-        pass
+        plt.show(block=stop)
 
 class Fingerprint():
     @timer
@@ -163,7 +161,7 @@ class Fingerprint():
         contour16 = ctour.get_reliable_region_border(self._contour, 16)
 
         # POINCARE INDEX
-        core_point, delta_point = poincare.poincare_index(self._orientation_field, self._reliability_map, contour40, 0.5, 0.4 * np.pi)
+        core_point, delta_point = poincare.poincare_index(self._orientation_field, self._reliability_map, contour40, 0.5, 0.6, 0.2 * np.pi)
 
         # MINUTAE
         minutiae = minuti.extract_minutiae(self._skeleton, self._reliability_map, self._orientation_field, contour16, 16, 0.5)
@@ -176,16 +174,34 @@ class Fingerprint():
     
     @timer
     def _generate_polymonial(self) -> None:
+        contour40 = ctour.get_reliable_region_border(self._contour, 40)
+
+        # POINCARE INDEX
+        core_point, delta_point = poincare.poincare_index(self._orientation_field, self._reliability_map, contour40, 0.4, 0.6, 0.2 * np.pi)
+
         # POLYMONIAL MODEL OF ORIENTATION FIELD
-        # PR, PI = polymonial_orientation_field(orientation_field, reliability_map, 4)
+        PR, PI = orient.polymonial_orientation_field(self._orientation_field, self._reliability_map, 4)
+
+        core_mask = np.zeros_like(PR, dtype=bool)
+        core_mask[core_point] = True
+
+        delta_mask = np.zeros_like(PR, dtype=bool)
+        delta_mask[delta_point] = True
 
         # POINTS CHARGES
-        # cores_charges = get_points_charges(orientation_field, PR, PI, reliability_map, cores_mask, 80)
-        # deltas_charges = get_points_charges(orientation_field, PR, PI, reliability_map, deltas_mask, 40)
+        cores_charges = point_charge.get_points_charges(self._orientation_field, PR, PI, self._reliability_map, core_mask, 80)
+        deltas_charges = point_charge.get_points_charges(self._orientation_field, PR, PI, self._reliability_map, delta_mask, 40)
 
         # POINT CHARGE
-        # final_O = point_charge_orientation_field(PR, PI, orientation_field, cores_mask, deltas_mask, cores_charges, deltas_charges, 80, 40)
-        pass
+        self._polymonial_orientation_field = orient.point_charge_orientation_field(PR, PI, self._orientation_field, core_mask, delta_mask, cores_charges, deltas_charges, 80, 40)
+
+        img.show_img(self._polymonial_orientation_field, title="Polymonial")
+
+        small_orientation_field, small_weight = orient.average_orientation_field(self._polymonial_orientation_field, self.reliability_map, block_size=8)
+        overlay = orient.draw_orientation_field(None, small_orientation_field, small_weight, step=8, line_length=6)
+        img.show_img(overlay, title="Polymonial Orientation Field")
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     @property
     @timer
@@ -223,50 +239,78 @@ class Fingerprint():
         return self._contour
 
     @timer
-    def show_original(self) -> None:
+    def show_original(self, stop: bool=True) -> None:
         img.show_img(self._original_img, "Original")
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+
+        if stop:
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
     @timer
-    def show_normalized(self) -> None:
+    def show_normalized(self, stop: bool=True) -> None:
         img.show_img(self.normalized, "Normalized")
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+
+        if stop:
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
     @timer
-    def show_binarized(self) -> None:
+    def show_binarized(self, stop: bool=True) -> None:
         img.show_img(self.binarized, "Binarized")
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+
+        if stop:
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
     @timer
-    def show_skeleton(self) -> None:
+    def show_skeleton(self, stop: bool=True) -> None:
         img.show_img(self.skeleton, "Skeleton")
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+
+        if stop:
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
     @timer
-    def show_orientation_field(self) -> None:
+    def show_orientation_field(self, stop: bool=True) -> None:
         small_orientation_field, small_weight = orient.average_orientation_field(self.orientation_field, self.reliability_map, block_size=8)
         overlay = orient.draw_orientation_field(None, small_orientation_field, small_weight, step=8, line_length=6)
         img.show_img(overlay, title="Orientation Field")
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+
+        if stop:
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
     @timer
-    def show_reliability(self) -> None:
+    def show_reliability(self, stop: bool=True) -> None:
         img.show_img(self.reliability_map, "Reliability")
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        
+        if stop:
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
     @timer
-    def show_contour(self) -> None:
+    def show_contour(self, stop: bool=True) -> None:
         skeleton_color = cv2.cvtColor(self.skeleton, cv2.COLOR_GRAY2RGB)
         cv2.drawContours(skeleton_color, [self.contour], -1, (0, 255, 0), thickness=1)
         img.show_img(skeleton_color, "Contour")
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        
+        if stop:
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
+    @timer
+    def show_all_steps(self, stop: bool=True) -> None:
+        self.show_original(False)
+        self.show_normalized(False)
+        self.show_binarized(False)
+        self.show_orientation_field(False)
+        self.show_reliability(False)
+        self.show_skeleton(False)
+        self.show_contour(False)
+
+        if stop:
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
 @timer
 def create_templates(file_paths: list[str]) -> list[FingerprintTemplate]:
@@ -294,3 +338,16 @@ def create_and_save_templates(save_path: str, fingerprints_paths: list[str]) -> 
     templates = create_templates(fingerprints_paths)
     save_templates(save_path, templates)
     return templates
+
+@timer
+def authenticate(fingerprint_minutiae: list[minuti.Minutiae], fingerprint_templates: FingerprintTemplate, auth_threashold: float) -> bool:
+    best_match = 0
+    for template in fingerprint_templates:
+        matched = minuti.compare_minutiae_sets(fingerprint_minutiae, template.minutiae)
+        best_match = max(best_match, matched)
+
+    match_percent = 0.0
+    if len(fingerprint_minutiae) != 0:
+         match_percent = best_match / len(fingerprint_minutiae)
+
+    return match_percent >= auth_threashold

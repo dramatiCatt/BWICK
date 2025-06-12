@@ -86,8 +86,8 @@ def point_charge_orientation_field(PR,
                                    orientation_field: cv2.typing.MatLike,
                                    cores_mask: cv2.typing.MatLike,
                                    deltas_mask: cv2.typing.MatLike,
-                                   cores_electricity,
-                                   deltas_electricity,
+                                   cores_electricity: np.ndarray,
+                                   deltas_electricity: np.ndarray,
                                    cores_R: int = 80, deltas_R: int = 40) -> cv2.typing.MatLike:
     
     PR_PI = np.stack((PR, PI), axis=-1)
@@ -104,7 +104,7 @@ def point_charge_orientation_field(PR,
     points_charges = [*cores_charges, *deltas_charges]
     points_weights = [*cores_weights, *deltas_weights]
 
-    model_weights = np.maximum(1 - np.sum(points_weights, axis=0), 0)
+    model_weights = np.maximum(1.0 - np.sum(points_weights, axis=0), 0)
 
     weights_stack = np.stack(points_weights, axis=0)
     charges_stack = np.stack(points_charges, axis=0)
