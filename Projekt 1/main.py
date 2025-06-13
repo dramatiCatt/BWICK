@@ -14,7 +14,7 @@ eg.: ../Data/Odciski/DB1_B/101_2.tif --show --auth ./Templates/101.json
 """
 
 def test_authentication():
-    data_folder_path = "../Data/Odciski/DB1_B"
+    data_folder_path = "../Data/Odciski"
     templates_folder_path = './Templates'
 
     # CREATE DATASET
@@ -22,6 +22,7 @@ def test_authentication():
 
     IMG_PER_FINGERPRINT = 8
     FINGERPRINTS_NUM = 10
+    DATATSETS_NUM = 4
 
     TEST_DATA_PERCENT = 0.3
     TEST_IMG_PER_FINGERPRINT = int(TEST_DATA_PERCENT * IMG_PER_FINGERPRINT)
@@ -29,21 +30,31 @@ def test_authentication():
     if not os.path.exists('test_data_paths.json') or FORCE_CREATE_DATASET:
         test_fingerprints_data_paths = []
         fingerprints_templates_collections = []
-        for f in range(1, FINGERPRINTS_NUM + 1):
-            fingerprint_paths = []
-            for i in range(1, IMG_PER_FINGERPRINT + 1):
-                fingerprint_paths.append(f"{data_folder_path}/1{f'0{f}' if f < 10 else f}_{i}.tif")
+        for d in range(1, DATATSETS_NUM + 1):
+            dataset_folder = f"{data_folder_path}/DB{d}_B"
+            dataset_template_folder = f"{templates_folder_path}/DB{d}"
 
-            # RANDOMIZE PATHS PER FINGERPRINT
-            np.random.shuffle(fingerprint_paths)
+            test_fingerprints_data_paths_in_dataset = []
+            fingerprints_templates_collections_in_dataset = []
+            for f in range(1, FINGERPRINTS_NUM + 1):
+                fingerprint_paths = []
+                for i in range(1, IMG_PER_FINGERPRINT + 1):
+                    fingerprint_paths.append(f"{dataset_folder}/1{f'0{f}' if f < 10 else f}_{i}.tif")
 
-            # GET TEST DATASET AND TEMPLATES
-            test_fingerprints_data_paths.append(fingerprint_paths[:TEST_IMG_PER_FINGERPRINT])
+                # RANDOMIZE PATHS PER FINGERPRINT
+                np.random.shuffle(fingerprint_paths)
+
+                # GET TEST DATASET AND TEMPLATES
+                test_fingerprints_data_paths_in_dataset.append(fingerprint_paths[:TEST_IMG_PER_FINGERPRINT])
+                
+                # SAVE TEMPLATES
+                print(f"Create template for fingerprint {f + 1} from dataset {d + 1}")
+                template = fpa.create_and_save_templates(f'{dataset_template_folder}/1{f"0{f}" if f < 10 else f}.json', 
+                                            fingerprint_paths[TEST_IMG_PER_FINGERPRINT:])
+                fingerprints_templates_collections_in_dataset.append(template)
             
-            # SAVE TEMPLATES
-            template = fpa.create_and_save_templates(f'{templates_folder_path}/1{f"0{f}" if f < 10 else f}.json', 
-                                        fingerprint_paths[TEST_IMG_PER_FINGERPRINT:])
-            fingerprints_templates_collections.append(template)
+            test_fingerprints_data_paths.append(test_fingerprints_data_paths_in_dataset)
+            fingerprints_templates_collections.append(fingerprints_templates_collections_in_dataset)
 
         with open('test_data_paths.json', 'w') as f:
             json.dump(test_fingerprints_data_paths, f, indent=4)
@@ -53,35 +64,40 @@ def test_authentication():
         
         fingerprints_templates_collections = [] 
         templates_folder = pathlib.Path(templates_folder_path)
-        for path in [f for f in templates_folder.iterdir() if f.is_file()]:
-            fingerprints_templates_collections.append(fpa.load_templates(path))
+        for dir_path in [d for d in templates_folder.iterdir() if d.is_dir()]:
+            fingerprints_templates_collections_in_dataset = []
+            for file_path in [f for f in dir_path.iterdir() if f.is_file()]:
+                fingerprints_templates_collections_in_dataset.append(fpa.load_templates(file_path))
+            fingerprints_templates_collections.append(fingerprints_templates_collections_in_dataset)
             
 
     AUTHENTICATION_THRESHOLD = 0.4
 
-    truth_table = np.zeros(shape=(FINGERPRINTS_NUM * TEST_IMG_PER_FINGERPRINT, FINGERPRINTS_NUM), dtype=bool)
+    truth_table = np.zeros(shape=(DATATSETS_NUM * FINGERPRINTS_NUM * TEST_IMG_PER_FINGERPRINT, FINGERPRINTS_NUM), dtype=bool)
     result_table = np.zeros_like(truth_table)
-            
-    for fingerprint_idx, test_fingerprints_paths in enumerate(test_fingerprints_data_paths):
-        for test_idx, test_path in enumerate(test_fingerprints_paths):
-            test_minutiae = fpa.FingerprintTemplate.from_img_file(test_path).minutiae
-            
-            for collection_idx, collection in enumerate(fingerprints_templates_collections):
-                start = time.perf_counter()
 
-                is_good = fpa.authenticate(test_minutiae, collection, AUTHENTICATION_THRESHOLD)
+    for dataset_idx, dataset_test_fingerprints_paths in enumerate(test_fingerprints_data_paths):       
+        for fingerprint_idx, test_fingerprints_paths in enumerate(dataset_test_fingerprints_paths):
+            for test_idx, test_path in enumerate(test_fingerprints_paths):
+                test_minutiae = fpa.FingerprintTemplate.from_img_file(test_path).minutiae
+                
+                for collection_dataset_idx, dataset_collection in enumerate(fingerprints_templates_collections):
+                    for collection_idx, collection in enumerate(dataset_collection):
+                        start = time.perf_counter()
 
-                end = time.perf_counter()
+                        is_good = fpa.authenticate(test_minutiae, collection, AUTHENTICATION_THRESHOLD)
 
-                print(f"Test {test_idx + 1} of Fingerprint {fingerprint_idx + 1} on Fingerprint {collection_idx + 1}: {'Authenticated' if is_good else 'Not authenticated'} in {end - start:.6f} seconds")
+                        end = time.perf_counter()
 
-                table_idx = fingerprint_idx * TEST_IMG_PER_FINGERPRINT + test_idx
-                if collection_idx == fingerprint_idx:
-                    truth_table[table_idx, collection_idx] = True
-                else:
-                    truth_table[table_idx, collection_idx] = False
+                        print(f"Test {test_idx + 1} of Fingerprint {fingerprint_idx + 1} from dataset {dataset_idx + 1} on Fingerprint {collection_idx + 1} from dataset {collection_dataset_idx + 1}: {'Authenticated' if is_good else 'Not authenticated'} in {end - start:.6f} seconds")
 
-                result_table[table_idx, collection_idx] = is_good
+                        table_idx = (dataset_idx * FINGERPRINTS_NUM + fingerprint_idx) * TEST_IMG_PER_FINGERPRINT + test_idx
+                        if collection_idx == fingerprint_idx:
+                            truth_table[table_idx, collection_idx] = True
+                        else:
+                            truth_table[table_idx, collection_idx] = False
+
+                        result_table[table_idx, collection_idx] = is_good
 
     truth_table = truth_table.flatten()
     result_table = result_table.flatten()
@@ -99,15 +115,18 @@ def test_authentication():
     false_positive_num = np.count_nonzero(result_table) - true_positive_num
     false_negative_num = len(result_table) - false_positive_num - true_positive_num - true_negative_num
 
+    accuracy = 0.0 if len(result_table) == 0 else (true_positive_num + true_negative_num) / len(result_table)
+
     print()
     print(f"Results num: {len(result_table)}")
-    print(f"True Positive: {true_positive_num}, expected: {FINGERPRINTS_NUM * TEST_IMG_PER_FINGERPRINT}")
-    print(f"True Negative: {true_negative_num}, expected: {(FINGERPRINTS_NUM ** 2 - FINGERPRINTS_NUM) * TEST_IMG_PER_FINGERPRINT}")
+    print(f"True Positive: {true_positive_num}, expected: {DATATSETS_NUM * FINGERPRINTS_NUM * TEST_IMG_PER_FINGERPRINT}")
+    print(f"True Negative: {true_negative_num}, expected: {(FINGERPRINTS_NUM ** 2 - FINGERPRINTS_NUM) * TEST_IMG_PER_FINGERPRINT * DATATSETS_NUM}")
     print(f"False Positive: {false_positive_num}, expected: 0")
     print(f"False Negative: {false_negative_num}, expected: 0")
+    print(f"Accuracy: {accuracy * 100.0} %")
 
 def main() -> None:
-    test_authentication()
+    # test_authentication()
 
     parser = argparse.ArgumentParser(description="Program do porownywania odciskow palcow i testowania autentykacji")
     parser.add_argument("fingerprint_img_path", help="sciezka do zdjecia linij papilarnych palca")
@@ -146,3 +165,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    # test_authentication()
