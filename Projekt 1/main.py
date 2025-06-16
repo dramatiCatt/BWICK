@@ -48,7 +48,7 @@ def test_authentication():
                 test_fingerprints_data_paths_in_dataset.append(fingerprint_paths[:TEST_IMG_PER_FINGERPRINT])
                 
                 # SAVE TEMPLATES
-                print(f"Create template for fingerprint {f + 1} from dataset {d + 1}")
+                print(f"Create template for fingerprint {f} from dataset {d}")
                 template = fpa.create_and_save_templates(f'{dataset_template_folder}/1{f"0{f}" if f < 10 else f}.json', 
                                             fingerprint_paths[TEST_IMG_PER_FINGERPRINT:])
                 fingerprints_templates_collections_in_dataset.append(template)
@@ -126,8 +126,6 @@ def test_authentication():
     print(f"Accuracy: {accuracy * 100.0} %")
 
 def main() -> None:
-    # test_authentication()
-
     parser = argparse.ArgumentParser(description="Program do porownywania odciskow palcow i testowania autentykacji")
     parser.add_argument("fingerprint_img_path", help="sciezka do zdjecia linij papilarnych palca")
     parser.add_argument("--show", "-s", action="store_true", help="pokazuje wszystkie etapy analizy palca")
