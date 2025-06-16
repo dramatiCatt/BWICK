@@ -131,9 +131,6 @@ def get_fingerprint_img() -> None:
     
     try:
         original_img = fpa.img.load_img(path)
-        current_fingerprint = fpa.Fingerprint(original_img)
-        
-        current_fingerprint.show_all_steps()
         
         img_rgb = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
         
@@ -147,6 +144,14 @@ def get_fingerprint_img() -> None:
         image_label.image = img_tk
         
         img_path_label.config(text=f"Wybrane zdjęcie: {path}")
+
+        fingerprint = fpa.Fingerprint(original_img)
+        fingerprint.show_all_steps()
+
+        fingerprint_template = fpa.FingerprintTemplate.from_fingerprint(fingerprint)
+        fingerprint_template.show_points(fingerprint.skeleton)
+
+        current_fingerprint = (fingerprint, fingerprint_template)
     except ValueError as ve:
         messagebox.showerror("Błąd Wczytywania", str(ve))
         image_label.config(image="")
@@ -187,9 +192,8 @@ def authenticate() -> None:
         messagebox.showerror("Błąd", "Nie zaczytano albo palca albo wzorca")
         return
     
-    minuiae = fpa.FingerprintTemplate.from_fingerprint(current_fingerprint).minutiae
-    
-    result = fpa.authenticate(minuiae, current_templates, 0.4)
+    _, fingerprint_template = current_fingerprint
+    result = fpa.authenticate(fingerprint_template.minutiae, current_templates, 0.4)
     
     messagebox.showinfo("Sukcess" if result else "Porażka", f"Autentykacja sie {'' if result else 'nie '}powiodla")
 
