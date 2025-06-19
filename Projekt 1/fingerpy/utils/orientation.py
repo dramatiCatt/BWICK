@@ -4,6 +4,7 @@ import numpy as np
 from .math import weight_least_square, eval_polymonial
 from .point_charge import calculate_point_charge
 import numba
+from .imgprocessing import gaussian_blur
 
 @timer
 def gradient_orientation_field(normalized_img: cv2.typing.MatLike, 
@@ -11,7 +12,7 @@ def gradient_orientation_field(normalized_img: cv2.typing.MatLike,
                                blur_kernel_size: int = 5, 
                                blur_power: float = 0.77) -> tuple[cv2.typing.MatLike, cv2.typing.MatLike]:
     '''
-    Orientation Field, Weigths
+    Orientation Field, Reliability Map
     '''
 
     Gx = cv2.Sobel(normalized_img, cv2.CV_64F, dx=1, dy=0, ksize=3)
@@ -45,15 +46,15 @@ def gradient_orientation_field(normalized_img: cv2.typing.MatLike,
 
     orientation_field_2 = 2 * orientation_field
 
-    cos2O = cv2.GaussianBlur(np.cos(orientation_field_2), (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
-    sin2O = cv2.GaussianBlur(np.sin(orientation_field_2), (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
+    cos2O = gaussian_blur(np.cos(orientation_field_2), blur_kernel_size, blur_power)
+    sin2O = gaussian_blur(np.sin(orientation_field_2), blur_kernel_size, blur_power)
 
     orientation_field = 0.5 * np.arctan2(sin2O, cos2O)
 
-    weights = (sum_gx_sqr_sub_gy_sqr ** 2 + 4 * sum_gxgy ** 2) / (sum_gx_sqr_sum_gy_sqr ** 2 + 1e-10)
-    weights = cv2.GaussianBlur(weights, (blur_kernel_size, blur_kernel_size), sigmaX=blur_power)
+    reliability_map = (sum_gx_sqr_sub_gy_sqr ** 2 + 4 * sum_gxgy ** 2) / (sum_gx_sqr_sum_gy_sqr ** 2 + 1e-10)
+    reliability_map = gaussian_blur(reliability_map, blur_kernel_size, blur_power)
 
-    return (orientation_field + np.pi) % np.pi, weights
+    return (orientation_field + np.pi) % np.pi, reliability_map
 
 @timer
 def polymonial_orientation_field(orientation_field: cv2.typing.MatLike, 

@@ -1,0 +1,1288 @@
+{
+    "train": [
+        {
+            "image_path": "./Data\\137_8.tif",
+            "json_path": "./Data\\137_8.json"
+        },
+        {
+            "image_path": "./Data\\109_8.tif",
+            "json_path": "./Data\\109_8.json"
+        },
+        {
+            "image_path": "./Data\\115_6.tif",
+            "json_path": "./Data\\115_6.json"
+        },
+        {
+            "image_path": "./Data\\132_7.tif",
+            "json_path": "./Data\\132_7.json"
+        },
+        {
+            "image_path": "./Data\\131_6.tif",
+            "json_path": "./Data\\131_6.json"
+        },
+        {
+            "image_path": "./Data\\140_3.tif",
+            "json_path": "./Data\\140_3.json"
+        },
+        {
+            "image_path": "./Data\\103_3.tif",
+            "json_path": "./Data\\103_3.json"
+        },
+        {
+            "image_path": "./Data\\129_6.tif",
+            "json_path": "./Data\\129_6.json"
+        },
+        {
+            "image_path": "./Data\\139_4.tif",
+            "json_path": "./Data\\139_4.json"
+        },
+        {
+            "image_path": "./Data\\116_4.tif",
+            "json_path": "./Data\\116_4.json"
+        },
+        {
+            "image_path": "./Data\\139_3.tif",
+            "json_path": "./Data\\139_3.json"
+        },
+        {
+            "image_path": "./Data\\111_7.tif",
+            "json_path": "./Data\\111_7.json"
+        },
+        {
+            "image_path": "./Data\\116_8.tif",
+            "json_path": "./Data\\116_8.json"
+        },
+        {
+            "image_path": "./Data\\138_2.tif",
+            "json_path": "./Data\\138_2.json"
+        },
+        {
+            "image_path": "./Data\\117_8.tif",
+            "json_path": "./Data\\117_8.json"
+        },
+        {
+            "image_path": "./Data\\130_7.tif",
+            "json_path": "./Data\\130_7.json"
+        },
+        {
+            "image_path": "./Data\\120_8.tif",
+            "json_path": "./Data\\120_8.json"
+        },
+        {
+            "image_path": "./Data\\105_6.tif",
+            "json_path": "./Data\\105_6.json"
+        },
+        {
+            "image_path": "./Data\\128_6.tif",
+            "json_path": "./Data\\128_6.json"
+        },
+        {
+            "image_path": "./Data\\128_2.tif",
+            "json_path": "./Data\\128_2.json"
+        },
+        {
+            "image_path": "./Data\\127_7.tif",
+            "json_path": "./Data\\127_7.json"
+        },
+        {
+            "image_path": "./Data\\131_4.tif",
+            "json_path": "./Data\\131_4.json"
+        },
+        {
+            "image_path": "./Data\\127_5.tif",
+            "json_path": "./Data\\127_5.json"
+        },
+        {
+            "image_path": "./Data\\128_3.tif",
+            "json_path": "./Data\\128_3.json"
+        },
+        {
+            "image_path": "./Data\\101_4.tif",
+            "json_path": "./Data\\101_4.json"
+        },
+        {
+            "image_path": "./Data\\112_3.tif",
+            "json_path": "./Data\\112_3.json"
+        },
+        {
+            "image_path": "./Data\\108_2.tif",
+            "json_path": "./Data\\108_2.json"
+        },
+        {
+            "image_path": "./Data\\111_4.tif",
+            "json_path": "./Data\\111_4.json"
+        },
+        {
+            "image_path": "./Data\\104_7.tif",
+            "json_path": "./Data\\104_7.json"
+        },
+        {
+            "image_path": "./Data\\139_8.tif",
+            "json_path": "./Data\\139_8.json"
+        },
+        {
+            "image_path": "./Data\\133_2.tif",
+            "json_path": "./Data\\133_2.json"
+        },
+        {
+            "image_path": "./Data\\135_2.tif",
+            "json_path": "./Data\\135_2.json"
+        },
+        {
+            "image_path": "./Data\\134_7.tif",
+            "json_path": "./Data\\134_7.json"
+        },
+        {
+            "image_path": "./Data\\140_7.tif",
+            "json_path": "./Data\\140_7.json"
+        },
+        {
+            "image_path": "./Data\\101_5.tif",
+            "json_path": "./Data\\101_5.json"
+        },
+        {
+            "image_path": "./Data\\114_5.tif",
+            "json_path": "./Data\\114_5.json"
+        },
+        {
+            "image_path": "./Data\\136_5.tif",
+            "json_path": "./Data\\136_5.json"
+        },
+        {
+            "image_path": "./Data\\118_7.tif",
+            "json_path": "./Data\\118_7.json"
+        },
+        {
+            "image_path": "./Data\\135_3.tif",
+            "json_path": "./Data\\135_3.json"
+        },
+        {
+            "image_path": "./Data\\103_6.tif",
+            "json_path": "./Data\\103_6.json"
+        },
+        {
+            "image_path": "./Data\\106_1.tif",
+            "json_path": "./Data\\106_1.json"
+        },
+        {
+            "image_path": "./Data\\123_6.tif",
+            "json_path": "./Data\\123_6.json"
+        },
+        {
+            "image_path": "./Data\\136_3.tif",
+            "json_path": "./Data\\136_3.json"
+        },
+        {
+            "image_path": "./Data\\113_3.tif",
+            "json_path": "./Data\\113_3.json"
+        },
+        {
+            "image_path": "./Data\\107_7.tif",
+            "json_path": "./Data\\107_7.json"
+        },
+        {
+            "image_path": "./Data\\101_7.tif",
+            "json_path": "./Data\\101_7.json"
+        },
+        {
+            "image_path": "./Data\\133_7.tif",
+            "json_path": "./Data\\133_7.json"
+        },
+        {
+            "image_path": "./Data\\134_2.tif",
+            "json_path": "./Data\\134_2.json"
+        },
+        {
+            "image_path": "./Data\\125_8.tif",
+            "json_path": "./Data\\125_8.json"
+        },
+        {
+            "image_path": "./Data\\123_8.tif",
+            "json_path": "./Data\\123_8.json"
+        },
+        {
+            "image_path": "./Data\\132_6.tif",
+            "json_path": "./Data\\132_6.json"
+        },
+        {
+            "image_path": "./Data\\140_6.tif",
+            "json_path": "./Data\\140_6.json"
+        },
+        {
+            "image_path": "./Data\\120_4.tif",
+            "json_path": "./Data\\120_4.json"
+        },
+        {
+            "image_path": "./Data\\116_3.tif",
+            "json_path": "./Data\\116_3.json"
+        },
+        {
+            "image_path": "./Data\\114_3.tif",
+            "json_path": "./Data\\114_3.json"
+        },
+        {
+            "image_path": "./Data\\115_4.tif",
+            "json_path": "./Data\\115_4.json"
+        },
+        {
+            "image_path": "./Data\\138_6.tif",
+            "json_path": "./Data\\138_6.json"
+        },
+        {
+            "image_path": "./Data\\105_5.tif",
+            "json_path": "./Data\\105_5.json"
+        },
+        {
+            "image_path": "./Data\\111_1.tif",
+            "json_path": "./Data\\111_1.json"
+        },
+        {
+            "image_path": "./Data\\114_4.tif",
+            "json_path": "./Data\\114_4.json"
+        },
+        {
+            "image_path": "./Data\\120_6.tif",
+            "json_path": "./Data\\120_6.json"
+        },
+        {
+            "image_path": "./Data\\121_6.tif",
+            "json_path": "./Data\\121_6.json"
+        },
+        {
+            "image_path": "./Data\\107_6.tif",
+            "json_path": "./Data\\107_6.json"
+        },
+        {
+            "image_path": "./Data\\131_7.tif",
+            "json_path": "./Data\\131_7.json"
+        },
+        {
+            "image_path": "./Data\\105_2.tif",
+            "json_path": "./Data\\105_2.json"
+        },
+        {
+            "image_path": "./Data\\130_2.tif",
+            "json_path": "./Data\\130_2.json"
+        },
+        {
+            "image_path": "./Data\\110_3.tif",
+            "json_path": "./Data\\110_3.json"
+        },
+        {
+            "image_path": "./Data\\129_7.tif",
+            "json_path": "./Data\\129_7.json"
+        },
+        {
+            "image_path": "./Data\\121_7.tif",
+            "json_path": "./Data\\121_7.json"
+        },
+        {
+            "image_path": "./Data\\119_6.tif",
+            "json_path": "./Data\\119_6.json"
+        },
+        {
+            "image_path": "./Data\\106_7.tif",
+            "json_path": "./Data\\106_7.json"
+        },
+        {
+            "image_path": "./Data\\115_3.tif",
+            "json_path": "./Data\\115_3.json"
+        },
+        {
+            "image_path": "./Data\\121_3.tif",
+            "json_path": "./Data\\121_3.json"
+        },
+        {
+            "image_path": "./Data\\132_2.tif",
+            "json_path": "./Data\\132_2.json"
+        },
+        {
+            "image_path": "./Data\\129_3.tif",
+            "json_path": "./Data\\129_3.json"
+        },
+        {
+            "image_path": "./Data\\135_5.tif",
+            "json_path": "./Data\\135_5.json"
+        },
+        {
+            "image_path": "./Data\\134_6.tif",
+            "json_path": "./Data\\134_6.json"
+        },
+        {
+            "image_path": "./Data\\131_3.tif",
+            "json_path": "./Data\\131_3.json"
+        },
+        {
+            "image_path": "./Data\\110_7.tif",
+            "json_path": "./Data\\110_7.json"
+        },
+        {
+            "image_path": "./Data\\106_3.tif",
+            "json_path": "./Data\\106_3.json"
+        },
+        {
+            "image_path": "./Data\\126_5.tif",
+            "json_path": "./Data\\126_5.json"
+        },
+        {
+            "image_path": "./Data\\109_4.tif",
+            "json_path": "./Data\\109_4.json"
+        },
+        {
+            "image_path": "./Data\\122_4.tif",
+            "json_path": "./Data\\122_4.json"
+        },
+        {
+            "image_path": "./Data\\101_6.tif",
+            "json_path": "./Data\\101_6.json"
+        },
+        {
+            "image_path": "./Data\\127_2.tif",
+            "json_path": "./Data\\127_2.json"
+        },
+        {
+            "image_path": "./Data\\138_5.tif",
+            "json_path": "./Data\\138_5.json"
+        },
+        {
+            "image_path": "./Data\\110_8.tif",
+            "json_path": "./Data\\110_8.json"
+        },
+        {
+            "image_path": "./Data\\136_7.tif",
+            "json_path": "./Data\\136_7.json"
+        },
+        {
+            "image_path": "./Data\\126_6.tif",
+            "json_path": "./Data\\126_6.json"
+        },
+        {
+            "image_path": "./Data\\119_7.tif",
+            "json_path": "./Data\\119_7.json"
+        },
+        {
+            "image_path": "./Data\\121_4.tif",
+            "json_path": "./Data\\121_4.json"
+        },
+        {
+            "image_path": "./Data\\118_5.tif",
+            "json_path": "./Data\\118_5.json"
+        },
+        {
+            "image_path": "./Data\\113_6.tif",
+            "json_path": "./Data\\113_6.json"
+        },
+        {
+            "image_path": "./Data\\104_3.tif",
+            "json_path": "./Data\\104_3.json"
+        },
+        {
+            "image_path": "./Data\\112_5.tif",
+            "json_path": "./Data\\112_5.json"
+        },
+        {
+            "image_path": "./Data\\117_1.tif",
+            "json_path": "./Data\\117_1.json"
+        },
+        {
+            "image_path": "./Data\\135_4.tif",
+            "json_path": "./Data\\135_4.json"
+        },
+        {
+            "image_path": "./Data\\132_8.tif",
+            "json_path": "./Data\\132_8.json"
+        },
+        {
+            "image_path": "./Data\\123_4.tif",
+            "json_path": "./Data\\123_4.json"
+        },
+        {
+            "image_path": "./Data\\136_6.tif",
+            "json_path": "./Data\\136_6.json"
+        },
+        {
+            "image_path": "./Data\\107_2.tif",
+            "json_path": "./Data\\107_2.json"
+        },
+        {
+            "image_path": "./Data\\103_8.tif",
+            "json_path": "./Data\\103_8.json"
+        },
+        {
+            "image_path": "./Data\\117_5.tif",
+            "json_path": "./Data\\117_5.json"
+        },
+        {
+            "image_path": "./Data\\117_3.tif",
+            "json_path": "./Data\\117_3.json"
+        },
+        {
+            "image_path": "./Data\\136_8.tif",
+            "json_path": "./Data\\136_8.json"
+        },
+        {
+            "image_path": "./Data\\127_3.tif",
+            "json_path": "./Data\\127_3.json"
+        },
+        {
+            "image_path": "./Data\\120_1.tif",
+            "json_path": "./Data\\120_1.json"
+        },
+        {
+            "image_path": "./Data\\102_3.tif",
+            "json_path": "./Data\\102_3.json"
+        },
+        {
+            "image_path": "./Data\\112_7.tif",
+            "json_path": "./Data\\112_7.json"
+        },
+        {
+            "image_path": "./Data\\121_1.tif",
+            "json_path": "./Data\\121_1.json"
+        },
+        {
+            "image_path": "./Data\\123_1.tif",
+            "json_path": "./Data\\123_1.json"
+        },
+        {
+            "image_path": "./Data\\113_2.tif",
+            "json_path": "./Data\\113_2.json"
+        },
+        {
+            "image_path": "./Data\\124_7.tif",
+            "json_path": "./Data\\124_7.json"
+        },
+        {
+            "image_path": "./Data\\128_1.tif",
+            "json_path": "./Data\\128_1.json"
+        },
+        {
+            "image_path": "./Data\\102_8.tif",
+            "json_path": "./Data\\102_8.json"
+        },
+        {
+            "image_path": "./Data\\132_5.tif",
+            "json_path": "./Data\\132_5.json"
+        },
+        {
+            "image_path": "./Data\\137_3.tif",
+            "json_path": "./Data\\137_3.json"
+        },
+        {
+            "image_path": "./Data\\114_6.tif",
+            "json_path": "./Data\\114_6.json"
+        },
+        {
+            "image_path": "./Data\\108_7.tif",
+            "json_path": "./Data\\108_7.json"
+        },
+        {
+            "image_path": "./Data\\101_3.tif",
+            "json_path": "./Data\\101_3.json"
+        },
+        {
+            "image_path": "./Data\\104_6.tif",
+            "json_path": "./Data\\104_6.json"
+        },
+        {
+            "image_path": "./Data\\125_3.tif",
+            "json_path": "./Data\\125_3.json"
+        },
+        {
+            "image_path": "./Data\\138_7.tif",
+            "json_path": "./Data\\138_7.json"
+        },
+        {
+            "image_path": "./Data\\139_6.tif",
+            "json_path": "./Data\\139_6.json"
+        },
+        {
+            "image_path": "./Data\\122_8.tif",
+            "json_path": "./Data\\122_8.json"
+        },
+        {
+            "image_path": "./Data\\124_1.tif",
+            "json_path": "./Data\\124_1.json"
+        },
+        {
+            "image_path": "./Data\\112_4.tif",
+            "json_path": "./Data\\112_4.json"
+        },
+        {
+            "image_path": "./Data\\122_3.tif",
+            "json_path": "./Data\\122_3.json"
+        },
+        {
+            "image_path": "./Data\\138_4.tif",
+            "json_path": "./Data\\138_4.json"
+        },
+        {
+            "image_path": "./Data\\115_1.tif",
+            "json_path": "./Data\\115_1.json"
+        },
+        {
+            "image_path": "./Data\\126_4.tif",
+            "json_path": "./Data\\126_4.json"
+        },
+        {
+            "image_path": "./Data\\133_4.tif",
+            "json_path": "./Data\\133_4.json"
+        },
+        {
+            "image_path": "./Data\\110_5.tif",
+            "json_path": "./Data\\110_5.json"
+        },
+        {
+            "image_path": "./Data\\111_2.tif",
+            "json_path": "./Data\\111_2.json"
+        },
+        {
+            "image_path": "./Data\\114_8.tif",
+            "json_path": "./Data\\114_8.json"
+        },
+        {
+            "image_path": "./Data\\109_5.tif",
+            "json_path": "./Data\\109_5.json"
+        },
+        {
+            "image_path": "./Data\\119_8.tif",
+            "json_path": "./Data\\119_8.json"
+        },
+        {
+            "image_path": "./Data\\102_5.tif",
+            "json_path": "./Data\\102_5.json"
+        },
+        {
+            "image_path": "./Data\\137_5.tif",
+            "json_path": "./Data\\137_5.json"
+        },
+        {
+            "image_path": "./Data\\126_7.tif",
+            "json_path": "./Data\\126_7.json"
+        },
+        {
+            "image_path": "./Data\\133_1.tif",
+            "json_path": "./Data\\133_1.json"
+        },
+        {
+            "image_path": "./Data\\127_4.tif",
+            "json_path": "./Data\\127_4.json"
+        },
+        {
+            "image_path": "./Data\\122_5.tif",
+            "json_path": "./Data\\122_5.json"
+        },
+        {
+            "image_path": "./Data\\134_5.tif",
+            "json_path": "./Data\\134_5.json"
+        },
+        {
+            "image_path": "./Data\\108_1.tif",
+            "json_path": "./Data\\108_1.json"
+        },
+        {
+            "image_path": "./Data\\118_2.tif",
+            "json_path": "./Data\\118_2.json"
+        },
+        {
+            "image_path": "./Data\\104_4.tif",
+            "json_path": "./Data\\104_4.json"
+        },
+        {
+            "image_path": "./Data\\137_7.tif",
+            "json_path": "./Data\\137_7.json"
+        },
+        {
+            "image_path": "./Data\\126_1.tif",
+            "json_path": "./Data\\126_1.json"
+        },
+        {
+            "image_path": "./Data\\130_5.tif",
+            "json_path": "./Data\\130_5.json"
+        },
+        {
+            "image_path": "./Data\\118_3.tif",
+            "json_path": "./Data\\118_3.json"
+        },
+        {
+            "image_path": "./Data\\131_1.tif",
+            "json_path": "./Data\\131_1.json"
+        },
+        {
+            "image_path": "./Data\\125_6.tif",
+            "json_path": "./Data\\125_6.json"
+        },
+        {
+            "image_path": "./Data\\108_6.tif",
+            "json_path": "./Data\\108_6.json"
+        },
+        {
+            "image_path": "./Data\\107_5.tif",
+            "json_path": "./Data\\107_5.json"
+        },
+        {
+            "image_path": "./Data\\115_5.tif",
+            "json_path": "./Data\\115_5.json"
+        },
+        {
+            "image_path": "./Data\\117_4.tif",
+            "json_path": "./Data\\117_4.json"
+        },
+        {
+            "image_path": "./Data\\124_3.tif",
+            "json_path": "./Data\\124_3.json"
+        },
+        {
+            "image_path": "./Data\\120_7.tif",
+            "json_path": "./Data\\120_7.json"
+        },
+        {
+            "image_path": "./Data\\105_8.tif",
+            "json_path": "./Data\\105_8.json"
+        },
+        {
+            "image_path": "./Data\\113_5.tif",
+            "json_path": "./Data\\113_5.json"
+        },
+        {
+            "image_path": "./Data\\104_8.tif",
+            "json_path": "./Data\\104_8.json"
+        },
+        {
+            "image_path": "./Data\\137_6.tif",
+            "json_path": "./Data\\137_6.json"
+        },
+        {
+            "image_path": "./Data\\118_4.tif",
+            "json_path": "./Data\\118_4.json"
+        },
+        {
+            "image_path": "./Data\\139_2.tif",
+            "json_path": "./Data\\139_2.json"
+        },
+        {
+            "image_path": "./Data\\103_2.tif",
+            "json_path": "./Data\\103_2.json"
+        },
+        {
+            "image_path": "./Data\\140_1.tif",
+            "json_path": "./Data\\140_1.json"
+        },
+        {
+            "image_path": "./Data\\130_1.tif",
+            "json_path": "./Data\\130_1.json"
+        },
+        {
+            "image_path": "./Data\\110_1.tif",
+            "json_path": "./Data\\110_1.json"
+        },
+        {
+            "image_path": "./Data\\130_8.tif",
+            "json_path": "./Data\\130_8.json"
+        },
+        {
+            "image_path": "./Data\\107_4.tif",
+            "json_path": "./Data\\107_4.json"
+        },
+        {
+            "image_path": "./Data\\109_7.tif",
+            "json_path": "./Data\\109_7.json"
+        },
+        {
+            "image_path": "./Data\\122_2.tif",
+            "json_path": "./Data\\122_2.json"
+        },
+        {
+            "image_path": "./Data\\108_4.tif",
+            "json_path": "./Data\\108_4.json"
+        },
+        {
+            "image_path": "./Data\\109_6.tif",
+            "json_path": "./Data\\109_6.json"
+        },
+        {
+            "image_path": "./Data\\125_1.tif",
+            "json_path": "./Data\\125_1.json"
+        },
+        {
+            "image_path": "./Data\\116_6.tif",
+            "json_path": "./Data\\116_6.json"
+        },
+        {
+            "image_path": "./Data\\124_4.tif",
+            "json_path": "./Data\\124_4.json"
+        },
+        {
+            "image_path": "./Data\\133_6.tif",
+            "json_path": "./Data\\133_6.json"
+        },
+        {
+            "image_path": "./Data\\103_4.tif",
+            "json_path": "./Data\\103_4.json"
+        },
+        {
+            "image_path": "./Data\\140_2.tif",
+            "json_path": "./Data\\140_2.json"
+        },
+        {
+            "image_path": "./Data\\111_3.tif",
+            "json_path": "./Data\\111_3.json"
+        },
+        {
+            "image_path": "./Data\\113_8.tif",
+            "json_path": "./Data\\113_8.json"
+        },
+        {
+            "image_path": "./Data\\129_2.tif",
+            "json_path": "./Data\\129_2.json"
+        },
+        {
+            "image_path": "./Data\\102_1.tif",
+            "json_path": "./Data\\102_1.json"
+        },
+        {
+            "image_path": "./Data\\102_2.tif",
+            "json_path": "./Data\\102_2.json"
+        },
+        {
+            "image_path": "./Data\\106_4.tif",
+            "json_path": "./Data\\106_4.json"
+        },
+        {
+            "image_path": "./Data\\129_8.tif",
+            "json_path": "./Data\\129_8.json"
+        },
+        {
+            "image_path": "./Data\\119_4.tif",
+            "json_path": "./Data\\119_4.json"
+        },
+        {
+            "image_path": "./Data\\106_2.tif",
+            "json_path": "./Data\\106_2.json"
+        },
+        {
+            "image_path": "./Data\\135_1.tif",
+            "json_path": "./Data\\135_1.json"
+        },
+        {
+            "image_path": "./Data\\125_7.tif",
+            "json_path": "./Data\\125_7.json"
+        },
+        {
+            "image_path": "./Data\\134_8.tif",
+            "json_path": "./Data\\134_8.json"
+        },
+        {
+            "image_path": "./Data\\119_1.tif",
+            "json_path": "./Data\\119_1.json"
+        },
+        {
+            "image_path": "./Data\\123_5.tif",
+            "json_path": "./Data\\123_5.json"
+        },
+        {
+            "image_path": "./Data\\124_5.tif",
+            "json_path": "./Data\\124_5.json"
+        },
+        {
+            "image_path": "./Data\\128_8.tif",
+            "json_path": "./Data\\128_8.json"
+        },
+        {
+            "image_path": "./Data\\105_3.tif",
+            "json_path": "./Data\\105_3.json"
+        },
+        {
+            "image_path": "./Data\\112_1.tif",
+            "json_path": "./Data\\112_1.json"
+        },
+        {
+            "image_path": "./Data\\116_2.tif",
+            "json_path": "./Data\\116_2.json"
+        }
+    ],
+    "val": [
+        {
+            "image_path": "./Data\\111_8.tif",
+            "json_path": "./Data\\111_8.json"
+        },
+        {
+            "image_path": "./Data\\130_4.tif",
+            "json_path": "./Data\\130_4.json"
+        },
+        {
+            "image_path": "./Data\\105_4.tif",
+            "json_path": "./Data\\105_4.json"
+        },
+        {
+            "image_path": "./Data\\113_4.tif",
+            "json_path": "./Data\\113_4.json"
+        },
+        {
+            "image_path": "./Data\\129_5.tif",
+            "json_path": "./Data\\129_5.json"
+        },
+        {
+            "image_path": "./Data\\117_7.tif",
+            "json_path": "./Data\\117_7.json"
+        },
+        {
+            "image_path": "./Data\\131_2.tif",
+            "json_path": "./Data\\131_2.json"
+        },
+        {
+            "image_path": "./Data\\102_4.tif",
+            "json_path": "./Data\\102_4.json"
+        },
+        {
+            "image_path": "./Data\\137_4.tif",
+            "json_path": "./Data\\137_4.json"
+        },
+        {
+            "image_path": "./Data\\108_8.tif",
+            "json_path": "./Data\\108_8.json"
+        },
+        {
+            "image_path": "./Data\\121_2.tif",
+            "json_path": "./Data\\121_2.json"
+        },
+        {
+            "image_path": "./Data\\126_8.tif",
+            "json_path": "./Data\\126_8.json"
+        },
+        {
+            "image_path": "./Data\\114_7.tif",
+            "json_path": "./Data\\114_7.json"
+        },
+        {
+            "image_path": "./Data\\128_4.tif",
+            "json_path": "./Data\\128_4.json"
+        },
+        {
+            "image_path": "./Data\\118_8.tif",
+            "json_path": "./Data\\118_8.json"
+        },
+        {
+            "image_path": "./Data\\120_2.tif",
+            "json_path": "./Data\\120_2.json"
+        },
+        {
+            "image_path": "./Data\\110_6.tif",
+            "json_path": "./Data\\110_6.json"
+        },
+        {
+            "image_path": "./Data\\127_8.tif",
+            "json_path": "./Data\\127_8.json"
+        },
+        {
+            "image_path": "./Data\\123_3.tif",
+            "json_path": "./Data\\123_3.json"
+        },
+        {
+            "image_path": "./Data\\107_1.tif",
+            "json_path": "./Data\\107_1.json"
+        },
+        {
+            "image_path": "./Data\\103_5.tif",
+            "json_path": "./Data\\103_5.json"
+        },
+        {
+            "image_path": "./Data\\136_4.tif",
+            "json_path": "./Data\\136_4.json"
+        },
+        {
+            "image_path": "./Data\\135_7.tif",
+            "json_path": "./Data\\135_7.json"
+        },
+        {
+            "image_path": "./Data\\132_3.tif",
+            "json_path": "./Data\\132_3.json"
+        },
+        {
+            "image_path": "./Data\\116_1.tif",
+            "json_path": "./Data\\116_1.json"
+        },
+        {
+            "image_path": "./Data\\109_2.tif",
+            "json_path": "./Data\\109_2.json"
+        },
+        {
+            "image_path": "./Data\\133_5.tif",
+            "json_path": "./Data\\133_5.json"
+        },
+        {
+            "image_path": "./Data\\140_8.tif",
+            "json_path": "./Data\\140_8.json"
+        },
+        {
+            "image_path": "./Data\\112_6.tif",
+            "json_path": "./Data\\112_6.json"
+        },
+        {
+            "image_path": "./Data\\101_1.tif",
+            "json_path": "./Data\\101_1.json"
+        },
+        {
+            "image_path": "./Data\\125_2.tif",
+            "json_path": "./Data\\125_2.json"
+        },
+        {
+            "image_path": "./Data\\115_2.tif",
+            "json_path": "./Data\\115_2.json"
+        },
+        {
+            "image_path": "./Data\\106_8.tif",
+            "json_path": "./Data\\106_8.json"
+        },
+        {
+            "image_path": "./Data\\138_3.tif",
+            "json_path": "./Data\\138_3.json"
+        },
+        {
+            "image_path": "./Data\\134_3.tif",
+            "json_path": "./Data\\134_3.json"
+        },
+        {
+            "image_path": "./Data\\122_6.tif",
+            "json_path": "./Data\\122_6.json"
+        },
+        {
+            "image_path": "./Data\\124_2.tif",
+            "json_path": "./Data\\124_2.json"
+        },
+        {
+            "image_path": "./Data\\119_3.tif",
+            "json_path": "./Data\\119_3.json"
+        },
+        {
+            "image_path": "./Data\\104_2.tif",
+            "json_path": "./Data\\104_2.json"
+        },
+        {
+            "image_path": "./Data\\139_7.tif",
+            "json_path": "./Data\\139_7.json"
+        }
+    ],
+    "test": [
+        {
+            "image_path": "./Data\\136_2.tif",
+            "json_path": "./Data\\136_2.json"
+        },
+        {
+            "image_path": "./Data\\105_1.tif",
+            "json_path": "./Data\\105_1.json"
+        },
+        {
+            "image_path": "./Data\\120_5.tif",
+            "json_path": "./Data\\120_5.json"
+        },
+        {
+            "image_path": "./Data\\138_8.tif",
+            "json_path": "./Data\\138_8.json"
+        },
+        {
+            "image_path": "./Data\\110_2.tif",
+            "json_path": "./Data\\110_2.json"
+        },
+        {
+            "image_path": "./Data\\104_5.tif",
+            "json_path": "./Data\\104_5.json"
+        },
+        {
+            "image_path": "./Data\\131_8.tif",
+            "json_path": "./Data\\131_8.json"
+        },
+        {
+            "image_path": "./Data\\140_4.tif",
+            "json_path": "./Data\\140_4.json"
+        },
+        {
+            "image_path": "./Data\\121_5.tif",
+            "json_path": "./Data\\121_5.json"
+        },
+        {
+            "image_path": "./Data\\135_6.tif",
+            "json_path": "./Data\\135_6.json"
+        },
+        {
+            "image_path": "./Data\\115_7.tif",
+            "json_path": "./Data\\115_7.json"
+        },
+        {
+            "image_path": "./Data\\106_6.tif",
+            "json_path": "./Data\\106_6.json"
+        },
+        {
+            "image_path": "./Data\\107_8.tif",
+            "json_path": "./Data\\107_8.json"
+        },
+        {
+            "image_path": "./Data\\108_3.tif",
+            "json_path": "./Data\\108_3.json"
+        },
+        {
+            "image_path": "./Data\\109_3.tif",
+            "json_path": "./Data\\109_3.json"
+        },
+        {
+            "image_path": "./Data\\119_5.tif",
+            "json_path": "./Data\\119_5.json"
+        },
+        {
+            "image_path": "./Data\\102_6.tif",
+            "json_path": "./Data\\102_6.json"
+        },
+        {
+            "image_path": "./Data\\130_6.tif",
+            "json_path": "./Data\\130_6.json"
+        },
+        {
+            "image_path": "./Data\\130_3.tif",
+            "json_path": "./Data\\130_3.json"
+        },
+        {
+            "image_path": "./Data\\119_2.tif",
+            "json_path": "./Data\\119_2.json"
+        },
+        {
+            "image_path": "./Data\\136_1.tif",
+            "json_path": "./Data\\136_1.json"
+        },
+        {
+            "image_path": "./Data\\114_1.tif",
+            "json_path": "./Data\\114_1.json"
+        },
+        {
+            "image_path": "./Data\\138_1.tif",
+            "json_path": "./Data\\138_1.json"
+        },
+        {
+            "image_path": "./Data\\111_5.tif",
+            "json_path": "./Data\\111_5.json"
+        },
+        {
+            "image_path": "./Data\\125_4.tif",
+            "json_path": "./Data\\125_4.json"
+        },
+        {
+            "image_path": "./Data\\104_1.tif",
+            "json_path": "./Data\\104_1.json"
+        },
+        {
+            "image_path": "./Data\\117_2.tif",
+            "json_path": "./Data\\117_2.json"
+        },
+        {
+            "image_path": "./Data\\112_8.tif",
+            "json_path": "./Data\\112_8.json"
+        },
+        {
+            "image_path": "./Data\\129_4.tif",
+            "json_path": "./Data\\129_4.json"
+        },
+        {
+            "image_path": "./Data\\139_1.tif",
+            "json_path": "./Data\\139_1.json"
+        },
+        {
+            "image_path": "./Data\\129_1.tif",
+            "json_path": "./Data\\129_1.json"
+        },
+        {
+            "image_path": "./Data\\126_2.tif",
+            "json_path": "./Data\\126_2.json"
+        },
+        {
+            "image_path": "./Data\\101_2.tif",
+            "json_path": "./Data\\101_2.json"
+        },
+        {
+            "image_path": "./Data\\124_8.tif",
+            "json_path": "./Data\\124_8.json"
+        },
+        {
+            "image_path": "./Data\\113_1.tif",
+            "json_path": "./Data\\113_1.json"
+        },
+        {
+            "image_path": "./Data\\114_2.tif",
+            "json_path": "./Data\\114_2.json"
+        },
+        {
+            "image_path": "./Data\\107_3.tif",
+            "json_path": "./Data\\107_3.json"
+        },
+        {
+            "image_path": "./Data\\117_6.tif",
+            "json_path": "./Data\\117_6.json"
+        },
+        {
+            "image_path": "./Data\\101_8.tif",
+            "json_path": "./Data\\101_8.json"
+        },
+        {
+            "image_path": "./Data\\103_1.tif",
+            "json_path": "./Data\\103_1.json"
+        },
+        {
+            "image_path": "./Data\\125_5.tif",
+            "json_path": "./Data\\125_5.json"
+        },
+        {
+            "image_path": "./Data\\102_7.tif",
+            "json_path": "./Data\\102_7.json"
+        },
+        {
+            "image_path": "./Data\\113_7.tif",
+            "json_path": "./Data\\113_7.json"
+        },
+        {
+            "image_path": "./Data\\123_2.tif",
+            "json_path": "./Data\\123_2.json"
+        },
+        {
+            "image_path": "./Data\\118_1.tif",
+            "json_path": "./Data\\118_1.json"
+        },
+        {
+            "image_path": "./Data\\132_4.tif",
+            "json_path": "./Data\\132_4.json"
+        },
+        {
+            "image_path": "./Data\\105_7.tif",
+            "json_path": "./Data\\105_7.json"
+        },
+        {
+            "image_path": "./Data\\112_2.tif",
+            "json_path": "./Data\\112_2.json"
+        },
+        {
+            "image_path": "./Data\\111_6.tif",
+            "json_path": "./Data\\111_6.json"
+        },
+        {
+            "image_path": "./Data\\134_1.tif",
+            "json_path": "./Data\\134_1.json"
+        },
+        {
+            "image_path": "./Data\\126_3.tif",
+            "json_path": "./Data\\126_3.json"
+        },
+        {
+            "image_path": "./Data\\133_3.tif",
+            "json_path": "./Data\\133_3.json"
+        },
+        {
+            "image_path": "./Data\\116_5.tif",
+            "json_path": "./Data\\116_5.json"
+        },
+        {
+            "image_path": "./Data\\116_7.tif",
+            "json_path": "./Data\\116_7.json"
+        },
+        {
+            "image_path": "./Data\\137_1.tif",
+            "json_path": "./Data\\137_1.json"
+        },
+        {
+            "image_path": "./Data\\110_4.tif",
+            "json_path": "./Data\\110_4.json"
+        },
+        {
+            "image_path": "./Data\\135_8.tif",
+            "json_path": "./Data\\135_8.json"
+        },
+        {
+            "image_path": "./Data\\109_1.tif",
+            "json_path": "./Data\\109_1.json"
+        },
+        {
+            "image_path": "./Data\\127_1.tif",
+            "json_path": "./Data\\127_1.json"
+        },
+        {
+            "image_path": "./Data\\132_1.tif",
+            "json_path": "./Data\\132_1.json"
+        },
+        {
+            "image_path": "./Data\\122_7.tif",
+            "json_path": "./Data\\122_7.json"
+        },
+        {
+            "image_path": "./Data\\137_2.tif",
+            "json_path": "./Data\\137_2.json"
+        },
+        {
+            "image_path": "./Data\\133_8.tif",
+            "json_path": "./Data\\133_8.json"
+        },
+        {
+            "image_path": "./Data\\123_7.tif",
+            "json_path": "./Data\\123_7.json"
+        },
+        {
+            "image_path": "./Data\\115_8.tif",
+            "json_path": "./Data\\115_8.json"
+        },
+        {
+            "image_path": "./Data\\128_7.tif",
+            "json_path": "./Data\\128_7.json"
+        },
+        {
+            "image_path": "./Data\\108_5.tif",
+            "json_path": "./Data\\108_5.json"
+        },
+        {
+            "image_path": "./Data\\118_6.tif",
+            "json_path": "./Data\\118_6.json"
+        },
+        {
+            "image_path": "./Data\\128_5.tif",
+            "json_path": "./Data\\128_5.json"
+        },
+        {
+            "image_path": "./Data\\124_6.tif",
+            "json_path": "./Data\\124_6.json"
+        },
+        {
+            "image_path": "./Data\\122_1.tif",
+            "json_path": "./Data\\122_1.json"
+        },
+        {
+            "image_path": "./Data\\103_7.tif",
+            "json_path": "./Data\\103_7.json"
+        },
+        {
+            "image_path": "./Data\\121_8.tif",
+            "json_path": "./Data\\121_8.json"
+        },
+        {
+            "image_path": "./Data\\140_5.tif",
+            "json_path": "./Data\\140_5.json"
+        },
+        {
+            "image_path": "./Data\\127_6.tif",
+            "json_path": "./Data\\127_6.json"
+        },
+        {
+            "image_path": "./Data\\106_5.tif",
+            "json_path": "./Data\\106_5.json"
+        },
+        {
+            "image_path": "./Data\\131_5.tif",
+            "json_path": "./Data\\131_5.json"
+        },
+        {
+            "image_path": "./Data\\120_3.tif",
+            "json_path": "./Data\\120_3.json"
+        },
+        {
+            "image_path": "./Data\\134_4.tif",
+            "json_path": "./Data\\134_4.json"
+        },
+        {
+            "image_path": "./Data\\139_5.tif",
+            "json_path": "./Data\\139_5.json"
+        }
+    ]
+}

@@ -32,30 +32,33 @@ def normalize_img(img: cv2.typing.MatLike) -> cv2.typing.MatLike:
 
 @timer
 @numba.njit
-def binarize_img(img: cv2.typing.MatLike, box_size: int = 5) -> cv2.typing.MatLike:
-    binarized = np.zeros_like(img)
-
+def binarize_img(img: cv2.typing.MatLike, box_size: int | None = 5) -> cv2.typing.MatLike:
     rows = img.shape[0]
     columns = img.shape[1]
 
-    small_rows = rows // box_size
-    small_columns = columns // box_size
+    if box_size is not None:
+        binarized = np.zeros_like(img)
 
-    for y in range(small_rows):
-        for x in range(small_columns):
-            y_start = y * box_size
-            y_end = min(y_start + box_size, rows)
-            x_start = x * box_size
-            x_end = min(x_start + box_size, columns)
+        small_rows = rows // box_size
+        small_columns = columns // box_size
 
-            # Get box values
-            box = img[y_start:y_end, x_start:x_end]
+        for y in range(small_rows):
+            for x in range(small_columns):
+                y_start = y * box_size
+                y_end = min(y_start + box_size, rows)
+                x_start = x * box_size
+                x_end = min(x_start + box_size, columns)
 
-            local_threshold = np.mean(box)
-            box_mask = box >= local_threshold
-            binarized_box = np.where(box_mask, 1, 0)
+                # Get box values
+                box = img[y_start:y_end, x_start:x_end]
 
-            binarized[y_start:y_end, x_start:x_end] = binarized_box
+                local_threshold = np.mean(box)
+                box_mask = box >= local_threshold
+                binarized_box = np.where(box_mask, 1.0, 0.0)
+
+                binarized[y_start:y_end, x_start:x_end] = binarized_box
+    else:
+        binarized = np.where(img >= np.mean(img), 1.0, 0.0).astype(img.dtype)
 
     return binarized
 
@@ -74,6 +77,14 @@ def crop_img(img: cv2.typing.MatLike, left: int, right: int, top: int, bottom: i
     end_y = min(bottom, h - bottom)
 
     return img[start_y:end_y, start_x:end_x]
+
+@timer
+def gaussian_blur(img: cv2.typing.MatLike, kernel_size: int, power: float) -> cv2.typing.MatLike:
+    return cv2.GaussianBlur(img, (kernel_size, kernel_size), sigmaX=power)
+
+@timer
+def median_filter(img: cv2.typing.MatLike, kernel_size: int = 3) -> cv2.typing.MatLike:
+    return cv2.medianBlur(img, kernel_size)
 
 @timer
 def directional_filtering(img: cv2.typing.MatLike, orientation_field: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike, block_size: int=16):

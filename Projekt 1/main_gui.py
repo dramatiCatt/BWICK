@@ -130,7 +130,7 @@ def get_fingerprint_img() -> None:
         return
     
     try:
-        original_img = fpa.img.load_img(path)
+        original_img = fpa.utils.imgprocessing.load_img(path)
         
         img_rgb = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
         
@@ -197,10 +197,8 @@ def authenticate() -> None:
     
     messagebox.showinfo("Sukcess" if result else "Porażka", f"Autentykacja sie {'' if result else 'nie '}powiodla")
 
-# TODO: gaussian blure na znormalizowanym obrazie
-# TODO: filtr medianowy na znormalizowanym obrazku
 # TODO: porównywanie minucji jak w pracy Stolarka na wikampie
-# TODO: może spróbować sieć neuronową dla wykrywania core i delty
+# TODO: może spróbować sieć neuronową dla wykrywania core i delty (HRNET using timm do ekstrakcji cech)
 
 def main():
     global root, current_fingerprint, img_path_label, image_label, templates_data_path_label, current_templates

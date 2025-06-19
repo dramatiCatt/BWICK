@@ -5,7 +5,7 @@ import numpy as np
 from typing import Self
 import json
 from timer import timer
-from .utils import imgprocessing as img, orientation as orient, contour as ctour, poincare, minutiae as minuti, math, point_charge
+from .utils import imgprocessing as imgp, orientation as orient, contour as ctour, poincare, minutiae as minuti, math, point_charge
 
 class FingerprintTemplate():
     TEMPLATE_MINUTIAE = 'minutiae'
@@ -28,7 +28,7 @@ class FingerprintTemplate():
     @classmethod
     @timer
     def from_img_file(cls, img_path: str) -> Self:
-        return cls.from_img(img.load_img(img_path))
+        return cls.from_img(imgp.load_img(img_path))
 
     @classmethod
     @timer
@@ -124,12 +124,16 @@ class Fingerprint():
     @classmethod
     @timer
     def from_file(cls, img_path: str) -> Self:
-        return cls(img.load_img(img_path))
+        return cls(imgp.load_img(img_path))
     
     @timer
     def _preprocess(self) -> None:
         # NORMALIZE FINGERPRINT
-        self._normalized = img.normalize_img(self._original_img)
+        self._normalized = imgp.normalize_img(self._original_img)
+        normalized_u8 = (self._normalized * 255).astype(np.uint8)
+        normalized_u8 = imgp.median_filter(normalized_u8, 3)
+        normalized_u8 = imgp.gaussian_blur(normalized_u8, 5, 0.5)
+        self._normalized = (normalized_u8 / 255.0).astype(np.float64)
 
         # CALCULATE ORIENTATION FIELD
         self._orientation_field, self._reliability_map = orient.gradient_orientation_field(self._normalized, 3, 5, 5)
@@ -149,10 +153,10 @@ class Fingerprint():
         self._reliability_map = self._reliability_map[start_y:end_y, start_x:end_x]
 
         # BINARIZE FINGERPRINT
-        self._binarized = img.binarize_img(self._normalized, 16)
+        self._binarized = imgp.binarize_img(self._normalized, 16)
 
         # SKELETONIZE FINGERPRINT
-        self._skeleton = img.skeletonize_img(self._binarized)
+        self._skeleton = imgp.skeletonize_img(self._binarized)
         self._skeleton[self._reliability_map <= 0] = 0
 
     @timer
@@ -195,11 +199,11 @@ class Fingerprint():
         # POINT CHARGE
         self._polymonial_orientation_field = orient.point_charge_orientation_field(PR, PI, self._orientation_field, core_mask, delta_mask, cores_charges, deltas_charges, 80, 40)
 
-        img.show_img(self._polymonial_orientation_field, title="Polymonial")
+        imgp.show_img(self._polymonial_orientation_field, title="Polymonial")
 
         small_orientation_field, small_weight = orient.average_orientation_field(self._polymonial_orientation_field, self.reliability_map, block_size=8)
         overlay = orient.draw_orientation_field(None, small_orientation_field, small_weight, step=8, line_length=6)
-        img.show_img(overlay, title="Polymonial Orientation Field")
+        imgp.show_img(overlay, title="Polymonial Orientation Field")
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
@@ -240,7 +244,7 @@ class Fingerprint():
 
     @timer
     def show_original(self, stop: bool=True) -> None:
-        img.show_img(self._original_img, "Original")
+        imgp.show_img(self._original_img, "Original")
 
         if stop:
             cv2.waitKey(0)
@@ -248,7 +252,7 @@ class Fingerprint():
 
     @timer
     def show_normalized(self, stop: bool=True) -> None:
-        img.show_img(self.normalized, "Normalized")
+        imgp.show_img(self.normalized, "Normalized")
 
         if stop:
             cv2.waitKey(0)
@@ -256,7 +260,7 @@ class Fingerprint():
 
     @timer
     def show_binarized(self, stop: bool=True) -> None:
-        img.show_img(self.binarized, "Binarized")
+        imgp.show_img(self.binarized, "Binarized")
 
         if stop:
             cv2.waitKey(0)
@@ -264,7 +268,7 @@ class Fingerprint():
 
     @timer
     def show_skeleton(self, stop: bool=True) -> None:
-        img.show_img(self.skeleton, "Skeleton")
+        imgp.show_img(self.skeleton, "Skeleton")
 
         if stop:
             cv2.waitKey(0)
@@ -274,7 +278,7 @@ class Fingerprint():
     def show_orientation_field(self, stop: bool=True) -> None:
         small_orientation_field, small_weight = orient.average_orientation_field(self.orientation_field, self.reliability_map, block_size=8)
         overlay = orient.draw_orientation_field(None, small_orientation_field, small_weight, step=8, line_length=6)
-        img.show_img(overlay, title="Orientation Field")
+        imgp.show_img(overlay, title="Orientation Field")
 
         if stop:
             cv2.waitKey(0)
@@ -282,7 +286,7 @@ class Fingerprint():
 
     @timer
     def show_reliability(self, stop: bool=True) -> None:
-        img.show_img(self.reliability_map, "Reliability")
+        imgp.show_img(self.reliability_map, "Reliability")
         
         if stop:
             cv2.waitKey(0)
@@ -292,7 +296,7 @@ class Fingerprint():
     def show_contour(self, stop: bool=True) -> None:
         skeleton_color = cv2.cvtColor(self.skeleton, cv2.COLOR_GRAY2RGB)
         cv2.drawContours(skeleton_color, [self.contour], -1, (0, 255, 0), thickness=1)
-        img.show_img(skeleton_color, "Contour")
+        imgp.show_img(skeleton_color, "Contour")
         
         if stop:
             cv2.waitKey(0)

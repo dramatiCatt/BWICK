@@ -13,14 +13,12 @@ MINUTIAE_TYPES_LIST = [MINUTIAE_ENDING, MINUTIAE_BIFURCATION]
 class Minutiae():
     MINUTIAE_POS = 'pos'
     MINUTIAE_ANGLE = 'angle'
-    MINUTIAE_RELIABILITY = 'reliability'
     MINUTIAE_TYPE = 'type'
 
     @timer
-    def __init__(self, pos: np.ndarray, angle: float, reliability: float, type_name: str) -> None:
+    def __init__(self, pos: np.ndarray, angle: float, type_name: str) -> None:
         self._pos = pos
         self._angle = angle
-        self._reliability = reliability
         self._type_name = type_name
 
     @classmethod
@@ -29,7 +27,6 @@ class Minutiae():
         return cls(
             np.array(data[cls.MINUTIAE_POS]),
             data[cls.MINUTIAE_ANGLE],
-            data[cls.MINUTIAE_RELIABILITY],
             data[cls.MINUTIAE_TYPE]
         )
 
@@ -38,7 +35,6 @@ class Minutiae():
         return {
             self.MINUTIAE_POS: np.round(self._pos, 4).tolist(),
             self.MINUTIAE_ANGLE: np.round(self._angle, 4),
-            self.MINUTIAE_RELIABILITY: np.round(self._reliability, 4),
             self.MINUTIAE_TYPE: self._type_name
         }
 
@@ -66,7 +62,6 @@ class Minutiae():
         return Minutiae(
             new_pos,
             new_angle,
-            self._reliability,
             self._type_name
         )
 
@@ -79,11 +74,6 @@ class Minutiae():
     @timer
     def angle(self) -> float:
         return self._angle
-
-    @property
-    @timer
-    def reliability(self) -> float:
-        return self._reliability
 
     @property
     @timer
@@ -150,8 +140,7 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
             minutiae.append(
                 Minutiae(
                     m_pos, 
-                    get_point_mean_angle(m_pos, orientation_field, 5), 
-                    reliability_map[y, x],
+                    get_point_mean_angle(m_pos, orientation_field, 5),
                     m_type
                 )
             )
@@ -217,3 +206,8 @@ def compare_minutiae_sets(minutiae_set_A: list[Minutiae], minutiae_set_B: list[M
                 break
     
     return matched
+
+@timer
+def compare_minutiae_sets_Stolarek(minutiae_set_A: list[Minutiae], minutiae_set_B: list[Minutiae], 
+                                    dist_threshold: int = 15, angle_threshold: float = 0.26) -> int:
+    pass
