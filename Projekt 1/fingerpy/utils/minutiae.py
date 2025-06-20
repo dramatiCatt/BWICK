@@ -1,5 +1,3 @@
-import numba.cpython
-import numba.cpython.unsafe
 from timer import timer
 import cv2
 import numpy as np
@@ -8,6 +6,7 @@ from scipy.spatial import KDTree
 from typing import Self
 import numba
 from collections import deque
+from .imgprocessing import show_img
 
 MINUTIAE_ENDING = 'ending'
 MINUTIAE_BIFURCATION = 'bifurcation'
@@ -124,7 +123,7 @@ def get_neightbours_coords(skeleton: cv2.typing.MatLike) -> np.ndarray:
     ]
 
     height, width = skeleton.shape
-    neightbours = np.zeros(shape=(height, width, 8, 2))
+    neightbours = np.zeros(shape=(height, width, 8, 2), dtype=int)
 
     for y in range(height):
         for x in range(width):
@@ -352,16 +351,16 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
     # Upewnij się, że mamy wartości 0 i 1 (a nie 0 i 255)
     skel = (skeleton > 0).astype(np.uint8)
 
-    processed_skeleton, filled_hole_pixels = fill_hole(skel, max_hole_size)
+    # skel, _ = fill_hole(skel, max_hole_size)
 
-    neighbor_count = count_neightbours(processed_skeleton)
+    neighbor_count = count_neightbours(skel)
 
     minutiae: list[Minutiae] = []
 
-    rows, cols = processed_skeleton.shape
+    rows, cols = skel.shape
     for y in range(1, rows - 1):
         for x in range(1, cols - 1):
-            if processed_skeleton[y, x] != 1:
+            if skel[y, x] != 1:
                 continue
 
             # Filtracja krawędzi
@@ -396,7 +395,7 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
             )
 
     print("Przed: " ,len(minutiae))
-    minutiae = postprocess_minutiae(minutiae, processed_skeleton)
+    minutiae = postprocess_minutiae(minutiae, skel)
     print("Po: ", len(minutiae))
     return minutiae
 
