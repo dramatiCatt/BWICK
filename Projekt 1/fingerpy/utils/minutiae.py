@@ -137,13 +137,11 @@ def get_neightbours_coords(skeleton: cv2.typing.MatLike) -> np.ndarray:
     return neightbours
 
 @timer
-def trace_ridge(skeleton: cv2.typing.MatLike, start_y: int, start_x: int, max_length: int) -> list[tuple[int, int]]:
+def trace_ridge(skeleton: cv2.typing.MatLike, start_y: int, start_x: int, max_length: int, 
+                neightbours_count: np.ndarray, neightbours_coords: np.ndarray) -> list[tuple[int, int]]:
     path = []
     current_y, current_x = start_y, start_x
     previous_y, previous_x = -1, -1
-
-    neightbours_count = count_neightbours(skeleton)
-    neightbours_coords = get_neightbours_coords(skeleton)
 
     for _ in range(max_length):
         path.append([current_y, current_x])
@@ -247,6 +245,7 @@ def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.Mat
     minutiae_to_remove = set()
 
     # 0. Ridges Map
+    print("Ridges Map")
     ridge_map = np.zeros_like(skeleton, dtype=int)
     current_ridge_id = 1
 
@@ -273,11 +272,12 @@ def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.Mat
         m.ridge_id = ridge_map[int(m.y), int(m.x)]
 
     # 1. Spur Removal
+    print("Spur Removal")
     for m in minutiae_list:
         if m.type_name != MINUTIAE_ENDING:
             continue
 
-        path = trace_ridge(skeleton, int(m.y), int(m.x), min_ridge_length + 1)
+        path = trace_ridge(skeleton, int(m.y), int(m.x), min_ridge_length + 1, neightbours_count, neightbours_coords)
 
         if len(path) <= min_ridge_length:
             minutiae_to_remove.add(m)
@@ -288,6 +288,7 @@ def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.Mat
         # Na razie uproszczenie: jeśli jest to krótki grzbiet, usuwamy.
 
     # 2. Double Minutiae and Bridge Removal
+    print("Double Minutiae and Bridge Removal")
     for i, m1 in enumerate(minutiae_list):
         if m1 in minutiae_to_remove:
             continue
@@ -325,6 +326,7 @@ def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.Mat
                     minutiae_to_remove.add(m2)
 
     # New Minutiae List
+    print("New Minutiae List")
     processed_minutiae = []
     for m in minutiae_list:
         if m in minutiae_to_remove:
