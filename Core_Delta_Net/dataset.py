@@ -202,9 +202,6 @@ def get_fingerprint_transforms(
         keypoint_params=A.KeypointParams(
             format='xy', 
             label_fields=[],
-            remove_invisible=False,
-            clip=False,
-            min_area=0
-            min_visibility=0.0
+            remove_invisible=False
         ) # 'xy' dla pikseli (x,y)
     )

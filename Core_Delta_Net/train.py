@@ -22,11 +22,8 @@ if __name__ == "__main__":
         scale_limit=0.15,
         apply_horizontal_flip=True,
         apply_vertical_flip=False,
-        apply_brightness_contrast=True,
-        brightness_limit=0.15,
-        contrast_limit=0.15,
-        apply_gaussian_noise=True,
-        noise_limit_std=0.03,
+        apply_brightness_contrast=False,
+        apply_gaussian_noise=False,
         normalize_image=True
     )
 
@@ -286,8 +283,6 @@ if __name__ == "__main__":
                 plt.scatter(core_coords_preds_cpu[idx][0] * width, core_coords_preds_cpu[idx][1] * height, c='green', s=15)
                 if delta_predicted_labels[idx]:
                     plt.scatter(delta_coords_preds_cpu[idx][0] * width, delta_coords_preds_cpu[idx][1] * height, c='orange', s=15)
-                
-                plt.show()
 
     avg_test_loss = running_test_loss / len(test_loader)
     test_delta_accuracy = correct_test_delta_predictions / total_test_delta_predictions if total_test_delta_predictions > 0 else 0.0
@@ -295,3 +290,5 @@ if __name__ == "__main__":
     test_end_time = time.time()
     test_duration = test_end_time - test_start_time
     print(f"--- Ostateczna Strata Testowa: {avg_test_loss:.4f}, Ostateczna Dokładność Delty: {test_delta_accuracy:.4f} (Czas testowania: {test_duration:.2f}s) ---")
+
+    plt.show()
