@@ -152,3 +152,11 @@ def nearest_value_idx(sorted_array: np.ndarray, target_value: float) -> int:
                     math.fabs(target_value - sorted_array[idx - 1]) < math.fabs(target_value - sorted_array[idx])):
         return idx - 1
     return idx
+
+@timer
+def euclidean_distance(x1: float, y1: float, x2: float, y2: float) -> float:
+    return np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+
+@timer
+def angle_berween_points(x1: float, y1: float, x2: float, y2: float) -> float:
+    return np.atan2(y2 - y1, x2 - x1)

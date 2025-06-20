@@ -3,10 +3,11 @@ import numba.cpython.unsafe
 from timer import timer
 import cv2
 import numpy as np
-from .math import get_point_mean_angle, farange, nearest_value_idx
+from .math import get_point_mean_angle, farange, nearest_value_idx, euclidean_distance, angle_berween_points
 from scipy.spatial import KDTree
 from typing import Self
 import numba
+from collections import deque
 
 MINUTIAE_ENDING = 'ending'
 MINUTIAE_BIFURCATION = 'bifurcation'
@@ -22,6 +23,7 @@ class Minutiae():
         self._pos = pos
         self._angle = angle
         self._type_name = type_name
+        self._ridge_id = -1
 
     @classmethod
     @timer
@@ -74,6 +76,16 @@ class Minutiae():
 
     @property
     @timer
+    def x(self) -> float:
+        return self._pos[1]
+    
+    @property
+    @timer
+    def y(self) -> float:
+        return self._pos[0]
+
+    @property
+    @timer
     def angle(self) -> float:
         return self._angle
 
@@ -82,11 +94,251 @@ class Minutiae():
     def type_name(self):
         return self._type_name
 
+    @property
+    @timer
+    def ridge_id(self) -> int:
+        return self._ridge_id
+
+    @ridge_id.setter
+    @timer
+    def ridge_id(self, value: int) -> int:
+        self._ridge_id = value
+        return self._ridge_id
+
+@timer
+def count_neightbours(skeleton: cv2.typing.MatLike) -> np.ndarray:
+    # Definiujemy kernel do zliczania sąsiadów (bez środka)
+    kernel = np.array([[1, 1, 1],
+                       [1, 0, 1],
+                       [1, 1, 1]], dtype=np.uint8)
+
+    # Zastosuj konwolucję w celu zliczenia aktywnych sąsiadów
+    return cv2.filter2D(skeleton, ddepth=-1, kernel=kernel, borderType=cv2.BORDER_CONSTANT)
+
+@timer
+def get_neightbours_coords(skeleton: cv2.typing.MatLike) -> np.ndarray:
+    NEIGHBOR_OFFSETS = [
+        (-1, -1), (-1, 0), (-1, 1),
+        ( 0, -1),          ( 0, 1),
+        ( 1, -1), ( 1, 0), ( 1, 1)
+    ]
+
+    height, width = skeleton.shape
+    neightbours = np.zeros(shape=(height, width, 8, 2))
+
+    for y in range(height):
+        for x in range(width):
+            i = 0
+            for dy, dx in NEIGHBOR_OFFSETS:
+                ny, nx = y + dy, x + dx
+                if 0 <= ny < height and 0 <= nx < width:
+                    neightbours[y, x, i] = [ny, nx]
+                    i += 1
+    
+    return neightbours
+
+@timer
+def trace_ridge(skeleton: cv2.typing.MatLike, start_y: int, start_x: int, max_length: int) -> list[tuple[int, int]]:
+    path = []
+    current_y, current_x = start_y, start_x
+    previous_y, previous_x = -1, -1
+
+    neightbours_count = count_neightbours(skeleton)
+    neightbours_coords = get_neightbours_coords(skeleton)
+
+    for _ in range(max_length):
+        path.append([current_y, current_x])
+        found_next = False
+        
+        for i in range(neightbours_count[current_y, current_x]):
+            ny, nx = neightbours_coords[current_y, current_x, i]
+            if (ny, nx) == (previous_y, previous_x):
+                continue
+
+            if neightbours_count[ny, nx] > 2:
+                continue
+
+            previous_y, previous_x = current_y, current_x
+            current_y, current_x = ny, nx
+            found_next = True
+            break
+            
+        if not found_next:
+            break
+    
+    return path
+
+@timer
+def find_all_ridge_pixels(start_y: int, start_x: int, visited: np.ndarray, 
+                          neightbours_count: np.ndarray, neightbours_coords: np.ndarray) -> list[tuple[int, int]]:
+    q = deque([(start_y, start_x)])
+    visited[start_y, start_x] = True
+    ridge_pixels = [(start_y, start_x)]
+
+    while q:
+        cy, cx = q.popleft()
+        
+        for i in range(neightbours_count[cy, cx]):
+            ny, nx = neightbours_coords[cy, cx, i]
+            if visited[ny, nx]:
+                continue
+
+            q.append((ny, nx))
+            ridge_pixels.append((ny, nx))
+    return ridge_pixels
+
+@timer
+def fill_hole(skeleton: cv2.typing.MatLike, max_hole_size: int) -> tuple[cv2.typing.MatLike, list[tuple[int, int]]]:
+    modified_skeleton = skeleton.copy()
+
+    filled_pixels = []
+
+    height, width = skeleton.shape
+
+    visited_background = np.zeros_like(skeleton, dtype=bool)
+
+    NEIGHBOR_OFFSETS = [
+        (-1, 0), (0, -1), (0, 1), (1, 0)
+    ]
+
+    for r in range(height):
+        for c in range(width):
+            if modified_skeleton[r, c] != 0 or visited_background[r, c]:
+                continue
+
+            current_hole_pixels = []
+            q = deque([(r, c)])
+            visited_background[r, c] = True
+
+            is_closed_hole = True
+
+            while q:
+                cy, cx = q.popleft()
+                current_hole_pixels.append((cy, cx))
+
+                for dy, dx in NEIGHBOR_OFFSETS:
+                    ny, nx = cy + dy, cx + dx
+
+                    if not (0 <= ny < height and 0 <= nx < width):
+                        is_closed_hole = False
+                        break
+
+                    if modified_skeleton[ny, nx] != 0 or visited_background[ny, nx]:
+                        continue
+
+                    visited_background[ny, nx] = True
+                    q.append((ny, nx))
+                
+                if not is_closed_hole:
+                    break
+
+            if not is_closed_hole and len(current_hole_pixels) > max_hole_size:
+                continue
+
+            for hy, hx in current_hole_pixels:
+                modified_skeleton[hy, hx] = 1
+                filled_pixels.append((hy, hx))
+
+    return modified_skeleton, filled_pixels
+
+@timer
+def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.MatLike, min_ridge_length: int = 15,
+                         max_bridge_dist: int = 15, min_distance_between_minutiae: int = 15) -> list[Minutiae]:
+    
+    minutiae_to_remove = set()
+
+    # 0. Ridges Map
+    ridge_map = np.zeros_like(skeleton, dtype=int)
+    current_ridge_id = 1
+
+    neightbours_count = count_neightbours(skeleton)
+    neightbours_coords = get_neightbours_coords(skeleton)
+    
+    visited_pixels = np.zeros_like(skeleton, dtype=bool)
+
+    height, width = skeleton.shape
+
+    for r in range(height):
+        for c in range(width):
+            if skeleton[r, c] != 1 or visited_pixels[r, c]:
+                continue
+
+            ridge_pixels = find_all_ridge_pixels(r, c, visited_pixels, neightbours_count, neightbours_coords)
+                
+            for py, px in ridge_pixels:
+                ridge_map[py, px] = current_ridge_id
+            
+            current_ridge_id += 1
+    
+    for m in minutiae_list:
+        m.ridge_id = ridge_map[int(m.y), int(m.x)]
+
+    # 1. Spur Removal
+    for m in minutiae_list:
+        if m.type_name != MINUTIAE_ENDING:
+            continue
+
+        path = trace_ridge(skeleton, int(m.y), int(m.x), min_ridge_length + 1)
+
+        if len(path) <= min_ridge_length:
+            minutiae_to_remove.add(m)
+
+        # Dodatkowo, jeśli punkt końcowy jest bardzo blisko innego punktu końcowego,
+        # i kąty wskazują na przerwę w grzbiecie, można je połączyć.
+        # To jest bardziej złożone i wymagałoby śledzenia kierunku grzbietu od obu punktów.
+        # Na razie uproszczenie: jeśli jest to krótki grzbiet, usuwamy.
+
+    # 2. Double Minutiae and Bridge Removal
+    for i, m1 in enumerate(minutiae_list):
+        if m1 in minutiae_to_remove:
+            continue
+
+        for j, m2 in enumerate(minutiae_list, start=i + 1):
+            if m2 in minutiae_to_remove:
+                continue
+
+            dist = euclidean_distance(m1.x, m1.y, m2.x, m2.y)
+
+            if dist >= max_bridge_dist:
+                continue
+
+            if m1.type_name == m2.type_name and dist < min_distance_between_minutiae:
+                minutiae_to_remove.add(m2)
+                continue
+
+            if m1.type_name == MINUTIAE_ENDING and m2.type_name == MINUTIAE_ENDING and \
+                m1.ridge_id != -1 and m2.ridge_id != -1 and m1.ridge_id != m2.ridge_id:
+                
+                line_angle = angle_berween_points(m1.x, m1.y, m2.x, m2.y)
+
+                angle_diff1 = abs(m1.angle - line_angle)
+                angle_diff2 = abs(m2.angle - line_angle)
+
+                angle_diff1 = min(angle_diff1, np.pi - angle_diff1)
+                angle_diff2 = min(angle_diff2, np.pi - angle_diff2)
+
+                angle_threshold_for_bridge = np.pi / 4
+
+                if (abs(angle_diff1 - np.pi / 2) < angle_threshold_for_bridge and
+                    abs(angle_diff2 - np.pi / 2) < angle_threshold_for_bridge):
+
+                    minutiae_to_remove.add(m1)
+                    minutiae_to_remove.add(m2)
+
+    # New Minutiae List
+    processed_minutiae = []
+    for m in minutiae_list:
+        if m in minutiae_to_remove:
+            continue
+        processed_minutiae.append(m)
+
+    return processed_minutiae
+
 @timer
 def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.MatLike,
                      orientation_field: cv2.typing.MatLike, 
                      border_contour: np.ndarray | None = None, border: int = 10,
-                     reliability_threshold: float = 0.5) -> list[Minutiae]:
+                     reliability_threshold: float = 0.5, max_hole_size: int = 10) -> list[Minutiae]:
     """
     Ekstrahuje punkty minutiae (zakończenia i rozwidlenia) z binarnego obrazu szkieletowego.
 
@@ -100,20 +352,16 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
     # Upewnij się, że mamy wartości 0 i 1 (a nie 0 i 255)
     skel = (skeleton > 0).astype(np.uint8)
 
-    # Definiujemy kernel do zliczania sąsiadów (bez środka)
-    kernel = np.array([[1, 1, 1],
-                       [1, 0, 1],
-                       [1, 1, 1]], dtype=np.uint8)
+    processed_skeleton, filled_hole_pixels = fill_hole(skel, max_hole_size)
 
-    # Zastosuj konwolucję w celu zliczenia aktywnych sąsiadów
-    neighbor_count = cv2.filter2D(skel, ddepth=-1, kernel=kernel, borderType=cv2.BORDER_CONSTANT)
+    neighbor_count = count_neightbours(processed_skeleton)
 
-    minutiae = []
+    minutiae: list[Minutiae] = []
 
-    rows, cols = skel.shape
+    rows, cols = processed_skeleton.shape
     for y in range(1, rows - 1):
         for x in range(1, cols - 1):
-            if skel[y, x] != 1:
+            if processed_skeleton[y, x] != 1:
                 continue
 
             # Filtracja krawędzi
@@ -147,6 +395,9 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
                 )
             )
 
+    print("Przed: " ,len(minutiae))
+    minutiae = postprocess_minutiae(minutiae, processed_skeleton)
+    print("Po: ", len(minutiae))
     return minutiae
 
 @timer
@@ -210,7 +461,7 @@ def compare_minutiae_sets(minutiae_set_A: list[Minutiae], minutiae_set_B: list[M
     return matched
 
 @timer
-def _transform_minutiae_set_Stolarek_numba(m1_x_coords: np.ndarray, m1_y_coords: np.ndarray, m1_angles: np.ndarray,
+def _get_best_transform_Stolarek(m1_x_coords: np.ndarray, m1_y_coords: np.ndarray, m1_angles: np.ndarray,
                                            m2_x_coords: np.ndarray, m2_y_coords: np.ndarray, m2_angles: np.ndarray,
                                            angle_threshold: float,
                                            delta_x_array: np.ndarray, delta_y_array: np.ndarray, angle_array: np.ndarray,
@@ -311,7 +562,7 @@ def transform_minutiae_set_Stolarek(minutiae_set: list[Minutiae], target_minutia
     cos_angles_grid = np.cos(angle_array)
     sin_angles_grid = np.sin(angle_array)
 
-    best_delta_x, best_delta_y, best_angle = _transform_minutiae_set_Stolarek_numba(
+    best_delta_x, best_delta_y, best_angle = _get_best_transform_Stolarek(
         m1_x_coords, m1_y_coords, m1_angles,
         m2_x_coords, m2_y_coords, m2_angles,
         angle_threshold,
