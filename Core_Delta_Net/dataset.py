@@ -42,7 +42,6 @@ class FingerprintDataset(Dataset[tuple[np.ndarray[tuple[int, ...]], torch.Tensor
 
         has_delta = image_point_data.get('delta') is not None
         
-        breakpoint()
         transform_params: dict[str, np.ndarray[tuple[int, ...]] | list[list[int]]]= {
             'image': image_np,
             'keypoints': [image_point_data['core']]
@@ -200,5 +199,12 @@ def get_fingerprint_transforms(
     # by Albumentations wiedziało, jak transformować punkty.
     return A.Compose(
         transforms_list,
-        keypoint_params=A.KeypointParams(format='xy', label_fields=[]) # 'xy' dla pikseli (x,y)
+        keypoint_params=A.KeypointParams(
+            format='xy', 
+            label_fields=[],
+            remove_invisible=False,
+            clip=False,
+            min_area=0
+            min_visibility=0.0
+        ) # 'xy' dla pikseli (x,y)
     )
