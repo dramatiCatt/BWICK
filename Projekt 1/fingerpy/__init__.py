@@ -344,10 +344,12 @@ def create_and_save_templates(save_path: str, fingerprints_paths: list[str]) -> 
     return templates
 
 @timer
-def authenticate(fingerprint_minutiae: list[minuti.Minutiae], fingerprint_templates: FingerprintTemplate, auth_threashold: float) -> bool:
+def authenticate(fingerprint_minutiae: list[minuti.Minutiae], fingerprint_templates: list[FingerprintTemplate], auth_threashold: float) -> bool:
     best_match = 0
     for template in fingerprint_templates:
-        matched = minuti.compare_minutiae_sets(fingerprint_minutiae, template.minutiae)
+        transformed_minutiae = minuti.transform_minutiae_set_Stolarek(fingerprint_minutiae, template.minutiae, 
+                                                                      0.24 * np.pi, 15, 5, 15, 5, 0.5 * np.pi, 0.25 * np.pi)
+        matched = minuti.compare_minutiae_sets(transformed_minutiae, template.minutiae)
         best_match = max(best_match, matched)
 
     match_percent = 0.0

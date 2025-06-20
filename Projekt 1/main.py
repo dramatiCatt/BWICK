@@ -162,5 +162,5 @@ def main() -> None:
         template.show_points(img=fingerprint.skeleton, stop=True)
 
 if __name__ == "__main__":
-    main()
-    # test_authentication()
+    # main()
+    test_authentication()

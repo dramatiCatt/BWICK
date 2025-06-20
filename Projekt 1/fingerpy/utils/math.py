@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import numba
 from scipy.spatial import cKDTree
+import math
 
 @timer
 @numba.njit
@@ -119,3 +120,35 @@ def get_point_mean_angle(point: np.ndarray | None, orientation_field: cv2.typing
 
     mean_angle = 0.5 * np.arctan2(np.mean(sin_vals), np.mean(cos_vals))
     return mean_angle
+
+@timer
+def farange(start: float, stop: float, step: float) -> np.ndarray:
+    if step <= 0:
+        raise ValueError("Step must be greater than 0")
+    
+    if start > stop:
+        return np.array([])
+    
+    num_elements = int(np.floor((stop - start) / step) + 1)
+    return np.linspace(start=start, stop=stop, num=num_elements)
+
+@timer
+def nearest_value(value_array: np.ndarray, target_value: float) -> float:
+    if value_array.size == 0:
+        raise ValueError("Array cannot be empty")
+    
+    differences = np.abs(value_array - target_value)
+
+    min_diffrence_index = np.argmin(differences)
+
+    return value_array[min_diffrence_index]
+
+@timer
+@numba.njit
+def nearest_value_idx(sorted_array: np.ndarray, target_value: float) -> int:
+    idx = np.searchsorted(sorted_array, target_value, side='left')
+
+    if idx > 0 and (idx == len(sorted_array) or \
+                    math.fabs(target_value - sorted_array[idx - 1]) < math.fabs(target_value - sorted_array[idx])):
+        return idx - 1
+    return idx

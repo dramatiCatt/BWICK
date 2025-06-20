@@ -1,7 +1,9 @@
+import numba.cpython
+import numba.cpython.unsafe
 from timer import timer
 import cv2
 import numpy as np
-from .math import get_point_mean_angle
+from .math import get_point_mean_angle, farange, nearest_value_idx
 from scipy.spatial import KDTree
 from typing import Self
 import numba
@@ -208,6 +210,193 @@ def compare_minutiae_sets(minutiae_set_A: list[Minutiae], minutiae_set_B: list[M
     return matched
 
 @timer
-def compare_minutiae_sets_Stolarek(minutiae_set_A: list[Minutiae], minutiae_set_B: list[Minutiae], 
-                                    dist_threshold: int = 15, angle_threshold: float = 0.26) -> int:
-    pass
+def _transform_minutiae_set_Stolarek_numba(m1_x_coords: np.ndarray, m1_y_coords: np.ndarray, m1_angles: np.ndarray,
+                                           m2_x_coords: np.ndarray, m2_y_coords: np.ndarray, m2_angles: np.ndarray,
+                                           angle_threshold: float,
+                                           delta_x_array: np.ndarray, delta_y_array: np.ndarray, angle_array: np.ndarray,
+                                           cos_angles_grid: np.ndarray, sin_angles_grid: np.ndarray) -> tuple[float, float, float]:
+    A = np.zeros(shape=(len(delta_x_array), len(delta_y_array), len(angle_array)))
+
+    offsets = np.array([-1, 0, 1], dtype=np.int64)
+
+    ox, oy, oa = np.meshgrid(offsets, offsets, offsets, indexing='ij')
+
+    ox_flat = ox.flatten()
+    oy_flat = oy.flatten()
+    oa_flat = oa.flatten()
+
+    num_offsets = len(offsets)**3
+
+    all_indices_to_increment_x = []
+    all_indices_to_increment_y = []
+    all_indices_to_increment_angle = []
+
+    for idx1, m1_angle in enumerate(m1_angles):
+        m1_x = m1_x_coords[idx1]
+        m1_y = m1_y_coords[idx1]
+        
+        for idx2, m2_angle in enumerate(m2_angles):
+            m2_x = m2_x_coords[idx2]
+            m2_y = m2_y_coords[idx2]
+
+            angle_diff_raw = np.abs(m2_angle + angle_array - m1_angle)
+            angle_diff = np.minimum(angle_diff_raw, 2.0 * np.pi - angle_diff_raw)
+
+            valid_angle_indices = np.where(angle_diff < angle_threshold)[0]
+
+            if valid_angle_indices.size == 0:
+                continue
+
+            current_cos_thetas = cos_angles_grid[valid_angle_indices]
+            current_sin_thetas = sin_angles_grid[valid_angle_indices]
+
+            transformed_m2_x = current_cos_thetas * m2_x - current_sin_thetas * m2_y
+            transformed_m2_y = current_sin_thetas * m2_x + current_cos_thetas * m2_y
+
+            delta_xs = m1_x - transformed_m2_x
+            delta_ys = m1_y - transformed_m2_y
+
+            delta_x_idx_batch = np.array([nearest_value_idx(delta_x_array, dx) for dx in delta_xs])
+            delta_y_idx_batch = np.array([nearest_value_idx(delta_y_array, dy) for dy in delta_ys])
+
+            if delta_x_idx_batch.size > 0:
+                for i in range(delta_x_idx_batch.size):
+                    all_indices_to_increment_x.append(delta_x_idx_batch[i])
+                    all_indices_to_increment_y.append(delta_y_idx_batch[i])
+                    all_indices_to_increment_angle.append(valid_angle_indices[i])
+
+                    for offset_idx in range(num_offsets):
+                        n_dx = delta_x_idx_batch[i] + ox_flat[offset_idx]
+                        n_dy = delta_y_idx_batch[i] + oy_flat[offset_idx]
+                        n_angle = valid_angle_indices[i] + oa_flat[offset_idx]
+
+                        if (0 <= n_dx < len(delta_x_array) and
+                            0 <= n_dy < len(delta_y_array) and
+                            0 <= n_angle < len(angle_array)):
+                            all_indices_to_increment_x.append(n_dx)
+                            all_indices_to_increment_y.append(n_dy)
+                            all_indices_to_increment_angle.append(n_angle)
+
+    np.add.at(A, (all_indices_to_increment_x, all_indices_to_increment_y, all_indices_to_increment_angle), 1)
+
+    if A.sum() == 0:
+        return np.nan, np.nan, np.nan
+    
+    best_transform_indices = np.unravel_index(np.argmax(A), A.shape)
+
+    best_delta_x = delta_x_array[best_transform_indices[0]]
+    best_delta_y = delta_y_array[best_transform_indices[1]]
+    best_angle = angle_array[best_transform_indices[2]]
+
+    return best_delta_x, best_delta_y, best_angle
+
+@timer
+def transform_minutiae_set_Stolarek(minutiae_set: list[Minutiae], target_minutiae_set: list[Minutiae], 
+                                    angle_threshold: float = 0.24 * np.pi, 
+                                    delta_x_limit: float = 5, delta_x_step: float = 1,
+                                    delta_y_limit: float = 5, delta_y_step: float = 1,
+                                    angle_limit: float = 0.08 * np.pi, angle_step: float = 0.006 * np.pi) -> list[Minutiae]:
+    delta_x_array = farange(-delta_x_limit, delta_x_limit, delta_x_step)
+    delta_y_array = farange(-delta_y_limit, delta_y_limit, delta_y_step)
+    angle_array = farange(-np.abs(angle_limit), np.abs(angle_limit), angle_step)
+
+    m1_x_coords = np.array([m.pos[1] for m in minutiae_set])
+    m1_y_coords = np.array([m.pos[0] for m in minutiae_set])
+    m1_angles = np.array([m.angle for m in minutiae_set])
+
+    m2_x_coords = np.array([m.pos[1] for m in target_minutiae_set])
+    m2_y_coords = np.array([m.pos[0] for m in target_minutiae_set])
+    m2_angles = np.array([m.angle for m in target_minutiae_set])
+
+    cos_angles_grid = np.cos(angle_array)
+    sin_angles_grid = np.sin(angle_array)
+
+    best_delta_x, best_delta_y, best_angle = _transform_minutiae_set_Stolarek_numba(
+        m1_x_coords, m1_y_coords, m1_angles,
+        m2_x_coords, m2_y_coords, m2_angles,
+        angle_threshold,
+        delta_x_array, delta_y_array, angle_array,
+        cos_angles_grid, sin_angles_grid
+    )
+
+    if np.isnan(best_delta_x):
+        print("Brak pasujących transformacji. Zwracam kopię oryginalnego zestawu")
+        return list(minutiae_set)
+
+    transformed_set = []
+    for m in minutiae_set:
+        new_x = m.pos[1] + best_delta_x
+        new_y = m.pos[0] + best_delta_y
+        new_angle = m.angle + best_angle
+
+        transformed_set.append(
+            Minutiae(
+                np.array([new_y, new_x]),
+                new_angle,
+                m.type_name
+            )
+        )
+    
+    return transformed_set
+
+    # for m1 in minutiae_set:
+    #     for m2 in target_minutiae_set:
+    #         for angle_idx, angle in enumerate(angle_array):
+    #             angle_diff = abs(m2.angle + angle - m1.angle)
+    #             angle_diff = min(angle_diff, 2.0 * np.pi - angle_diff)
+                
+    #             if angle_diff >= angle_threshold:
+    #                 continue
+
+    #             cos_theta = np.cos(angle)
+    #             sin_theta = np.sin(angle)
+
+    #             delta_x = m1.pos[1] - (cos_theta * m2.pos[1] - sin_theta * m2.pos[0])
+    #             delta_y = m1.pos[0] - (sin_theta * m2.pos[1] + cos_theta * m2.pos[0])
+
+    #             near_delta_x = nearest_value(delta_x_array, delta_x)
+    #             near_delta_y = nearest_value(delta_y_array, delta_y)
+
+    #             delta_x_idx = np.where(delta_x_array == near_delta_x)[0]
+    #             delta_y_idx = np.where(delta_y_array == near_delta_y)[0]
+
+    #             A[delta_x_idx, delta_y_idx, angle_idx] += 1
+    #             for i in range(-1, 2, 1):
+    #                 for j in range(-1, 2, 1):
+    #                     for k in range(-1, 2, 1):
+    #                         i_idx = delta_x_idx + i
+    #                         if i_idx < 0 or i_idx >= len(delta_x_array):
+    #                             continue
+
+    #                         j_idx = delta_y_idx + j
+    #                         if j_idx < 0 or j_idx >= len(delta_y_array):
+    #                             continue
+
+    #                         k_idx = angle_idx + k
+    #                         if k_idx < 0 or k_idx >= len(angle_array):
+    #                             continue
+                            
+    #                         A[i_idx, j_idx, k_idx] += 1
+    
+    # best_transform = np.argmax(A, keepdims=True)
+
+    # best_delta_x = delta_x_array[best_transform[0]]
+    # best_delta_y = delta_y_array[best_transform[1]]
+    # best_angle = angle_array[best_transform[2]]
+
+    # transformed_set = []
+
+    # for m in minutiae_set:
+    #     new_x = m.pos[1] + best_delta_x
+    #     new_y = m.pos[0] + best_delta_y
+    #     new_angle = m.angle + best_angle
+
+    #     transformed_set.append(
+    #         Minutiae(
+    #             np.ndarray([new_y, new_x]),
+    #             new_angle,
+    #             m.type_name
+    #         )
+    #     )
+
+    # return transformed_set
