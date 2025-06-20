@@ -42,20 +42,21 @@ class FingerprintDataset(Dataset[tuple[np.ndarray[tuple[int, ...]], torch.Tensor
 
         has_delta = image_point_data.get('delta') is not None
         
+        breakpoint()
         transform_params: dict[str, np.ndarray[tuple[int, ...]] | list[list[int]]]= {
             'image': image_np,
-            'core': image_point_data['core']
+            'keypoints': [image_point_data['core']]
         }
 
         if has_delta:
-            transform_params['delta'] = image_point_data['delta']
+            transform_params['keypoints'].append(image_point_data['delta'])
 
         # Zastosuj transformacje
         if self.transform:
             augmented: dict[str, list[int]] = self.transform(**transform_params)
             image_transformed = augmented['image']
-            core_transformed = augmented['core']
-            delta_transformed = augmented.get('delta')
+            core_transformed = augmented['keypoints'][0]
+            delta_transformed = None if len(augmented['keypoints']) == 1 else augmented['keypoints'][1]
         else:
             image_transformed = A.Compose([
                 A.Resize(self.target_image_size[1], self.target_image_size[0]), # height, width

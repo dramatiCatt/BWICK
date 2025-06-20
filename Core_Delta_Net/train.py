@@ -7,6 +7,8 @@ if __name__ == "__main__":
     import torch.nn as nn
     import torch.optim as optim
     import time
+    import matplotlib.pyplot as plt
+    import numpy as np
 
     # DATA
     image_target_size = (224, 224)
@@ -78,7 +80,12 @@ if __name__ == "__main__":
     # TRAIN
     num_epochs = 100
     best_val_loss = float('inf')
+    best_train_loss = float('inf')
+    best_epoch = -1
     model_save_path = "best_fingerprint_model.pth"
+
+    train_losses_per_epoch: list[float] = []
+    val_losses_per_epoch: list[float] = []
 
     patience = 10
     epochs_no_improve = 0
@@ -125,13 +132,14 @@ if __name__ == "__main__":
                 print(f"Epoch {epoch+1}/{num_epochs}, Batch {batch_idx+1}/{len(train_loader)}, Train Loss: {total_loss.item():.4f}")
 
         avg_train_loss = running_train_loss / len(train_loader)
+        train_losses_per_epoch.append(avg_train_loss)
 
         train_epoch_end_time = time.time()
         train_epoch_duration = train_epoch_end_time - epoch_start_time
         print(f"--- Epoch {epoch+1} Treningowa Strata: {avg_train_loss:.4f} (Czas treningu: {train_epoch_duration:.2f}s) ---")
 
         # WALIDACJA
-        val_start_time = time.time() # Czas rozpoczęcia walidacji w epoce
+        val_start_time = time.time()
         model.eval()
         running_val_loss = 0.0
 
@@ -168,18 +176,22 @@ if __name__ == "__main__":
 
         avg_val_loss = running_val_loss / len(val_loader)
         val_delta_accuracy = correct_delta_predictions / total_delta_predictions if total_delta_predictions > 0 else 0.0
-        
+        val_losses_per_epoch.append(avg_val_loss)
+
         val_end_time = time.time()
         val_duration = val_end_time - val_start_time
         print(f"--- Epoch {epoch+1} Walidacyjna Strata: {avg_val_loss:.4f}, Dokładność Delty: {val_delta_accuracy:.4f} (Czas walidacji: {val_duration:.2f}s) ---")
 
         scheduler.step(avg_val_loss)
 
-        if avg_val_loss < best_val_loss:
+        if avg_val_loss < best_val_loss and avg_train_loss < best_train_loss:
             print(f"Walidacyjna strata poprawiła się z {best_val_loss:.4f} do {avg_val_loss:.4f}. Zapisuję model...")
             best_val_loss = avg_val_loss
+            best_train_loss = avg_train_loss
             torch.save(model.state_dict(), model_save_path)
             epochs_no_improve = 0
+
+            best_epoch = epoch
         else:
             epochs_no_improve += 1
             print(f"Walidacyjna strata nie poprawiła się. Cierpliwość: {epochs_no_improve}/{patience}")
@@ -194,6 +206,27 @@ if __name__ == "__main__":
     total_training_end_time = time.time() # Czas zakończenia całego treningu
     total_training_duration = total_training_end_time - total_training_start_time
     print(f"\nTrening zakończony! Całkowity czas treningu: {total_training_duration:.2f} sekund")
+
+    # SHOW LOSSES GRAPH
+    epochs = np.arange(1, len(train_losses_per_epoch) + 1).astype(np.int32)
+
+    plt.figure(figsize=(10, 5))
+
+    plt.subplot(1, 2, 1)
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.title("Train Loss")
+    plt.plot(epochs, train_losses_per_epoch)
+    plt.scatter(best_epoch + 1, best_train_loss, c='blue', s=15)
+
+    plt.subplot(1, 2, 2)
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.title("Validate Loss")
+    plt.plot(epochs, val_losses_per_epoch)
+    plt.scatter(best_epoch + 1, best_val_loss, c='blue', s=15)
+
+    plt.show()
 
     print(f"\nRozpoczynanie oceny na zbiorze testowym...")
     test_start_time = time.time()
@@ -211,9 +244,9 @@ if __name__ == "__main__":
             delta_coords_gt = delta_coords_gt.to(device)
             delta_existence_gt = delta_existence_gt.to(device)
 
-            core_preds, delta_coords_preds, delta_existence_logits = model(images)
+            core_coords_preds, delta_coords_preds, delta_existence_logits = model(images)
 
-            loss_core = loss_fn_coords(core_preds, core_coords_gt)
+            loss_core = loss_fn_coords(core_coords_preds, core_coords_gt)
             loss_delta_existence = loss_fn_delta_existence(delta_existence_logits.squeeze(1), delta_existence_gt)
 
             delta_mask = delta_existence_gt.unsqueeze(1).expand_as(delta_coords_preds)
@@ -231,6 +264,30 @@ if __name__ == "__main__":
             
             correct_test_delta_predictions += (delta_predicted_labels == delta_existence_gt).sum().item()
             total_test_delta_predictions += delta_existence_gt.numel()
+
+            images_cpu = images.cpu()
+            core_coords_gt_cpu = core_coords_gt.cpu()
+            delta_coords_gt_cpu = delta_coords_gt.cpu()
+            core_coords_preds_cpu = core_coords_preds.cpu()
+            delta_coords_preds_cpu = delta_coords_preds.cpu()
+
+            for idx, image in enumerate(images_cpu):
+                transposed_image = np.transpose(image, (1, 2, 0))
+
+                plt.figure(figsize=(5, 5))
+                plt.imshow(transposed_image)
+
+                width, height, _ = transposed_image.shape
+
+                plt.scatter(core_coords_gt_cpu[idx][0] * width, core_coords_gt_cpu[idx][1] * height, c='blue', s=15)
+                if delta_existence_gt[idx]:
+                    plt.scatter(delta_coords_gt_cpu[idx][0] * width, delta_coords_gt_cpu[idx][1] * height, c='red', s=15)
+
+                plt.scatter(core_coords_preds_cpu[idx][0] * width, core_coords_preds_cpu[idx][1] * height, c='green', s=15)
+                if delta_predicted_labels[idx]:
+                    plt.scatter(delta_coords_preds_cpu[idx][0] * width, delta_coords_preds_cpu[idx][1] * height, c='orange', s=15)
+                
+                plt.show()
 
     avg_test_loss = running_test_loss / len(test_loader)
     test_delta_accuracy = correct_test_delta_predictions / total_test_delta_predictions if total_test_delta_predictions > 0 else 0.0
