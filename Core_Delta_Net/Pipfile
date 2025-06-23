@@ -16,6 +16,8 @@ torch = {version = "==2.7.1", index = "pytorch"}
 torchaudio = {version = "==2.7.1", index = "pytorch"}
 torchvision = {version = "==0.22.1", index = "pytorch"}
 timm = "*"
+numba = "*"
+opencv-contrib-python = "*"
 
 [dev-packages]
 

@@ -40,9 +40,15 @@ if __name__ == "__main__":
 
     split_data_json = "data_split.json"
 
-    train_dataset = FingerprintDataset(split_data_json, "train", transform=train_transforms, target_image_size=image_target_size)
-    val_dataset = FingerprintDataset(split_data_json, "val", transform=val_test_transforms, target_image_size=image_target_size)
-    test_dataset = FingerprintDataset(split_data_json, "test", transform=val_test_transforms, target_image_size=image_target_size)
+    data_type = "original"
+    # data_type = "normalized"
+    # data_type = "orientation_field"
+    # data_type = "binarized"
+    # data_type = "skeleton"
+
+    train_dataset = FingerprintDataset(split_data_json, "train", data_type, transform=train_transforms, target_image_size=image_target_size)
+    val_dataset = FingerprintDataset(split_data_json, "val", data_type, transform=val_test_transforms, target_image_size=image_target_size)
+    test_dataset = FingerprintDataset(split_data_json, "test", data_type, transform=val_test_transforms, target_image_size=image_target_size)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"\nUżywam urządzenia: {device}")

@@ -6,35 +6,54 @@ import numpy as np # Albumentations często pracuje z NumPy arrays
 import albumentations as A
 from albumentations.pytorch import ToTensorV2 # Specjalna transformacja dla PyTorch
 import cv2
+from typing import Literal
 
-class FingerprintDataset(Dataset[tuple[np.ndarray[tuple[int, ...]], torch.Tensor, torch.Tensor, torch.Tensor]]):
-    def __init__(self, split_file_path: str, split_type: str, transform: A.Compose | None = None, target_image_size: tuple[int, int] = (224, 224)):
+SPLIT_TYPE = Literal["train", "val", "test"]
+DATA_TYPE = Literal["original", "normalized", "orientation_field", "binarized", "skeleton"]
+class FingerprintDataset(Dataset[tuple[np.ndarray[tuple[int, ...], np.dtype[np.float64]], torch.Tensor, torch.Tensor, torch.Tensor]]):
+    def __init__(self, split_file_path: str, split_type: SPLIT_TYPE, data_type: DATA_TYPE, transform: A.Compose | None = None, target_image_size: tuple[int, int] = (224, 224)):
         """
         Args:
             split_file_path (str): Ścieżka do pliku JSON z podziałem danych (np. "dataset_split.json").
-            split_type (str): Typ podziału ('train', 'val', 'test').
+            split_type (SPLIT_TYPE): Typ podziału ('train', 'val', 'test').
+            data_type (DATA_TYPE): Typ danych ('original', 'normalized', 'orientation_field', 'binarized', 'skeleton')
             transform (albumentations.Compose, optional): Opcjonalne transformacje z Albumentations.
             target_image_size (Tuple[int, int]): Rozmiar do którego obrazy zostaną przeskalowane (szerokość, wysokość).
         """
         with open(split_file_path, 'r', encoding='utf-8') as f:
-            self.data: list[dict[str, str | int]] = json.load(f)[split_type]
+            self.data: list[dict[str, str]] = json.load(f)[split_type]
         self.transform: A.Compose | None = transform
         self.target_image_size: tuple[int, int] = target_image_size
+
+        if data_type == "original":
+            self.target_image_path = "image_path"
+            self.target_json_path = "json_path"
+        elif data_type == "normalized":
+            self.target_image_path = "normalized_path"
+            self.target_json_path = "crop_json_path"
+        elif data_type == "orientation_field":
+            self.target_image_path = "orientation_field_path"
+            self.target_json_path = "crop_json_path"
+        elif data_type == "binarized":
+            self.target_image_path = "binarized_path"
+            self.target_json_path = "crop_json_path"
+        elif data_type == "skeleton":
+            self.target_image_path = "normalized_path"
+            self.target_json_path = "crop_json_path"
 
     def __len__(self):
         return len(self.data)
 
-    def __getitem__(self, idx: int) -> tuple[np.ndarray[tuple[int, ...]], torch.Tensor, torch.Tensor, torch.Tensor]:
-        sample: dict[str, str | int] = self.data[idx]
-        image_path: str | int = sample["image_path"]
-        assert isinstance(image_path, str)
+    def __getitem__(self, idx: int) -> tuple[np.ndarray[tuple[int, ...], np.dtype[np.float64]], torch.Tensor, torch.Tensor, torch.Tensor]:
+        sample: dict[str, str] = self.data[idx]
+        image_path: str = sample[self.target_image_path]
 
         image: Image.Image = Image.open(image_path).convert("RGB")
-        image_np: np.ndarray[tuple[int, ...]] = np.array(image)
+        image_np: np.ndarray[tuple[int, ...], np.dtype[np.float64]] = np.array(image)
 
         original_width, original_height = image.size
 
-        json_path: str | int = sample["json_path"]
+        json_path: str | int = sample[self.target_json_path]
         assert isinstance(json_path, str)
         image_point_data: dict[str, list[int]] = {}
         with open(json_path, 'r') as f:
@@ -42,7 +61,7 @@ class FingerprintDataset(Dataset[tuple[np.ndarray[tuple[int, ...]], torch.Tensor
 
         has_delta = image_point_data.get('delta') is not None
         
-        transform_params: dict[str, np.ndarray[tuple[int, ...]] | list[list[int]]]= {
+        transform_params: dict[str, np.ndarray[tuple[int, ...], np.dtype[np.float64]] | list[list[int]]]= {
             'image': image_np,
             'keypoints': [image_point_data['core']]
         }

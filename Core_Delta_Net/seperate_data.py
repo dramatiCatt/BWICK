@@ -5,7 +5,7 @@ if __name__ == "__main__":
     import random
     from collections import defaultdict
 
-    def load_data_paths(data_dir: str) -> list[dict[str, str | int]]:
+    def load_data_paths(data_dir: str) -> list[dict[str, int | dict[str, str]]]:
         """
         Wczytuje ścieżki do obrazów i odpowiadających im plików JSON,
         oraz parsuje dane z JSON. Dodatkowo ekstrahuje numer palca z nazwy pliku.
@@ -18,16 +18,29 @@ if __name__ == "__main__":
                         i zawiera ścieżkę do obrazu, współrzędne core i delta (jeśli istnieje),
                         flagę is_delta_present oraz numer palca.
         """
-        data_samples : list[dict[str, str | int]] = []
+        data_samples : list[dict[str, int | dict[str, str]]] = []
         
         # Przejdź przez wszystkie pliki w katalogu
         for filename in os.listdir(data_dir):
-            if not filename.lower().endswith(('.tif', '.png', '.jpg', '.jpeg', '.bmp')):
+            if not filename.lower().endswith('.tif'):
                 continue
 
             image_path: str = os.path.join(data_dir, filename)
-            json_filename: str = os.path.splitext(filename)[0] + '.json'
+
+            filename = os.path.splitext(filename)[0]
+
+            json_filename: str = filename + '.json'
             json_path: str = os.path.join(data_dir, json_filename)
+
+            crop_json_path: str = os.path.join(data_dir, filename + "_crop.json")
+
+            normalized_path: str = os.path.join(data_dir, filename + "_normalized.png")
+
+            orientation_field_path: str = os.path.join(data_dir, filename + "_orientation_field.png")
+            
+            binarized_path: str = os.path.join(data_dir, filename + "_binarized.png")
+            
+            skeleton_path: str = os.path.join(data_dir, filename + "_skeleton.png")
 
             # Ekstrakcja numeru palca z nazwy pliku 1nn_n.tif
             try:
@@ -52,13 +65,22 @@ if __name__ == "__main__":
                     print(f"Ostrzeżenie: Plik JSON {json_path} nie zawiera 'core'. Pomijam.")
                     continue
 
-                data : dict[str, str | int] = {
-                    "finger_id" : finger_id,
+                data : dict[str, str] = {
                     "image_path" : image_path,
-                    "json_path" : json_path
+                    "json_path" : json_path,
+                    "crop_json_path" : crop_json_path,
+                    "normalized_path" : normalized_path,
+                    "orientation_field_path" : orientation_field_path,
+                    "binarized_path" : binarized_path,
+                    "skeleton_path" : skeleton_path
                 }
 
-                data_samples.append(data)
+                finger_data : dict[str, int | dict[str, str]] = {
+                    "finger_id" : finger_id,
+                    "data": data
+                }
+
+                data_samples.append(finger_data)
 
             except json.JSONDecodeError:
                 print(f"Błąd parsowania JSON w pliku: {json_path}. Pomijam.")
@@ -71,12 +93,12 @@ if __name__ == "__main__":
         return data_samples
 
     def split_data_by_finger(
-        data_samples: list[dict[str, str | int]],
+        data_samples: list[dict[str, int | dict[str, str]]],
         train_ratio: float = 0.7,
         val_ratio: float = 0.1,
         test_ratio: float = 0.2,
         seed: int | None = 42
-    ) -> dict[str, list[dict[str, str | int]]]:
+    ) -> dict[str, list[dict[str, int | dict[str, str]]]]:
         """
         Dzieli próbki danych na zbiory treningowy, walidacyjny i testowy,
         zapewniając, że każdy palec jest reprezentowany w zbiorach walidacyjnych i testowych.
@@ -98,15 +120,15 @@ if __name__ == "__main__":
             random.seed(seed)
 
         # 1. Pogrupuj dane według numeru palca
-        data_by_finger : defaultdict[int, list[dict[str, str | int,]]] = defaultdict(list[dict[str, str | int]])
+        data_by_finger : defaultdict[int, list[dict[str, int | dict[str, str]]]] = defaultdict(list[dict[str, int | dict[str, str]]])
         for sample in data_samples:
-            finger_id: str | int = sample["finger_id"]
+            finger_id: int | dict[str, str] = sample["finger_id"]
             assert isinstance(finger_id, int)
             data_by_finger[finger_id].append(sample)
 
-        train_data : list[dict[str, str | int]] = []
-        val_data : list[dict[str, str | int]] = []
-        test_data : list[dict[str, str | int]] = []
+        train_data : list[dict[str, int | dict[str, str]]] = []
+        val_data : list[dict[str, int | dict[str, str]]] = []
+        test_data : list[dict[str, int | dict[str, str]]] = []
 
         # 2. Dla każdego palca, rozdziel próbki do zbiorów
         for finger_id, samples_for_finger in data_by_finger.items():
@@ -137,9 +159,9 @@ if __name__ == "__main__":
         print(f"  Testowe: {len(test_data)} próbek")
 
         # Sprawdzenie unikalnych palców w każdym zbiorze
-        train_fingers : set[int | str] = { s["finger_id"] for s in train_data }
-        val_fingers : set[int | str] = { s["finger_id"] for s in val_data }
-        test_fingers : set[int | str] = { s["finger_id"] for s in test_data }
+        train_fingers : set[int] = { s["finger_id"] for s in train_data if isinstance(s["finger_id"], int) }
+        val_fingers : set[int] = { s["finger_id"] for s in val_data if isinstance(s["finger_id"], int) }
+        test_fingers : set[int] = { s["finger_id"] for s in test_data if isinstance(s["finger_id"], int) }
         all_fingers: set[int] = set(data_by_finger.keys())
 
         print(f"  Unikalne palce w treningowym: {len(train_fingers)}/{len(all_fingers)}")
@@ -157,25 +179,25 @@ if __name__ == "__main__":
             "test": test_data
         }
 
-    def save_split_to_json(split_data: dict[str, list[dict[str, str | int]]], output_path: str):
+    def save_split_to_json(split_data: dict[str, list[dict[str, int | dict[str, str]]]], output_path: str):
         """
         Zapisuje podział danych (ścieżki i adnotacje) do pliku JSON.
         """
-        output_data: dict[str, list[dict[str, str | int]]] = {
-            "train": [{"image_path": d["image_path"], "json_path": d["json_path"]} for d in split_data["train"]],
-            "val": [{"image_path": d["image_path"], "json_path": d["json_path"]} for d in split_data["val"]],
-            "test": [{"image_path": d["image_path"], "json_path": d["json_path"]} for d in split_data["test"]]
+        output_data: dict[str, list[dict[str, str]]] = {
+            "train": [d["data"] for d in split_data["train"] if isinstance(d["data"], dict)],
+            "val": [d["data"] for d in split_data["val"] if isinstance(d["data"], dict)],
+            "test": [d["data"] for d in split_data["test"] if isinstance(d["data"], dict)]
         }
 
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(output_data, f, indent=4, ensure_ascii=False)
         print(f"Podział danych zapisany do: {output_path}")
 
-    data_paths: list[dict[str, str | int]] = load_data_paths("./Data")
+    data_paths: list[dict[str, int | dict[str, str]]] = load_data_paths(os.path.join(".", "Data"))
 
     if not data_paths:
         print("There is no data")
         exit()
 
-    data: dict[str, list[dict[str, str | int]]] = split_data_by_finger(data_paths, 0.7, 0.1, 0.2, None)
+    data: dict[str, list[dict[str, int | dict[str, str]]]] = split_data_by_finger(data_paths, 0.7, 0.1, 0.2, None)
     save_split_to_json(data, "data_split.json")

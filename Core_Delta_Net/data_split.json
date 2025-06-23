@@ -1,1288 +1,2888 @@
 {
     "train": [
         {
-            "image_path": "./Data\\137_8.tif",
-            "json_path": "./Data\\137_8.json"
-        },
-        {
-            "image_path": "./Data\\109_8.tif",
-            "json_path": "./Data\\109_8.json"
-        },
-        {
-            "image_path": "./Data\\115_6.tif",
-            "json_path": "./Data\\115_6.json"
-        },
-        {
-            "image_path": "./Data\\132_7.tif",
-            "json_path": "./Data\\132_7.json"
-        },
-        {
-            "image_path": "./Data\\131_6.tif",
-            "json_path": "./Data\\131_6.json"
-        },
-        {
-            "image_path": "./Data\\140_3.tif",
-            "json_path": "./Data\\140_3.json"
-        },
-        {
-            "image_path": "./Data\\103_3.tif",
-            "json_path": "./Data\\103_3.json"
-        },
-        {
-            "image_path": "./Data\\129_6.tif",
-            "json_path": "./Data\\129_6.json"
-        },
-        {
-            "image_path": "./Data\\139_4.tif",
-            "json_path": "./Data\\139_4.json"
-        },
-        {
-            "image_path": "./Data\\116_4.tif",
-            "json_path": "./Data\\116_4.json"
-        },
-        {
-            "image_path": "./Data\\139_3.tif",
-            "json_path": "./Data\\139_3.json"
-        },
-        {
-            "image_path": "./Data\\111_7.tif",
-            "json_path": "./Data\\111_7.json"
-        },
-        {
-            "image_path": "./Data\\116_8.tif",
-            "json_path": "./Data\\116_8.json"
-        },
-        {
-            "image_path": "./Data\\138_2.tif",
-            "json_path": "./Data\\138_2.json"
-        },
-        {
-            "image_path": "./Data\\117_8.tif",
-            "json_path": "./Data\\117_8.json"
-        },
-        {
-            "image_path": "./Data\\130_7.tif",
-            "json_path": "./Data\\130_7.json"
-        },
-        {
-            "image_path": "./Data\\120_8.tif",
-            "json_path": "./Data\\120_8.json"
-        },
-        {
-            "image_path": "./Data\\105_6.tif",
-            "json_path": "./Data\\105_6.json"
-        },
-        {
-            "image_path": "./Data\\128_6.tif",
-            "json_path": "./Data\\128_6.json"
-        },
-        {
-            "image_path": "./Data\\128_2.tif",
-            "json_path": "./Data\\128_2.json"
-        },
-        {
-            "image_path": "./Data\\127_7.tif",
-            "json_path": "./Data\\127_7.json"
-        },
-        {
-            "image_path": "./Data\\131_4.tif",
-            "json_path": "./Data\\131_4.json"
-        },
-        {
-            "image_path": "./Data\\127_5.tif",
-            "json_path": "./Data\\127_5.json"
-        },
-        {
-            "image_path": "./Data\\128_3.tif",
-            "json_path": "./Data\\128_3.json"
-        },
-        {
-            "image_path": "./Data\\101_4.tif",
-            "json_path": "./Data\\101_4.json"
-        },
-        {
-            "image_path": "./Data\\112_3.tif",
-            "json_path": "./Data\\112_3.json"
-        },
-        {
-            "image_path": "./Data\\108_2.tif",
-            "json_path": "./Data\\108_2.json"
-        },
-        {
-            "image_path": "./Data\\111_4.tif",
-            "json_path": "./Data\\111_4.json"
-        },
-        {
-            "image_path": "./Data\\104_7.tif",
-            "json_path": "./Data\\104_7.json"
-        },
-        {
-            "image_path": "./Data\\139_8.tif",
-            "json_path": "./Data\\139_8.json"
-        },
-        {
-            "image_path": "./Data\\133_2.tif",
-            "json_path": "./Data\\133_2.json"
-        },
-        {
-            "image_path": "./Data\\135_2.tif",
-            "json_path": "./Data\\135_2.json"
-        },
-        {
-            "image_path": "./Data\\134_7.tif",
-            "json_path": "./Data\\134_7.json"
-        },
-        {
-            "image_path": "./Data\\140_7.tif",
-            "json_path": "./Data\\140_7.json"
-        },
-        {
-            "image_path": "./Data\\101_5.tif",
-            "json_path": "./Data\\101_5.json"
-        },
-        {
-            "image_path": "./Data\\114_5.tif",
-            "json_path": "./Data\\114_5.json"
-        },
-        {
-            "image_path": "./Data\\136_5.tif",
-            "json_path": "./Data\\136_5.json"
-        },
-        {
-            "image_path": "./Data\\118_7.tif",
-            "json_path": "./Data\\118_7.json"
-        },
-        {
-            "image_path": "./Data\\135_3.tif",
-            "json_path": "./Data\\135_3.json"
-        },
-        {
-            "image_path": "./Data\\103_6.tif",
-            "json_path": "./Data\\103_6.json"
-        },
-        {
-            "image_path": "./Data\\106_1.tif",
-            "json_path": "./Data\\106_1.json"
-        },
-        {
-            "image_path": "./Data\\123_6.tif",
-            "json_path": "./Data\\123_6.json"
-        },
-        {
-            "image_path": "./Data\\136_3.tif",
-            "json_path": "./Data\\136_3.json"
-        },
-        {
-            "image_path": "./Data\\113_3.tif",
-            "json_path": "./Data\\113_3.json"
-        },
-        {
-            "image_path": "./Data\\107_7.tif",
-            "json_path": "./Data\\107_7.json"
-        },
-        {
-            "image_path": "./Data\\101_7.tif",
-            "json_path": "./Data\\101_7.json"
-        },
-        {
-            "image_path": "./Data\\133_7.tif",
-            "json_path": "./Data\\133_7.json"
-        },
-        {
-            "image_path": "./Data\\134_2.tif",
-            "json_path": "./Data\\134_2.json"
-        },
-        {
-            "image_path": "./Data\\125_8.tif",
-            "json_path": "./Data\\125_8.json"
-        },
-        {
-            "image_path": "./Data\\123_8.tif",
-            "json_path": "./Data\\123_8.json"
-        },
-        {
-            "image_path": "./Data\\132_6.tif",
-            "json_path": "./Data\\132_6.json"
-        },
-        {
-            "image_path": "./Data\\140_6.tif",
-            "json_path": "./Data\\140_6.json"
-        },
-        {
-            "image_path": "./Data\\120_4.tif",
-            "json_path": "./Data\\120_4.json"
-        },
-        {
-            "image_path": "./Data\\116_3.tif",
-            "json_path": "./Data\\116_3.json"
-        },
-        {
-            "image_path": "./Data\\114_3.tif",
-            "json_path": "./Data\\114_3.json"
-        },
-        {
-            "image_path": "./Data\\115_4.tif",
-            "json_path": "./Data\\115_4.json"
-        },
-        {
-            "image_path": "./Data\\138_6.tif",
-            "json_path": "./Data\\138_6.json"
-        },
-        {
-            "image_path": "./Data\\105_5.tif",
-            "json_path": "./Data\\105_5.json"
-        },
-        {
-            "image_path": "./Data\\111_1.tif",
-            "json_path": "./Data\\111_1.json"
-        },
-        {
-            "image_path": "./Data\\114_4.tif",
-            "json_path": "./Data\\114_4.json"
-        },
-        {
-            "image_path": "./Data\\120_6.tif",
-            "json_path": "./Data\\120_6.json"
-        },
-        {
-            "image_path": "./Data\\121_6.tif",
-            "json_path": "./Data\\121_6.json"
-        },
-        {
-            "image_path": "./Data\\107_6.tif",
-            "json_path": "./Data\\107_6.json"
-        },
-        {
-            "image_path": "./Data\\131_7.tif",
-            "json_path": "./Data\\131_7.json"
-        },
-        {
-            "image_path": "./Data\\105_2.tif",
-            "json_path": "./Data\\105_2.json"
-        },
-        {
-            "image_path": "./Data\\130_2.tif",
-            "json_path": "./Data\\130_2.json"
-        },
-        {
-            "image_path": "./Data\\110_3.tif",
-            "json_path": "./Data\\110_3.json"
-        },
-        {
-            "image_path": "./Data\\129_7.tif",
-            "json_path": "./Data\\129_7.json"
-        },
-        {
-            "image_path": "./Data\\121_7.tif",
-            "json_path": "./Data\\121_7.json"
-        },
-        {
-            "image_path": "./Data\\119_6.tif",
-            "json_path": "./Data\\119_6.json"
-        },
-        {
-            "image_path": "./Data\\106_7.tif",
-            "json_path": "./Data\\106_7.json"
-        },
-        {
-            "image_path": "./Data\\115_3.tif",
-            "json_path": "./Data\\115_3.json"
-        },
-        {
-            "image_path": "./Data\\121_3.tif",
-            "json_path": "./Data\\121_3.json"
-        },
-        {
-            "image_path": "./Data\\132_2.tif",
-            "json_path": "./Data\\132_2.json"
-        },
-        {
-            "image_path": "./Data\\129_3.tif",
-            "json_path": "./Data\\129_3.json"
-        },
-        {
-            "image_path": "./Data\\135_5.tif",
-            "json_path": "./Data\\135_5.json"
-        },
-        {
-            "image_path": "./Data\\134_6.tif",
-            "json_path": "./Data\\134_6.json"
-        },
-        {
-            "image_path": "./Data\\131_3.tif",
-            "json_path": "./Data\\131_3.json"
-        },
-        {
-            "image_path": "./Data\\110_7.tif",
-            "json_path": "./Data\\110_7.json"
-        },
-        {
-            "image_path": "./Data\\106_3.tif",
-            "json_path": "./Data\\106_3.json"
-        },
-        {
-            "image_path": "./Data\\126_5.tif",
-            "json_path": "./Data\\126_5.json"
-        },
-        {
-            "image_path": "./Data\\109_4.tif",
-            "json_path": "./Data\\109_4.json"
-        },
-        {
-            "image_path": "./Data\\122_4.tif",
-            "json_path": "./Data\\122_4.json"
-        },
-        {
-            "image_path": "./Data\\101_6.tif",
-            "json_path": "./Data\\101_6.json"
-        },
-        {
-            "image_path": "./Data\\127_2.tif",
-            "json_path": "./Data\\127_2.json"
-        },
-        {
-            "image_path": "./Data\\138_5.tif",
-            "json_path": "./Data\\138_5.json"
-        },
-        {
-            "image_path": "./Data\\110_8.tif",
-            "json_path": "./Data\\110_8.json"
-        },
-        {
-            "image_path": "./Data\\136_7.tif",
-            "json_path": "./Data\\136_7.json"
-        },
-        {
-            "image_path": "./Data\\126_6.tif",
-            "json_path": "./Data\\126_6.json"
-        },
-        {
-            "image_path": "./Data\\119_7.tif",
-            "json_path": "./Data\\119_7.json"
-        },
-        {
-            "image_path": "./Data\\121_4.tif",
-            "json_path": "./Data\\121_4.json"
-        },
-        {
-            "image_path": "./Data\\118_5.tif",
-            "json_path": "./Data\\118_5.json"
-        },
-        {
-            "image_path": "./Data\\113_6.tif",
-            "json_path": "./Data\\113_6.json"
-        },
-        {
-            "image_path": "./Data\\104_3.tif",
-            "json_path": "./Data\\104_3.json"
-        },
-        {
-            "image_path": "./Data\\112_5.tif",
-            "json_path": "./Data\\112_5.json"
-        },
-        {
-            "image_path": "./Data\\117_1.tif",
-            "json_path": "./Data\\117_1.json"
-        },
-        {
-            "image_path": "./Data\\135_4.tif",
-            "json_path": "./Data\\135_4.json"
-        },
-        {
-            "image_path": "./Data\\132_8.tif",
-            "json_path": "./Data\\132_8.json"
-        },
-        {
-            "image_path": "./Data\\123_4.tif",
-            "json_path": "./Data\\123_4.json"
-        },
-        {
-            "image_path": "./Data\\136_6.tif",
-            "json_path": "./Data\\136_6.json"
-        },
-        {
-            "image_path": "./Data\\107_2.tif",
-            "json_path": "./Data\\107_2.json"
-        },
-        {
-            "image_path": "./Data\\103_8.tif",
-            "json_path": "./Data\\103_8.json"
-        },
-        {
-            "image_path": "./Data\\117_5.tif",
-            "json_path": "./Data\\117_5.json"
-        },
-        {
-            "image_path": "./Data\\117_3.tif",
-            "json_path": "./Data\\117_3.json"
-        },
-        {
-            "image_path": "./Data\\136_8.tif",
-            "json_path": "./Data\\136_8.json"
-        },
-        {
-            "image_path": "./Data\\127_3.tif",
-            "json_path": "./Data\\127_3.json"
-        },
-        {
-            "image_path": "./Data\\120_1.tif",
-            "json_path": "./Data\\120_1.json"
-        },
-        {
-            "image_path": "./Data\\102_3.tif",
-            "json_path": "./Data\\102_3.json"
-        },
-        {
-            "image_path": "./Data\\112_7.tif",
-            "json_path": "./Data\\112_7.json"
-        },
-        {
-            "image_path": "./Data\\121_1.tif",
-            "json_path": "./Data\\121_1.json"
-        },
-        {
-            "image_path": "./Data\\123_1.tif",
-            "json_path": "./Data\\123_1.json"
-        },
-        {
-            "image_path": "./Data\\113_2.tif",
-            "json_path": "./Data\\113_2.json"
-        },
-        {
-            "image_path": "./Data\\124_7.tif",
-            "json_path": "./Data\\124_7.json"
-        },
-        {
-            "image_path": "./Data\\128_1.tif",
-            "json_path": "./Data\\128_1.json"
-        },
-        {
-            "image_path": "./Data\\102_8.tif",
-            "json_path": "./Data\\102_8.json"
-        },
-        {
-            "image_path": "./Data\\132_5.tif",
-            "json_path": "./Data\\132_5.json"
-        },
-        {
-            "image_path": "./Data\\137_3.tif",
-            "json_path": "./Data\\137_3.json"
-        },
-        {
-            "image_path": "./Data\\114_6.tif",
-            "json_path": "./Data\\114_6.json"
-        },
-        {
-            "image_path": "./Data\\108_7.tif",
-            "json_path": "./Data\\108_7.json"
-        },
-        {
-            "image_path": "./Data\\101_3.tif",
-            "json_path": "./Data\\101_3.json"
-        },
-        {
-            "image_path": "./Data\\104_6.tif",
-            "json_path": "./Data\\104_6.json"
-        },
-        {
-            "image_path": "./Data\\125_3.tif",
-            "json_path": "./Data\\125_3.json"
-        },
-        {
-            "image_path": "./Data\\138_7.tif",
-            "json_path": "./Data\\138_7.json"
-        },
-        {
-            "image_path": "./Data\\139_6.tif",
-            "json_path": "./Data\\139_6.json"
-        },
-        {
-            "image_path": "./Data\\122_8.tif",
-            "json_path": "./Data\\122_8.json"
-        },
-        {
-            "image_path": "./Data\\124_1.tif",
-            "json_path": "./Data\\124_1.json"
-        },
-        {
-            "image_path": "./Data\\112_4.tif",
-            "json_path": "./Data\\112_4.json"
-        },
-        {
-            "image_path": "./Data\\122_3.tif",
-            "json_path": "./Data\\122_3.json"
-        },
-        {
-            "image_path": "./Data\\138_4.tif",
-            "json_path": "./Data\\138_4.json"
-        },
-        {
-            "image_path": "./Data\\115_1.tif",
-            "json_path": "./Data\\115_1.json"
-        },
-        {
-            "image_path": "./Data\\126_4.tif",
-            "json_path": "./Data\\126_4.json"
-        },
-        {
-            "image_path": "./Data\\133_4.tif",
-            "json_path": "./Data\\133_4.json"
-        },
-        {
-            "image_path": "./Data\\110_5.tif",
-            "json_path": "./Data\\110_5.json"
-        },
-        {
-            "image_path": "./Data\\111_2.tif",
-            "json_path": "./Data\\111_2.json"
-        },
-        {
-            "image_path": "./Data\\114_8.tif",
-            "json_path": "./Data\\114_8.json"
-        },
-        {
-            "image_path": "./Data\\109_5.tif",
-            "json_path": "./Data\\109_5.json"
-        },
-        {
-            "image_path": "./Data\\119_8.tif",
-            "json_path": "./Data\\119_8.json"
-        },
-        {
-            "image_path": "./Data\\102_5.tif",
-            "json_path": "./Data\\102_5.json"
-        },
-        {
-            "image_path": "./Data\\137_5.tif",
-            "json_path": "./Data\\137_5.json"
-        },
-        {
-            "image_path": "./Data\\126_7.tif",
-            "json_path": "./Data\\126_7.json"
-        },
-        {
-            "image_path": "./Data\\133_1.tif",
-            "json_path": "./Data\\133_1.json"
-        },
-        {
-            "image_path": "./Data\\127_4.tif",
-            "json_path": "./Data\\127_4.json"
-        },
-        {
-            "image_path": "./Data\\122_5.tif",
-            "json_path": "./Data\\122_5.json"
-        },
-        {
-            "image_path": "./Data\\134_5.tif",
-            "json_path": "./Data\\134_5.json"
-        },
-        {
-            "image_path": "./Data\\108_1.tif",
-            "json_path": "./Data\\108_1.json"
-        },
-        {
-            "image_path": "./Data\\118_2.tif",
-            "json_path": "./Data\\118_2.json"
-        },
-        {
-            "image_path": "./Data\\104_4.tif",
-            "json_path": "./Data\\104_4.json"
-        },
-        {
-            "image_path": "./Data\\137_7.tif",
-            "json_path": "./Data\\137_7.json"
-        },
-        {
-            "image_path": "./Data\\126_1.tif",
-            "json_path": "./Data\\126_1.json"
-        },
-        {
-            "image_path": "./Data\\130_5.tif",
-            "json_path": "./Data\\130_5.json"
-        },
-        {
-            "image_path": "./Data\\118_3.tif",
-            "json_path": "./Data\\118_3.json"
-        },
-        {
-            "image_path": "./Data\\131_1.tif",
-            "json_path": "./Data\\131_1.json"
-        },
-        {
-            "image_path": "./Data\\125_6.tif",
-            "json_path": "./Data\\125_6.json"
-        },
-        {
-            "image_path": "./Data\\108_6.tif",
-            "json_path": "./Data\\108_6.json"
-        },
-        {
-            "image_path": "./Data\\107_5.tif",
-            "json_path": "./Data\\107_5.json"
-        },
-        {
-            "image_path": "./Data\\115_5.tif",
-            "json_path": "./Data\\115_5.json"
-        },
-        {
-            "image_path": "./Data\\117_4.tif",
-            "json_path": "./Data\\117_4.json"
-        },
-        {
-            "image_path": "./Data\\124_3.tif",
-            "json_path": "./Data\\124_3.json"
-        },
-        {
-            "image_path": "./Data\\120_7.tif",
-            "json_path": "./Data\\120_7.json"
-        },
-        {
-            "image_path": "./Data\\105_8.tif",
-            "json_path": "./Data\\105_8.json"
-        },
-        {
-            "image_path": "./Data\\113_5.tif",
-            "json_path": "./Data\\113_5.json"
-        },
-        {
-            "image_path": "./Data\\104_8.tif",
-            "json_path": "./Data\\104_8.json"
-        },
-        {
-            "image_path": "./Data\\137_6.tif",
-            "json_path": "./Data\\137_6.json"
-        },
-        {
-            "image_path": "./Data\\118_4.tif",
-            "json_path": "./Data\\118_4.json"
-        },
-        {
-            "image_path": "./Data\\139_2.tif",
-            "json_path": "./Data\\139_2.json"
-        },
-        {
-            "image_path": "./Data\\103_2.tif",
-            "json_path": "./Data\\103_2.json"
-        },
-        {
-            "image_path": "./Data\\140_1.tif",
-            "json_path": "./Data\\140_1.json"
-        },
-        {
-            "image_path": "./Data\\130_1.tif",
-            "json_path": "./Data\\130_1.json"
-        },
-        {
-            "image_path": "./Data\\110_1.tif",
-            "json_path": "./Data\\110_1.json"
-        },
-        {
-            "image_path": "./Data\\130_8.tif",
-            "json_path": "./Data\\130_8.json"
-        },
-        {
-            "image_path": "./Data\\107_4.tif",
-            "json_path": "./Data\\107_4.json"
-        },
-        {
-            "image_path": "./Data\\109_7.tif",
-            "json_path": "./Data\\109_7.json"
-        },
-        {
-            "image_path": "./Data\\122_2.tif",
-            "json_path": "./Data\\122_2.json"
-        },
-        {
-            "image_path": "./Data\\108_4.tif",
-            "json_path": "./Data\\108_4.json"
-        },
-        {
-            "image_path": "./Data\\109_6.tif",
-            "json_path": "./Data\\109_6.json"
-        },
-        {
-            "image_path": "./Data\\125_1.tif",
-            "json_path": "./Data\\125_1.json"
-        },
-        {
-            "image_path": "./Data\\116_6.tif",
-            "json_path": "./Data\\116_6.json"
-        },
-        {
-            "image_path": "./Data\\124_4.tif",
-            "json_path": "./Data\\124_4.json"
-        },
-        {
-            "image_path": "./Data\\133_6.tif",
-            "json_path": "./Data\\133_6.json"
-        },
-        {
-            "image_path": "./Data\\103_4.tif",
-            "json_path": "./Data\\103_4.json"
-        },
-        {
-            "image_path": "./Data\\140_2.tif",
-            "json_path": "./Data\\140_2.json"
-        },
-        {
-            "image_path": "./Data\\111_3.tif",
-            "json_path": "./Data\\111_3.json"
-        },
-        {
-            "image_path": "./Data\\113_8.tif",
-            "json_path": "./Data\\113_8.json"
-        },
-        {
-            "image_path": "./Data\\129_2.tif",
-            "json_path": "./Data\\129_2.json"
-        },
-        {
-            "image_path": "./Data\\102_1.tif",
-            "json_path": "./Data\\102_1.json"
-        },
-        {
-            "image_path": "./Data\\102_2.tif",
-            "json_path": "./Data\\102_2.json"
-        },
-        {
-            "image_path": "./Data\\106_4.tif",
-            "json_path": "./Data\\106_4.json"
-        },
-        {
-            "image_path": "./Data\\129_8.tif",
-            "json_path": "./Data\\129_8.json"
-        },
-        {
-            "image_path": "./Data\\119_4.tif",
-            "json_path": "./Data\\119_4.json"
-        },
-        {
-            "image_path": "./Data\\106_2.tif",
-            "json_path": "./Data\\106_2.json"
-        },
-        {
-            "image_path": "./Data\\135_1.tif",
-            "json_path": "./Data\\135_1.json"
-        },
-        {
-            "image_path": "./Data\\125_7.tif",
-            "json_path": "./Data\\125_7.json"
-        },
-        {
-            "image_path": "./Data\\134_8.tif",
-            "json_path": "./Data\\134_8.json"
-        },
-        {
-            "image_path": "./Data\\119_1.tif",
-            "json_path": "./Data\\119_1.json"
-        },
-        {
-            "image_path": "./Data\\123_5.tif",
-            "json_path": "./Data\\123_5.json"
-        },
-        {
-            "image_path": "./Data\\124_5.tif",
-            "json_path": "./Data\\124_5.json"
-        },
-        {
-            "image_path": "./Data\\128_8.tif",
-            "json_path": "./Data\\128_8.json"
-        },
-        {
-            "image_path": "./Data\\105_3.tif",
-            "json_path": "./Data\\105_3.json"
-        },
-        {
-            "image_path": "./Data\\112_1.tif",
-            "json_path": "./Data\\112_1.json"
-        },
-        {
-            "image_path": "./Data\\116_2.tif",
-            "json_path": "./Data\\116_2.json"
+            "image_path": ".\\Data\\116_1.tif",
+            "json_path": ".\\Data\\116_1.json",
+            "crop_json_path": ".\\Data\\116_1_crop.json",
+            "normalized_path": ".\\Data\\116_1_normalized.png",
+            "orientation_field_path": ".\\Data\\116_1_orientation_field.png",
+            "binarized_path": ".\\Data\\116_1_binarized.png",
+            "skeleton_path": ".\\Data\\116_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\128_4.tif",
+            "json_path": ".\\Data\\128_4.json",
+            "crop_json_path": ".\\Data\\128_4_crop.json",
+            "normalized_path": ".\\Data\\128_4_normalized.png",
+            "orientation_field_path": ".\\Data\\128_4_orientation_field.png",
+            "binarized_path": ".\\Data\\128_4_binarized.png",
+            "skeleton_path": ".\\Data\\128_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\136_2.tif",
+            "json_path": ".\\Data\\136_2.json",
+            "crop_json_path": ".\\Data\\136_2_crop.json",
+            "normalized_path": ".\\Data\\136_2_normalized.png",
+            "orientation_field_path": ".\\Data\\136_2_orientation_field.png",
+            "binarized_path": ".\\Data\\136_2_binarized.png",
+            "skeleton_path": ".\\Data\\136_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\105_1.tif",
+            "json_path": ".\\Data\\105_1.json",
+            "crop_json_path": ".\\Data\\105_1_crop.json",
+            "normalized_path": ".\\Data\\105_1_normalized.png",
+            "orientation_field_path": ".\\Data\\105_1_orientation_field.png",
+            "binarized_path": ".\\Data\\105_1_binarized.png",
+            "skeleton_path": ".\\Data\\105_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\115_1.tif",
+            "json_path": ".\\Data\\115_1.json",
+            "crop_json_path": ".\\Data\\115_1_crop.json",
+            "normalized_path": ".\\Data\\115_1_normalized.png",
+            "orientation_field_path": ".\\Data\\115_1_orientation_field.png",
+            "binarized_path": ".\\Data\\115_1_binarized.png",
+            "skeleton_path": ".\\Data\\115_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\131_3.tif",
+            "json_path": ".\\Data\\131_3.json",
+            "crop_json_path": ".\\Data\\131_3_crop.json",
+            "normalized_path": ".\\Data\\131_3_normalized.png",
+            "orientation_field_path": ".\\Data\\131_3_orientation_field.png",
+            "binarized_path": ".\\Data\\131_3_binarized.png",
+            "skeleton_path": ".\\Data\\131_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\140_7.tif",
+            "json_path": ".\\Data\\140_7.json",
+            "crop_json_path": ".\\Data\\140_7_crop.json",
+            "normalized_path": ".\\Data\\140_7_normalized.png",
+            "orientation_field_path": ".\\Data\\140_7_orientation_field.png",
+            "binarized_path": ".\\Data\\140_7_binarized.png",
+            "skeleton_path": ".\\Data\\140_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\133_2.tif",
+            "json_path": ".\\Data\\133_2.json",
+            "crop_json_path": ".\\Data\\133_2_crop.json",
+            "normalized_path": ".\\Data\\133_2_normalized.png",
+            "orientation_field_path": ".\\Data\\133_2_orientation_field.png",
+            "binarized_path": ".\\Data\\133_2_binarized.png",
+            "skeleton_path": ".\\Data\\133_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\112_4.tif",
+            "json_path": ".\\Data\\112_4.json",
+            "crop_json_path": ".\\Data\\112_4_crop.json",
+            "normalized_path": ".\\Data\\112_4_normalized.png",
+            "orientation_field_path": ".\\Data\\112_4_orientation_field.png",
+            "binarized_path": ".\\Data\\112_4_binarized.png",
+            "skeleton_path": ".\\Data\\112_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\135_5.tif",
+            "json_path": ".\\Data\\135_5.json",
+            "crop_json_path": ".\\Data\\135_5_crop.json",
+            "normalized_path": ".\\Data\\135_5_normalized.png",
+            "orientation_field_path": ".\\Data\\135_5_orientation_field.png",
+            "binarized_path": ".\\Data\\135_5_binarized.png",
+            "skeleton_path": ".\\Data\\135_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\125_5.tif",
+            "json_path": ".\\Data\\125_5.json",
+            "crop_json_path": ".\\Data\\125_5_crop.json",
+            "normalized_path": ".\\Data\\125_5_normalized.png",
+            "orientation_field_path": ".\\Data\\125_5_orientation_field.png",
+            "binarized_path": ".\\Data\\125_5_binarized.png",
+            "skeleton_path": ".\\Data\\125_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\133_5.tif",
+            "json_path": ".\\Data\\133_5.json",
+            "crop_json_path": ".\\Data\\133_5_crop.json",
+            "normalized_path": ".\\Data\\133_5_normalized.png",
+            "orientation_field_path": ".\\Data\\133_5_orientation_field.png",
+            "binarized_path": ".\\Data\\133_5_binarized.png",
+            "skeleton_path": ".\\Data\\133_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\106_3.tif",
+            "json_path": ".\\Data\\106_3.json",
+            "crop_json_path": ".\\Data\\106_3_crop.json",
+            "normalized_path": ".\\Data\\106_3_normalized.png",
+            "orientation_field_path": ".\\Data\\106_3_orientation_field.png",
+            "binarized_path": ".\\Data\\106_3_binarized.png",
+            "skeleton_path": ".\\Data\\106_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\139_1.tif",
+            "json_path": ".\\Data\\139_1.json",
+            "crop_json_path": ".\\Data\\139_1_crop.json",
+            "normalized_path": ".\\Data\\139_1_normalized.png",
+            "orientation_field_path": ".\\Data\\139_1_orientation_field.png",
+            "binarized_path": ".\\Data\\139_1_binarized.png",
+            "skeleton_path": ".\\Data\\139_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\105_7.tif",
+            "json_path": ".\\Data\\105_7.json",
+            "crop_json_path": ".\\Data\\105_7_crop.json",
+            "normalized_path": ".\\Data\\105_7_normalized.png",
+            "orientation_field_path": ".\\Data\\105_7_orientation_field.png",
+            "binarized_path": ".\\Data\\105_7_binarized.png",
+            "skeleton_path": ".\\Data\\105_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\103_8.tif",
+            "json_path": ".\\Data\\103_8.json",
+            "crop_json_path": ".\\Data\\103_8_crop.json",
+            "normalized_path": ".\\Data\\103_8_normalized.png",
+            "orientation_field_path": ".\\Data\\103_8_orientation_field.png",
+            "binarized_path": ".\\Data\\103_8_binarized.png",
+            "skeleton_path": ".\\Data\\103_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\134_1.tif",
+            "json_path": ".\\Data\\134_1.json",
+            "crop_json_path": ".\\Data\\134_1_crop.json",
+            "normalized_path": ".\\Data\\134_1_normalized.png",
+            "orientation_field_path": ".\\Data\\134_1_orientation_field.png",
+            "binarized_path": ".\\Data\\134_1_binarized.png",
+            "skeleton_path": ".\\Data\\134_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\134_5.tif",
+            "json_path": ".\\Data\\134_5.json",
+            "crop_json_path": ".\\Data\\134_5_crop.json",
+            "normalized_path": ".\\Data\\134_5_normalized.png",
+            "orientation_field_path": ".\\Data\\134_5_orientation_field.png",
+            "binarized_path": ".\\Data\\134_5_binarized.png",
+            "skeleton_path": ".\\Data\\134_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\136_7.tif",
+            "json_path": ".\\Data\\136_7.json",
+            "crop_json_path": ".\\Data\\136_7_crop.json",
+            "normalized_path": ".\\Data\\136_7_normalized.png",
+            "orientation_field_path": ".\\Data\\136_7_orientation_field.png",
+            "binarized_path": ".\\Data\\136_7_binarized.png",
+            "skeleton_path": ".\\Data\\136_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\102_6.tif",
+            "json_path": ".\\Data\\102_6.json",
+            "crop_json_path": ".\\Data\\102_6_crop.json",
+            "normalized_path": ".\\Data\\102_6_normalized.png",
+            "orientation_field_path": ".\\Data\\102_6_orientation_field.png",
+            "binarized_path": ".\\Data\\102_6_binarized.png",
+            "skeleton_path": ".\\Data\\102_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\107_2.tif",
+            "json_path": ".\\Data\\107_2.json",
+            "crop_json_path": ".\\Data\\107_2_crop.json",
+            "normalized_path": ".\\Data\\107_2_normalized.png",
+            "orientation_field_path": ".\\Data\\107_2_orientation_field.png",
+            "binarized_path": ".\\Data\\107_2_binarized.png",
+            "skeleton_path": ".\\Data\\107_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\126_2.tif",
+            "json_path": ".\\Data\\126_2.json",
+            "crop_json_path": ".\\Data\\126_2_crop.json",
+            "normalized_path": ".\\Data\\126_2_normalized.png",
+            "orientation_field_path": ".\\Data\\126_2_orientation_field.png",
+            "binarized_path": ".\\Data\\126_2_binarized.png",
+            "skeleton_path": ".\\Data\\126_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\105_2.tif",
+            "json_path": ".\\Data\\105_2.json",
+            "crop_json_path": ".\\Data\\105_2_crop.json",
+            "normalized_path": ".\\Data\\105_2_normalized.png",
+            "orientation_field_path": ".\\Data\\105_2_orientation_field.png",
+            "binarized_path": ".\\Data\\105_2_binarized.png",
+            "skeleton_path": ".\\Data\\105_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\102_2.tif",
+            "json_path": ".\\Data\\102_2.json",
+            "crop_json_path": ".\\Data\\102_2_crop.json",
+            "normalized_path": ".\\Data\\102_2_normalized.png",
+            "orientation_field_path": ".\\Data\\102_2_orientation_field.png",
+            "binarized_path": ".\\Data\\102_2_binarized.png",
+            "skeleton_path": ".\\Data\\102_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\121_4.tif",
+            "json_path": ".\\Data\\121_4.json",
+            "crop_json_path": ".\\Data\\121_4_crop.json",
+            "normalized_path": ".\\Data\\121_4_normalized.png",
+            "orientation_field_path": ".\\Data\\121_4_orientation_field.png",
+            "binarized_path": ".\\Data\\121_4_binarized.png",
+            "skeleton_path": ".\\Data\\121_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\111_6.tif",
+            "json_path": ".\\Data\\111_6.json",
+            "crop_json_path": ".\\Data\\111_6_crop.json",
+            "normalized_path": ".\\Data\\111_6_normalized.png",
+            "orientation_field_path": ".\\Data\\111_6_orientation_field.png",
+            "binarized_path": ".\\Data\\111_6_binarized.png",
+            "skeleton_path": ".\\Data\\111_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\119_4.tif",
+            "json_path": ".\\Data\\119_4.json",
+            "crop_json_path": ".\\Data\\119_4_crop.json",
+            "normalized_path": ".\\Data\\119_4_normalized.png",
+            "orientation_field_path": ".\\Data\\119_4_orientation_field.png",
+            "binarized_path": ".\\Data\\119_4_binarized.png",
+            "skeleton_path": ".\\Data\\119_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\102_1.tif",
+            "json_path": ".\\Data\\102_1.json",
+            "crop_json_path": ".\\Data\\102_1_crop.json",
+            "normalized_path": ".\\Data\\102_1_normalized.png",
+            "orientation_field_path": ".\\Data\\102_1_orientation_field.png",
+            "binarized_path": ".\\Data\\102_1_binarized.png",
+            "skeleton_path": ".\\Data\\102_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\101_1.tif",
+            "json_path": ".\\Data\\101_1.json",
+            "crop_json_path": ".\\Data\\101_1_crop.json",
+            "normalized_path": ".\\Data\\101_1_normalized.png",
+            "orientation_field_path": ".\\Data\\101_1_orientation_field.png",
+            "binarized_path": ".\\Data\\101_1_binarized.png",
+            "skeleton_path": ".\\Data\\101_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\103_3.tif",
+            "json_path": ".\\Data\\103_3.json",
+            "crop_json_path": ".\\Data\\103_3_crop.json",
+            "normalized_path": ".\\Data\\103_3_normalized.png",
+            "orientation_field_path": ".\\Data\\103_3_orientation_field.png",
+            "binarized_path": ".\\Data\\103_3_binarized.png",
+            "skeleton_path": ".\\Data\\103_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\136_1.tif",
+            "json_path": ".\\Data\\136_1.json",
+            "crop_json_path": ".\\Data\\136_1_crop.json",
+            "normalized_path": ".\\Data\\136_1_normalized.png",
+            "orientation_field_path": ".\\Data\\136_1_orientation_field.png",
+            "binarized_path": ".\\Data\\136_1_binarized.png",
+            "skeleton_path": ".\\Data\\136_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\114_8.tif",
+            "json_path": ".\\Data\\114_8.json",
+            "crop_json_path": ".\\Data\\114_8_crop.json",
+            "normalized_path": ".\\Data\\114_8_normalized.png",
+            "orientation_field_path": ".\\Data\\114_8_orientation_field.png",
+            "binarized_path": ".\\Data\\114_8_binarized.png",
+            "skeleton_path": ".\\Data\\114_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\125_8.tif",
+            "json_path": ".\\Data\\125_8.json",
+            "crop_json_path": ".\\Data\\125_8_crop.json",
+            "normalized_path": ".\\Data\\125_8_normalized.png",
+            "orientation_field_path": ".\\Data\\125_8_orientation_field.png",
+            "binarized_path": ".\\Data\\125_8_binarized.png",
+            "skeleton_path": ".\\Data\\125_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\124_6.tif",
+            "json_path": ".\\Data\\124_6.json",
+            "crop_json_path": ".\\Data\\124_6_crop.json",
+            "normalized_path": ".\\Data\\124_6_normalized.png",
+            "orientation_field_path": ".\\Data\\124_6_orientation_field.png",
+            "binarized_path": ".\\Data\\124_6_binarized.png",
+            "skeleton_path": ".\\Data\\124_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\118_5.tif",
+            "json_path": ".\\Data\\118_5.json",
+            "crop_json_path": ".\\Data\\118_5_crop.json",
+            "normalized_path": ".\\Data\\118_5_normalized.png",
+            "orientation_field_path": ".\\Data\\118_5_orientation_field.png",
+            "binarized_path": ".\\Data\\118_5_binarized.png",
+            "skeleton_path": ".\\Data\\118_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\138_7.tif",
+            "json_path": ".\\Data\\138_7.json",
+            "crop_json_path": ".\\Data\\138_7_crop.json",
+            "normalized_path": ".\\Data\\138_7_normalized.png",
+            "orientation_field_path": ".\\Data\\138_7_orientation_field.png",
+            "binarized_path": ".\\Data\\138_7_binarized.png",
+            "skeleton_path": ".\\Data\\138_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\114_6.tif",
+            "json_path": ".\\Data\\114_6.json",
+            "crop_json_path": ".\\Data\\114_6_crop.json",
+            "normalized_path": ".\\Data\\114_6_normalized.png",
+            "orientation_field_path": ".\\Data\\114_6_orientation_field.png",
+            "binarized_path": ".\\Data\\114_6_binarized.png",
+            "skeleton_path": ".\\Data\\114_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\104_3.tif",
+            "json_path": ".\\Data\\104_3.json",
+            "crop_json_path": ".\\Data\\104_3_crop.json",
+            "normalized_path": ".\\Data\\104_3_normalized.png",
+            "orientation_field_path": ".\\Data\\104_3_orientation_field.png",
+            "binarized_path": ".\\Data\\104_3_binarized.png",
+            "skeleton_path": ".\\Data\\104_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\106_6.tif",
+            "json_path": ".\\Data\\106_6.json",
+            "crop_json_path": ".\\Data\\106_6_crop.json",
+            "normalized_path": ".\\Data\\106_6_normalized.png",
+            "orientation_field_path": ".\\Data\\106_6_orientation_field.png",
+            "binarized_path": ".\\Data\\106_6_binarized.png",
+            "skeleton_path": ".\\Data\\106_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\114_5.tif",
+            "json_path": ".\\Data\\114_5.json",
+            "crop_json_path": ".\\Data\\114_5_crop.json",
+            "normalized_path": ".\\Data\\114_5_normalized.png",
+            "orientation_field_path": ".\\Data\\114_5_orientation_field.png",
+            "binarized_path": ".\\Data\\114_5_binarized.png",
+            "skeleton_path": ".\\Data\\114_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\118_6.tif",
+            "json_path": ".\\Data\\118_6.json",
+            "crop_json_path": ".\\Data\\118_6_crop.json",
+            "normalized_path": ".\\Data\\118_6_normalized.png",
+            "orientation_field_path": ".\\Data\\118_6_orientation_field.png",
+            "binarized_path": ".\\Data\\118_6_binarized.png",
+            "skeleton_path": ".\\Data\\118_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\112_1.tif",
+            "json_path": ".\\Data\\112_1.json",
+            "crop_json_path": ".\\Data\\112_1_crop.json",
+            "normalized_path": ".\\Data\\112_1_normalized.png",
+            "orientation_field_path": ".\\Data\\112_1_orientation_field.png",
+            "binarized_path": ".\\Data\\112_1_binarized.png",
+            "skeleton_path": ".\\Data\\112_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\119_1.tif",
+            "json_path": ".\\Data\\119_1.json",
+            "crop_json_path": ".\\Data\\119_1_crop.json",
+            "normalized_path": ".\\Data\\119_1_normalized.png",
+            "orientation_field_path": ".\\Data\\119_1_orientation_field.png",
+            "binarized_path": ".\\Data\\119_1_binarized.png",
+            "skeleton_path": ".\\Data\\119_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\130_2.tif",
+            "json_path": ".\\Data\\130_2.json",
+            "crop_json_path": ".\\Data\\130_2_crop.json",
+            "normalized_path": ".\\Data\\130_2_normalized.png",
+            "orientation_field_path": ".\\Data\\130_2_orientation_field.png",
+            "binarized_path": ".\\Data\\130_2_binarized.png",
+            "skeleton_path": ".\\Data\\130_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\115_4.tif",
+            "json_path": ".\\Data\\115_4.json",
+            "crop_json_path": ".\\Data\\115_4_crop.json",
+            "normalized_path": ".\\Data\\115_4_normalized.png",
+            "orientation_field_path": ".\\Data\\115_4_orientation_field.png",
+            "binarized_path": ".\\Data\\115_4_binarized.png",
+            "skeleton_path": ".\\Data\\115_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\127_1.tif",
+            "json_path": ".\\Data\\127_1.json",
+            "crop_json_path": ".\\Data\\127_1_crop.json",
+            "normalized_path": ".\\Data\\127_1_normalized.png",
+            "orientation_field_path": ".\\Data\\127_1_orientation_field.png",
+            "binarized_path": ".\\Data\\127_1_binarized.png",
+            "skeleton_path": ".\\Data\\127_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\102_3.tif",
+            "json_path": ".\\Data\\102_3.json",
+            "crop_json_path": ".\\Data\\102_3_crop.json",
+            "normalized_path": ".\\Data\\102_3_normalized.png",
+            "orientation_field_path": ".\\Data\\102_3_orientation_field.png",
+            "binarized_path": ".\\Data\\102_3_binarized.png",
+            "skeleton_path": ".\\Data\\102_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\113_2.tif",
+            "json_path": ".\\Data\\113_2.json",
+            "crop_json_path": ".\\Data\\113_2_crop.json",
+            "normalized_path": ".\\Data\\113_2_normalized.png",
+            "orientation_field_path": ".\\Data\\113_2_orientation_field.png",
+            "binarized_path": ".\\Data\\113_2_binarized.png",
+            "skeleton_path": ".\\Data\\113_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\113_3.tif",
+            "json_path": ".\\Data\\113_3.json",
+            "crop_json_path": ".\\Data\\113_3_crop.json",
+            "normalized_path": ".\\Data\\113_3_normalized.png",
+            "orientation_field_path": ".\\Data\\113_3_orientation_field.png",
+            "binarized_path": ".\\Data\\113_3_binarized.png",
+            "skeleton_path": ".\\Data\\113_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\139_6.tif",
+            "json_path": ".\\Data\\139_6.json",
+            "crop_json_path": ".\\Data\\139_6_crop.json",
+            "normalized_path": ".\\Data\\139_6_normalized.png",
+            "orientation_field_path": ".\\Data\\139_6_orientation_field.png",
+            "binarized_path": ".\\Data\\139_6_binarized.png",
+            "skeleton_path": ".\\Data\\139_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\101_5.tif",
+            "json_path": ".\\Data\\101_5.json",
+            "crop_json_path": ".\\Data\\101_5_crop.json",
+            "normalized_path": ".\\Data\\101_5_normalized.png",
+            "orientation_field_path": ".\\Data\\101_5_orientation_field.png",
+            "binarized_path": ".\\Data\\101_5_binarized.png",
+            "skeleton_path": ".\\Data\\101_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\123_2.tif",
+            "json_path": ".\\Data\\123_2.json",
+            "crop_json_path": ".\\Data\\123_2_crop.json",
+            "normalized_path": ".\\Data\\123_2_normalized.png",
+            "orientation_field_path": ".\\Data\\123_2_orientation_field.png",
+            "binarized_path": ".\\Data\\123_2_binarized.png",
+            "skeleton_path": ".\\Data\\123_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\132_1.tif",
+            "json_path": ".\\Data\\132_1.json",
+            "crop_json_path": ".\\Data\\132_1_crop.json",
+            "normalized_path": ".\\Data\\132_1_normalized.png",
+            "orientation_field_path": ".\\Data\\132_1_orientation_field.png",
+            "binarized_path": ".\\Data\\132_1_binarized.png",
+            "skeleton_path": ".\\Data\\132_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\133_7.tif",
+            "json_path": ".\\Data\\133_7.json",
+            "crop_json_path": ".\\Data\\133_7_crop.json",
+            "normalized_path": ".\\Data\\133_7_normalized.png",
+            "orientation_field_path": ".\\Data\\133_7_orientation_field.png",
+            "binarized_path": ".\\Data\\133_7_binarized.png",
+            "skeleton_path": ".\\Data\\133_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\112_2.tif",
+            "json_path": ".\\Data\\112_2.json",
+            "crop_json_path": ".\\Data\\112_2_crop.json",
+            "normalized_path": ".\\Data\\112_2_normalized.png",
+            "orientation_field_path": ".\\Data\\112_2_orientation_field.png",
+            "binarized_path": ".\\Data\\112_2_binarized.png",
+            "skeleton_path": ".\\Data\\112_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\138_8.tif",
+            "json_path": ".\\Data\\138_8.json",
+            "crop_json_path": ".\\Data\\138_8_crop.json",
+            "normalized_path": ".\\Data\\138_8_normalized.png",
+            "orientation_field_path": ".\\Data\\138_8_orientation_field.png",
+            "binarized_path": ".\\Data\\138_8_binarized.png",
+            "skeleton_path": ".\\Data\\138_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\124_2.tif",
+            "json_path": ".\\Data\\124_2.json",
+            "crop_json_path": ".\\Data\\124_2_crop.json",
+            "normalized_path": ".\\Data\\124_2_normalized.png",
+            "orientation_field_path": ".\\Data\\124_2_orientation_field.png",
+            "binarized_path": ".\\Data\\124_2_binarized.png",
+            "skeleton_path": ".\\Data\\124_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\131_2.tif",
+            "json_path": ".\\Data\\131_2.json",
+            "crop_json_path": ".\\Data\\131_2_crop.json",
+            "normalized_path": ".\\Data\\131_2_normalized.png",
+            "orientation_field_path": ".\\Data\\131_2_orientation_field.png",
+            "binarized_path": ".\\Data\\131_2_binarized.png",
+            "skeleton_path": ".\\Data\\131_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\135_1.tif",
+            "json_path": ".\\Data\\135_1.json",
+            "crop_json_path": ".\\Data\\135_1_crop.json",
+            "normalized_path": ".\\Data\\135_1_normalized.png",
+            "orientation_field_path": ".\\Data\\135_1_orientation_field.png",
+            "binarized_path": ".\\Data\\135_1_binarized.png",
+            "skeleton_path": ".\\Data\\135_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\126_3.tif",
+            "json_path": ".\\Data\\126_3.json",
+            "crop_json_path": ".\\Data\\126_3_crop.json",
+            "normalized_path": ".\\Data\\126_3_normalized.png",
+            "orientation_field_path": ".\\Data\\126_3_orientation_field.png",
+            "binarized_path": ".\\Data\\126_3_binarized.png",
+            "skeleton_path": ".\\Data\\126_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\137_4.tif",
+            "json_path": ".\\Data\\137_4.json",
+            "crop_json_path": ".\\Data\\137_4_crop.json",
+            "normalized_path": ".\\Data\\137_4_normalized.png",
+            "orientation_field_path": ".\\Data\\137_4_orientation_field.png",
+            "binarized_path": ".\\Data\\137_4_binarized.png",
+            "skeleton_path": ".\\Data\\137_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\106_7.tif",
+            "json_path": ".\\Data\\106_7.json",
+            "crop_json_path": ".\\Data\\106_7_crop.json",
+            "normalized_path": ".\\Data\\106_7_normalized.png",
+            "orientation_field_path": ".\\Data\\106_7_orientation_field.png",
+            "binarized_path": ".\\Data\\106_7_binarized.png",
+            "skeleton_path": ".\\Data\\106_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\117_1.tif",
+            "json_path": ".\\Data\\117_1.json",
+            "crop_json_path": ".\\Data\\117_1_crop.json",
+            "normalized_path": ".\\Data\\117_1_normalized.png",
+            "orientation_field_path": ".\\Data\\117_1_orientation_field.png",
+            "binarized_path": ".\\Data\\117_1_binarized.png",
+            "skeleton_path": ".\\Data\\117_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\121_8.tif",
+            "json_path": ".\\Data\\121_8.json",
+            "crop_json_path": ".\\Data\\121_8_crop.json",
+            "normalized_path": ".\\Data\\121_8_normalized.png",
+            "orientation_field_path": ".\\Data\\121_8_orientation_field.png",
+            "binarized_path": ".\\Data\\121_8_binarized.png",
+            "skeleton_path": ".\\Data\\121_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\132_2.tif",
+            "json_path": ".\\Data\\132_2.json",
+            "crop_json_path": ".\\Data\\132_2_crop.json",
+            "normalized_path": ".\\Data\\132_2_normalized.png",
+            "orientation_field_path": ".\\Data\\132_2_orientation_field.png",
+            "binarized_path": ".\\Data\\132_2_binarized.png",
+            "skeleton_path": ".\\Data\\132_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\120_1.tif",
+            "json_path": ".\\Data\\120_1.json",
+            "crop_json_path": ".\\Data\\120_1_crop.json",
+            "normalized_path": ".\\Data\\120_1_normalized.png",
+            "orientation_field_path": ".\\Data\\120_1_orientation_field.png",
+            "binarized_path": ".\\Data\\120_1_binarized.png",
+            "skeleton_path": ".\\Data\\120_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\109_7.tif",
+            "json_path": ".\\Data\\109_7.json",
+            "crop_json_path": ".\\Data\\109_7_crop.json",
+            "normalized_path": ".\\Data\\109_7_normalized.png",
+            "orientation_field_path": ".\\Data\\109_7_orientation_field.png",
+            "binarized_path": ".\\Data\\109_7_binarized.png",
+            "skeleton_path": ".\\Data\\109_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\132_5.tif",
+            "json_path": ".\\Data\\132_5.json",
+            "crop_json_path": ".\\Data\\132_5_crop.json",
+            "normalized_path": ".\\Data\\132_5_normalized.png",
+            "orientation_field_path": ".\\Data\\132_5_orientation_field.png",
+            "binarized_path": ".\\Data\\132_5_binarized.png",
+            "skeleton_path": ".\\Data\\132_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\102_4.tif",
+            "json_path": ".\\Data\\102_4.json",
+            "crop_json_path": ".\\Data\\102_4_crop.json",
+            "normalized_path": ".\\Data\\102_4_normalized.png",
+            "orientation_field_path": ".\\Data\\102_4_orientation_field.png",
+            "binarized_path": ".\\Data\\102_4_binarized.png",
+            "skeleton_path": ".\\Data\\102_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\105_3.tif",
+            "json_path": ".\\Data\\105_3.json",
+            "crop_json_path": ".\\Data\\105_3_crop.json",
+            "normalized_path": ".\\Data\\105_3_normalized.png",
+            "orientation_field_path": ".\\Data\\105_3_orientation_field.png",
+            "binarized_path": ".\\Data\\105_3_binarized.png",
+            "skeleton_path": ".\\Data\\105_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\116_7.tif",
+            "json_path": ".\\Data\\116_7.json",
+            "crop_json_path": ".\\Data\\116_7_crop.json",
+            "normalized_path": ".\\Data\\116_7_normalized.png",
+            "orientation_field_path": ".\\Data\\116_7_orientation_field.png",
+            "binarized_path": ".\\Data\\116_7_binarized.png",
+            "skeleton_path": ".\\Data\\116_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\110_8.tif",
+            "json_path": ".\\Data\\110_8.json",
+            "crop_json_path": ".\\Data\\110_8_crop.json",
+            "normalized_path": ".\\Data\\110_8_normalized.png",
+            "orientation_field_path": ".\\Data\\110_8_orientation_field.png",
+            "binarized_path": ".\\Data\\110_8_binarized.png",
+            "skeleton_path": ".\\Data\\110_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\138_1.tif",
+            "json_path": ".\\Data\\138_1.json",
+            "crop_json_path": ".\\Data\\138_1_crop.json",
+            "normalized_path": ".\\Data\\138_1_normalized.png",
+            "orientation_field_path": ".\\Data\\138_1_orientation_field.png",
+            "binarized_path": ".\\Data\\138_1_binarized.png",
+            "skeleton_path": ".\\Data\\138_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\131_4.tif",
+            "json_path": ".\\Data\\131_4.json",
+            "crop_json_path": ".\\Data\\131_4_crop.json",
+            "normalized_path": ".\\Data\\131_4_normalized.png",
+            "orientation_field_path": ".\\Data\\131_4_orientation_field.png",
+            "binarized_path": ".\\Data\\131_4_binarized.png",
+            "skeleton_path": ".\\Data\\131_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\114_3.tif",
+            "json_path": ".\\Data\\114_3.json",
+            "crop_json_path": ".\\Data\\114_3_crop.json",
+            "normalized_path": ".\\Data\\114_3_normalized.png",
+            "orientation_field_path": ".\\Data\\114_3_orientation_field.png",
+            "binarized_path": ".\\Data\\114_3_binarized.png",
+            "skeleton_path": ".\\Data\\114_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\119_3.tif",
+            "json_path": ".\\Data\\119_3.json",
+            "crop_json_path": ".\\Data\\119_3_crop.json",
+            "normalized_path": ".\\Data\\119_3_normalized.png",
+            "orientation_field_path": ".\\Data\\119_3_orientation_field.png",
+            "binarized_path": ".\\Data\\119_3_binarized.png",
+            "skeleton_path": ".\\Data\\119_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\129_8.tif",
+            "json_path": ".\\Data\\129_8.json",
+            "crop_json_path": ".\\Data\\129_8_crop.json",
+            "normalized_path": ".\\Data\\129_8_normalized.png",
+            "orientation_field_path": ".\\Data\\129_8_orientation_field.png",
+            "binarized_path": ".\\Data\\129_8_binarized.png",
+            "skeleton_path": ".\\Data\\129_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\125_2.tif",
+            "json_path": ".\\Data\\125_2.json",
+            "crop_json_path": ".\\Data\\125_2_crop.json",
+            "normalized_path": ".\\Data\\125_2_normalized.png",
+            "orientation_field_path": ".\\Data\\125_2_orientation_field.png",
+            "binarized_path": ".\\Data\\125_2_binarized.png",
+            "skeleton_path": ".\\Data\\125_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\103_7.tif",
+            "json_path": ".\\Data\\103_7.json",
+            "crop_json_path": ".\\Data\\103_7_crop.json",
+            "normalized_path": ".\\Data\\103_7_normalized.png",
+            "orientation_field_path": ".\\Data\\103_7_orientation_field.png",
+            "binarized_path": ".\\Data\\103_7_binarized.png",
+            "skeleton_path": ".\\Data\\103_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\107_6.tif",
+            "json_path": ".\\Data\\107_6.json",
+            "crop_json_path": ".\\Data\\107_6_crop.json",
+            "normalized_path": ".\\Data\\107_6_normalized.png",
+            "orientation_field_path": ".\\Data\\107_6_orientation_field.png",
+            "binarized_path": ".\\Data\\107_6_binarized.png",
+            "skeleton_path": ".\\Data\\107_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\106_4.tif",
+            "json_path": ".\\Data\\106_4.json",
+            "crop_json_path": ".\\Data\\106_4_crop.json",
+            "normalized_path": ".\\Data\\106_4_normalized.png",
+            "orientation_field_path": ".\\Data\\106_4_orientation_field.png",
+            "binarized_path": ".\\Data\\106_4_binarized.png",
+            "skeleton_path": ".\\Data\\106_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\124_5.tif",
+            "json_path": ".\\Data\\124_5.json",
+            "crop_json_path": ".\\Data\\124_5_crop.json",
+            "normalized_path": ".\\Data\\124_5_normalized.png",
+            "orientation_field_path": ".\\Data\\124_5_orientation_field.png",
+            "binarized_path": ".\\Data\\124_5_binarized.png",
+            "skeleton_path": ".\\Data\\124_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\110_7.tif",
+            "json_path": ".\\Data\\110_7.json",
+            "crop_json_path": ".\\Data\\110_7_crop.json",
+            "normalized_path": ".\\Data\\110_7_normalized.png",
+            "orientation_field_path": ".\\Data\\110_7_orientation_field.png",
+            "binarized_path": ".\\Data\\110_7_binarized.png",
+            "skeleton_path": ".\\Data\\110_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\125_3.tif",
+            "json_path": ".\\Data\\125_3.json",
+            "crop_json_path": ".\\Data\\125_3_crop.json",
+            "normalized_path": ".\\Data\\125_3_normalized.png",
+            "orientation_field_path": ".\\Data\\125_3_orientation_field.png",
+            "binarized_path": ".\\Data\\125_3_binarized.png",
+            "skeleton_path": ".\\Data\\125_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\130_3.tif",
+            "json_path": ".\\Data\\130_3.json",
+            "crop_json_path": ".\\Data\\130_3_crop.json",
+            "normalized_path": ".\\Data\\130_3_normalized.png",
+            "orientation_field_path": ".\\Data\\130_3_orientation_field.png",
+            "binarized_path": ".\\Data\\130_3_binarized.png",
+            "skeleton_path": ".\\Data\\130_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\109_4.tif",
+            "json_path": ".\\Data\\109_4.json",
+            "crop_json_path": ".\\Data\\109_4_crop.json",
+            "normalized_path": ".\\Data\\109_4_normalized.png",
+            "orientation_field_path": ".\\Data\\109_4_orientation_field.png",
+            "binarized_path": ".\\Data\\109_4_binarized.png",
+            "skeleton_path": ".\\Data\\109_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\140_6.tif",
+            "json_path": ".\\Data\\140_6.json",
+            "crop_json_path": ".\\Data\\140_6_crop.json",
+            "normalized_path": ".\\Data\\140_6_normalized.png",
+            "orientation_field_path": ".\\Data\\140_6_orientation_field.png",
+            "binarized_path": ".\\Data\\140_6_binarized.png",
+            "skeleton_path": ".\\Data\\140_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\139_7.tif",
+            "json_path": ".\\Data\\139_7.json",
+            "crop_json_path": ".\\Data\\139_7_crop.json",
+            "normalized_path": ".\\Data\\139_7_normalized.png",
+            "orientation_field_path": ".\\Data\\139_7_orientation_field.png",
+            "binarized_path": ".\\Data\\139_7_binarized.png",
+            "skeleton_path": ".\\Data\\139_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\121_3.tif",
+            "json_path": ".\\Data\\121_3.json",
+            "crop_json_path": ".\\Data\\121_3_crop.json",
+            "normalized_path": ".\\Data\\121_3_normalized.png",
+            "orientation_field_path": ".\\Data\\121_3_orientation_field.png",
+            "binarized_path": ".\\Data\\121_3_binarized.png",
+            "skeleton_path": ".\\Data\\121_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\109_5.tif",
+            "json_path": ".\\Data\\109_5.json",
+            "crop_json_path": ".\\Data\\109_5_crop.json",
+            "normalized_path": ".\\Data\\109_5_normalized.png",
+            "orientation_field_path": ".\\Data\\109_5_orientation_field.png",
+            "binarized_path": ".\\Data\\109_5_binarized.png",
+            "skeleton_path": ".\\Data\\109_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\137_5.tif",
+            "json_path": ".\\Data\\137_5.json",
+            "crop_json_path": ".\\Data\\137_5_crop.json",
+            "normalized_path": ".\\Data\\137_5_normalized.png",
+            "orientation_field_path": ".\\Data\\137_5_orientation_field.png",
+            "binarized_path": ".\\Data\\137_5_binarized.png",
+            "skeleton_path": ".\\Data\\137_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\122_4.tif",
+            "json_path": ".\\Data\\122_4.json",
+            "crop_json_path": ".\\Data\\122_4_crop.json",
+            "normalized_path": ".\\Data\\122_4_normalized.png",
+            "orientation_field_path": ".\\Data\\122_4_orientation_field.png",
+            "binarized_path": ".\\Data\\122_4_binarized.png",
+            "skeleton_path": ".\\Data\\122_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\104_1.tif",
+            "json_path": ".\\Data\\104_1.json",
+            "crop_json_path": ".\\Data\\104_1_crop.json",
+            "normalized_path": ".\\Data\\104_1_normalized.png",
+            "orientation_field_path": ".\\Data\\104_1_orientation_field.png",
+            "binarized_path": ".\\Data\\104_1_binarized.png",
+            "skeleton_path": ".\\Data\\104_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\109_8.tif",
+            "json_path": ".\\Data\\109_8.json",
+            "crop_json_path": ".\\Data\\109_8_crop.json",
+            "normalized_path": ".\\Data\\109_8_normalized.png",
+            "orientation_field_path": ".\\Data\\109_8_orientation_field.png",
+            "binarized_path": ".\\Data\\109_8_binarized.png",
+            "skeleton_path": ".\\Data\\109_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\101_8.tif",
+            "json_path": ".\\Data\\101_8.json",
+            "crop_json_path": ".\\Data\\101_8_crop.json",
+            "normalized_path": ".\\Data\\101_8_normalized.png",
+            "orientation_field_path": ".\\Data\\101_8_orientation_field.png",
+            "binarized_path": ".\\Data\\101_8_binarized.png",
+            "skeleton_path": ".\\Data\\101_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\110_1.tif",
+            "json_path": ".\\Data\\110_1.json",
+            "crop_json_path": ".\\Data\\110_1_crop.json",
+            "normalized_path": ".\\Data\\110_1_normalized.png",
+            "orientation_field_path": ".\\Data\\110_1_orientation_field.png",
+            "binarized_path": ".\\Data\\110_1_binarized.png",
+            "skeleton_path": ".\\Data\\110_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\131_7.tif",
+            "json_path": ".\\Data\\131_7.json",
+            "crop_json_path": ".\\Data\\131_7_crop.json",
+            "normalized_path": ".\\Data\\131_7_normalized.png",
+            "orientation_field_path": ".\\Data\\131_7_orientation_field.png",
+            "binarized_path": ".\\Data\\131_7_binarized.png",
+            "skeleton_path": ".\\Data\\131_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\108_2.tif",
+            "json_path": ".\\Data\\108_2.json",
+            "crop_json_path": ".\\Data\\108_2_crop.json",
+            "normalized_path": ".\\Data\\108_2_normalized.png",
+            "orientation_field_path": ".\\Data\\108_2_orientation_field.png",
+            "binarized_path": ".\\Data\\108_2_binarized.png",
+            "skeleton_path": ".\\Data\\108_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\107_8.tif",
+            "json_path": ".\\Data\\107_8.json",
+            "crop_json_path": ".\\Data\\107_8_crop.json",
+            "normalized_path": ".\\Data\\107_8_normalized.png",
+            "orientation_field_path": ".\\Data\\107_8_orientation_field.png",
+            "binarized_path": ".\\Data\\107_8_binarized.png",
+            "skeleton_path": ".\\Data\\107_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\126_5.tif",
+            "json_path": ".\\Data\\126_5.json",
+            "crop_json_path": ".\\Data\\126_5_crop.json",
+            "normalized_path": ".\\Data\\126_5_normalized.png",
+            "orientation_field_path": ".\\Data\\126_5_orientation_field.png",
+            "binarized_path": ".\\Data\\126_5_binarized.png",
+            "skeleton_path": ".\\Data\\126_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\115_6.tif",
+            "json_path": ".\\Data\\115_6.json",
+            "crop_json_path": ".\\Data\\115_6_crop.json",
+            "normalized_path": ".\\Data\\115_6_normalized.png",
+            "orientation_field_path": ".\\Data\\115_6_orientation_field.png",
+            "binarized_path": ".\\Data\\115_6_binarized.png",
+            "skeleton_path": ".\\Data\\115_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\129_2.tif",
+            "json_path": ".\\Data\\129_2.json",
+            "crop_json_path": ".\\Data\\129_2_crop.json",
+            "normalized_path": ".\\Data\\129_2_normalized.png",
+            "orientation_field_path": ".\\Data\\129_2_orientation_field.png",
+            "binarized_path": ".\\Data\\129_2_binarized.png",
+            "skeleton_path": ".\\Data\\129_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\117_5.tif",
+            "json_path": ".\\Data\\117_5.json",
+            "crop_json_path": ".\\Data\\117_5_crop.json",
+            "normalized_path": ".\\Data\\117_5_normalized.png",
+            "orientation_field_path": ".\\Data\\117_5_orientation_field.png",
+            "binarized_path": ".\\Data\\117_5_binarized.png",
+            "skeleton_path": ".\\Data\\117_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\108_7.tif",
+            "json_path": ".\\Data\\108_7.json",
+            "crop_json_path": ".\\Data\\108_7_crop.json",
+            "normalized_path": ".\\Data\\108_7_normalized.png",
+            "orientation_field_path": ".\\Data\\108_7_orientation_field.png",
+            "binarized_path": ".\\Data\\108_7_binarized.png",
+            "skeleton_path": ".\\Data\\108_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\136_6.tif",
+            "json_path": ".\\Data\\136_6.json",
+            "crop_json_path": ".\\Data\\136_6_crop.json",
+            "normalized_path": ".\\Data\\136_6_normalized.png",
+            "orientation_field_path": ".\\Data\\136_6_orientation_field.png",
+            "binarized_path": ".\\Data\\136_6_binarized.png",
+            "skeleton_path": ".\\Data\\136_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\122_7.tif",
+            "json_path": ".\\Data\\122_7.json",
+            "crop_json_path": ".\\Data\\122_7_crop.json",
+            "normalized_path": ".\\Data\\122_7_normalized.png",
+            "orientation_field_path": ".\\Data\\122_7_orientation_field.png",
+            "binarized_path": ".\\Data\\122_7_binarized.png",
+            "skeleton_path": ".\\Data\\122_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\118_4.tif",
+            "json_path": ".\\Data\\118_4.json",
+            "crop_json_path": ".\\Data\\118_4_crop.json",
+            "normalized_path": ".\\Data\\118_4_normalized.png",
+            "orientation_field_path": ".\\Data\\118_4_orientation_field.png",
+            "binarized_path": ".\\Data\\118_4_binarized.png",
+            "skeleton_path": ".\\Data\\118_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\117_4.tif",
+            "json_path": ".\\Data\\117_4.json",
+            "crop_json_path": ".\\Data\\117_4_crop.json",
+            "normalized_path": ".\\Data\\117_4_normalized.png",
+            "orientation_field_path": ".\\Data\\117_4_orientation_field.png",
+            "binarized_path": ".\\Data\\117_4_binarized.png",
+            "skeleton_path": ".\\Data\\117_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\133_3.tif",
+            "json_path": ".\\Data\\133_3.json",
+            "crop_json_path": ".\\Data\\133_3_crop.json",
+            "normalized_path": ".\\Data\\133_3_normalized.png",
+            "orientation_field_path": ".\\Data\\133_3_orientation_field.png",
+            "binarized_path": ".\\Data\\133_3_binarized.png",
+            "skeleton_path": ".\\Data\\133_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\111_4.tif",
+            "json_path": ".\\Data\\111_4.json",
+            "crop_json_path": ".\\Data\\111_4_crop.json",
+            "normalized_path": ".\\Data\\111_4_normalized.png",
+            "orientation_field_path": ".\\Data\\111_4_orientation_field.png",
+            "binarized_path": ".\\Data\\111_4_binarized.png",
+            "skeleton_path": ".\\Data\\111_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\139_8.tif",
+            "json_path": ".\\Data\\139_8.json",
+            "crop_json_path": ".\\Data\\139_8_crop.json",
+            "normalized_path": ".\\Data\\139_8_normalized.png",
+            "orientation_field_path": ".\\Data\\139_8_orientation_field.png",
+            "binarized_path": ".\\Data\\139_8_binarized.png",
+            "skeleton_path": ".\\Data\\139_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\134_8.tif",
+            "json_path": ".\\Data\\134_8.json",
+            "crop_json_path": ".\\Data\\134_8_crop.json",
+            "normalized_path": ".\\Data\\134_8_normalized.png",
+            "orientation_field_path": ".\\Data\\134_8_orientation_field.png",
+            "binarized_path": ".\\Data\\134_8_binarized.png",
+            "skeleton_path": ".\\Data\\134_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\122_5.tif",
+            "json_path": ".\\Data\\122_5.json",
+            "crop_json_path": ".\\Data\\122_5_crop.json",
+            "normalized_path": ".\\Data\\122_5_normalized.png",
+            "orientation_field_path": ".\\Data\\122_5_orientation_field.png",
+            "binarized_path": ".\\Data\\122_5_binarized.png",
+            "skeleton_path": ".\\Data\\122_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\101_7.tif",
+            "json_path": ".\\Data\\101_7.json",
+            "crop_json_path": ".\\Data\\101_7_crop.json",
+            "normalized_path": ".\\Data\\101_7_normalized.png",
+            "orientation_field_path": ".\\Data\\101_7_orientation_field.png",
+            "binarized_path": ".\\Data\\101_7_binarized.png",
+            "skeleton_path": ".\\Data\\101_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\111_3.tif",
+            "json_path": ".\\Data\\111_3.json",
+            "crop_json_path": ".\\Data\\111_3_crop.json",
+            "normalized_path": ".\\Data\\111_3_normalized.png",
+            "orientation_field_path": ".\\Data\\111_3_orientation_field.png",
+            "binarized_path": ".\\Data\\111_3_binarized.png",
+            "skeleton_path": ".\\Data\\111_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\114_1.tif",
+            "json_path": ".\\Data\\114_1.json",
+            "crop_json_path": ".\\Data\\114_1_crop.json",
+            "normalized_path": ".\\Data\\114_1_normalized.png",
+            "orientation_field_path": ".\\Data\\114_1_orientation_field.png",
+            "binarized_path": ".\\Data\\114_1_binarized.png",
+            "skeleton_path": ".\\Data\\114_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\120_3.tif",
+            "json_path": ".\\Data\\120_3.json",
+            "crop_json_path": ".\\Data\\120_3_crop.json",
+            "normalized_path": ".\\Data\\120_3_normalized.png",
+            "orientation_field_path": ".\\Data\\120_3_orientation_field.png",
+            "binarized_path": ".\\Data\\120_3_binarized.png",
+            "skeleton_path": ".\\Data\\120_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\135_6.tif",
+            "json_path": ".\\Data\\135_6.json",
+            "crop_json_path": ".\\Data\\135_6_crop.json",
+            "normalized_path": ".\\Data\\135_6_normalized.png",
+            "orientation_field_path": ".\\Data\\135_6_orientation_field.png",
+            "binarized_path": ".\\Data\\135_6_binarized.png",
+            "skeleton_path": ".\\Data\\135_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\138_4.tif",
+            "json_path": ".\\Data\\138_4.json",
+            "crop_json_path": ".\\Data\\138_4_crop.json",
+            "normalized_path": ".\\Data\\138_4_normalized.png",
+            "orientation_field_path": ".\\Data\\138_4_orientation_field.png",
+            "binarized_path": ".\\Data\\138_4_binarized.png",
+            "skeleton_path": ".\\Data\\138_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\112_5.tif",
+            "json_path": ".\\Data\\112_5.json",
+            "crop_json_path": ".\\Data\\112_5_crop.json",
+            "normalized_path": ".\\Data\\112_5_normalized.png",
+            "orientation_field_path": ".\\Data\\112_5_orientation_field.png",
+            "binarized_path": ".\\Data\\112_5_binarized.png",
+            "skeleton_path": ".\\Data\\112_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\104_6.tif",
+            "json_path": ".\\Data\\104_6.json",
+            "crop_json_path": ".\\Data\\104_6_crop.json",
+            "normalized_path": ".\\Data\\104_6_normalized.png",
+            "orientation_field_path": ".\\Data\\104_6_orientation_field.png",
+            "binarized_path": ".\\Data\\104_6_binarized.png",
+            "skeleton_path": ".\\Data\\104_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\137_6.tif",
+            "json_path": ".\\Data\\137_6.json",
+            "crop_json_path": ".\\Data\\137_6_crop.json",
+            "normalized_path": ".\\Data\\137_6_normalized.png",
+            "orientation_field_path": ".\\Data\\137_6_orientation_field.png",
+            "binarized_path": ".\\Data\\137_6_binarized.png",
+            "skeleton_path": ".\\Data\\137_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\121_6.tif",
+            "json_path": ".\\Data\\121_6.json",
+            "crop_json_path": ".\\Data\\121_6_crop.json",
+            "normalized_path": ".\\Data\\121_6_normalized.png",
+            "orientation_field_path": ".\\Data\\121_6_orientation_field.png",
+            "binarized_path": ".\\Data\\121_6_binarized.png",
+            "skeleton_path": ".\\Data\\121_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\109_1.tif",
+            "json_path": ".\\Data\\109_1.json",
+            "crop_json_path": ".\\Data\\109_1_crop.json",
+            "normalized_path": ".\\Data\\109_1_normalized.png",
+            "orientation_field_path": ".\\Data\\109_1_orientation_field.png",
+            "binarized_path": ".\\Data\\109_1_binarized.png",
+            "skeleton_path": ".\\Data\\109_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\127_3.tif",
+            "json_path": ".\\Data\\127_3.json",
+            "crop_json_path": ".\\Data\\127_3_crop.json",
+            "normalized_path": ".\\Data\\127_3_normalized.png",
+            "orientation_field_path": ".\\Data\\127_3_orientation_field.png",
+            "binarized_path": ".\\Data\\127_3_binarized.png",
+            "skeleton_path": ".\\Data\\127_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\130_4.tif",
+            "json_path": ".\\Data\\130_4.json",
+            "crop_json_path": ".\\Data\\130_4_crop.json",
+            "normalized_path": ".\\Data\\130_4_normalized.png",
+            "orientation_field_path": ".\\Data\\130_4_orientation_field.png",
+            "binarized_path": ".\\Data\\130_4_binarized.png",
+            "skeleton_path": ".\\Data\\130_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\122_2.tif",
+            "json_path": ".\\Data\\122_2.json",
+            "crop_json_path": ".\\Data\\122_2_crop.json",
+            "normalized_path": ".\\Data\\122_2_normalized.png",
+            "orientation_field_path": ".\\Data\\122_2_orientation_field.png",
+            "binarized_path": ".\\Data\\122_2_binarized.png",
+            "skeleton_path": ".\\Data\\122_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\112_3.tif",
+            "json_path": ".\\Data\\112_3.json",
+            "crop_json_path": ".\\Data\\112_3_crop.json",
+            "normalized_path": ".\\Data\\112_3_normalized.png",
+            "orientation_field_path": ".\\Data\\112_3_orientation_field.png",
+            "binarized_path": ".\\Data\\112_3_binarized.png",
+            "skeleton_path": ".\\Data\\112_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\140_4.tif",
+            "json_path": ".\\Data\\140_4.json",
+            "crop_json_path": ".\\Data\\140_4_crop.json",
+            "normalized_path": ".\\Data\\140_4_normalized.png",
+            "orientation_field_path": ".\\Data\\140_4_orientation_field.png",
+            "binarized_path": ".\\Data\\140_4_binarized.png",
+            "skeleton_path": ".\\Data\\140_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\123_4.tif",
+            "json_path": ".\\Data\\123_4.json",
+            "crop_json_path": ".\\Data\\123_4_crop.json",
+            "normalized_path": ".\\Data\\123_4_normalized.png",
+            "orientation_field_path": ".\\Data\\123_4_orientation_field.png",
+            "binarized_path": ".\\Data\\123_4_binarized.png",
+            "skeleton_path": ".\\Data\\123_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\127_4.tif",
+            "json_path": ".\\Data\\127_4.json",
+            "crop_json_path": ".\\Data\\127_4_crop.json",
+            "normalized_path": ".\\Data\\127_4_normalized.png",
+            "orientation_field_path": ".\\Data\\127_4_orientation_field.png",
+            "binarized_path": ".\\Data\\127_4_binarized.png",
+            "skeleton_path": ".\\Data\\127_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\115_7.tif",
+            "json_path": ".\\Data\\115_7.json",
+            "crop_json_path": ".\\Data\\115_7_crop.json",
+            "normalized_path": ".\\Data\\115_7_normalized.png",
+            "orientation_field_path": ".\\Data\\115_7_orientation_field.png",
+            "binarized_path": ".\\Data\\115_7_binarized.png",
+            "skeleton_path": ".\\Data\\115_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\118_2.tif",
+            "json_path": ".\\Data\\118_2.json",
+            "crop_json_path": ".\\Data\\118_2_crop.json",
+            "normalized_path": ".\\Data\\118_2_normalized.png",
+            "orientation_field_path": ".\\Data\\118_2_orientation_field.png",
+            "binarized_path": ".\\Data\\118_2_binarized.png",
+            "skeleton_path": ".\\Data\\118_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\104_5.tif",
+            "json_path": ".\\Data\\104_5.json",
+            "crop_json_path": ".\\Data\\104_5_crop.json",
+            "normalized_path": ".\\Data\\104_5_normalized.png",
+            "orientation_field_path": ".\\Data\\104_5_orientation_field.png",
+            "binarized_path": ".\\Data\\104_5_binarized.png",
+            "skeleton_path": ".\\Data\\104_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\135_4.tif",
+            "json_path": ".\\Data\\135_4.json",
+            "crop_json_path": ".\\Data\\135_4_crop.json",
+            "normalized_path": ".\\Data\\135_4_normalized.png",
+            "orientation_field_path": ".\\Data\\135_4_orientation_field.png",
+            "binarized_path": ".\\Data\\135_4_binarized.png",
+            "skeleton_path": ".\\Data\\135_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\128_5.tif",
+            "json_path": ".\\Data\\128_5.json",
+            "crop_json_path": ".\\Data\\128_5_crop.json",
+            "normalized_path": ".\\Data\\128_5_normalized.png",
+            "orientation_field_path": ".\\Data\\128_5_orientation_field.png",
+            "binarized_path": ".\\Data\\128_5_binarized.png",
+            "skeleton_path": ".\\Data\\128_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\121_1.tif",
+            "json_path": ".\\Data\\121_1.json",
+            "crop_json_path": ".\\Data\\121_1_crop.json",
+            "normalized_path": ".\\Data\\121_1_normalized.png",
+            "orientation_field_path": ".\\Data\\121_1_orientation_field.png",
+            "binarized_path": ".\\Data\\121_1_binarized.png",
+            "skeleton_path": ".\\Data\\121_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\138_2.tif",
+            "json_path": ".\\Data\\138_2.json",
+            "crop_json_path": ".\\Data\\138_2_crop.json",
+            "normalized_path": ".\\Data\\138_2_normalized.png",
+            "orientation_field_path": ".\\Data\\138_2_orientation_field.png",
+            "binarized_path": ".\\Data\\138_2_binarized.png",
+            "skeleton_path": ".\\Data\\138_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\120_7.tif",
+            "json_path": ".\\Data\\120_7.json",
+            "crop_json_path": ".\\Data\\120_7_crop.json",
+            "normalized_path": ".\\Data\\120_7_normalized.png",
+            "orientation_field_path": ".\\Data\\120_7_orientation_field.png",
+            "binarized_path": ".\\Data\\120_7_binarized.png",
+            "skeleton_path": ".\\Data\\120_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\103_2.tif",
+            "json_path": ".\\Data\\103_2.json",
+            "crop_json_path": ".\\Data\\103_2_crop.json",
+            "normalized_path": ".\\Data\\103_2_normalized.png",
+            "orientation_field_path": ".\\Data\\103_2_orientation_field.png",
+            "binarized_path": ".\\Data\\103_2_binarized.png",
+            "skeleton_path": ".\\Data\\103_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\136_8.tif",
+            "json_path": ".\\Data\\136_8.json",
+            "crop_json_path": ".\\Data\\136_8_crop.json",
+            "normalized_path": ".\\Data\\136_8_normalized.png",
+            "orientation_field_path": ".\\Data\\136_8_orientation_field.png",
+            "binarized_path": ".\\Data\\136_8_binarized.png",
+            "skeleton_path": ".\\Data\\136_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\119_7.tif",
+            "json_path": ".\\Data\\119_7.json",
+            "crop_json_path": ".\\Data\\119_7_crop.json",
+            "normalized_path": ".\\Data\\119_7_normalized.png",
+            "orientation_field_path": ".\\Data\\119_7_orientation_field.png",
+            "binarized_path": ".\\Data\\119_7_binarized.png",
+            "skeleton_path": ".\\Data\\119_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\128_2.tif",
+            "json_path": ".\\Data\\128_2.json",
+            "crop_json_path": ".\\Data\\128_2_crop.json",
+            "normalized_path": ".\\Data\\128_2_normalized.png",
+            "orientation_field_path": ".\\Data\\128_2_orientation_field.png",
+            "binarized_path": ".\\Data\\128_2_binarized.png",
+            "skeleton_path": ".\\Data\\128_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\116_8.tif",
+            "json_path": ".\\Data\\116_8.json",
+            "crop_json_path": ".\\Data\\116_8_crop.json",
+            "normalized_path": ".\\Data\\116_8_normalized.png",
+            "orientation_field_path": ".\\Data\\116_8_orientation_field.png",
+            "binarized_path": ".\\Data\\116_8_binarized.png",
+            "skeleton_path": ".\\Data\\116_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\117_8.tif",
+            "json_path": ".\\Data\\117_8.json",
+            "crop_json_path": ".\\Data\\117_8_crop.json",
+            "normalized_path": ".\\Data\\117_8_normalized.png",
+            "orientation_field_path": ".\\Data\\117_8_orientation_field.png",
+            "binarized_path": ".\\Data\\117_8_binarized.png",
+            "skeleton_path": ".\\Data\\117_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\126_4.tif",
+            "json_path": ".\\Data\\126_4.json",
+            "crop_json_path": ".\\Data\\126_4_crop.json",
+            "normalized_path": ".\\Data\\126_4_normalized.png",
+            "orientation_field_path": ".\\Data\\126_4_orientation_field.png",
+            "binarized_path": ".\\Data\\126_4_binarized.png",
+            "skeleton_path": ".\\Data\\126_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\139_5.tif",
+            "json_path": ".\\Data\\139_5.json",
+            "crop_json_path": ".\\Data\\139_5_crop.json",
+            "normalized_path": ".\\Data\\139_5_normalized.png",
+            "orientation_field_path": ".\\Data\\139_5_orientation_field.png",
+            "binarized_path": ".\\Data\\139_5_binarized.png",
+            "skeleton_path": ".\\Data\\139_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\123_5.tif",
+            "json_path": ".\\Data\\123_5.json",
+            "crop_json_path": ".\\Data\\123_5_crop.json",
+            "normalized_path": ".\\Data\\123_5_normalized.png",
+            "orientation_field_path": ".\\Data\\123_5_orientation_field.png",
+            "binarized_path": ".\\Data\\123_5_binarized.png",
+            "skeleton_path": ".\\Data\\123_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\137_1.tif",
+            "json_path": ".\\Data\\137_1.json",
+            "crop_json_path": ".\\Data\\137_1_crop.json",
+            "normalized_path": ".\\Data\\137_1_normalized.png",
+            "orientation_field_path": ".\\Data\\137_1_orientation_field.png",
+            "binarized_path": ".\\Data\\137_1_binarized.png",
+            "skeleton_path": ".\\Data\\137_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\120_4.tif",
+            "json_path": ".\\Data\\120_4.json",
+            "crop_json_path": ".\\Data\\120_4_crop.json",
+            "normalized_path": ".\\Data\\120_4_normalized.png",
+            "orientation_field_path": ".\\Data\\120_4_orientation_field.png",
+            "binarized_path": ".\\Data\\120_4_binarized.png",
+            "skeleton_path": ".\\Data\\120_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\124_4.tif",
+            "json_path": ".\\Data\\124_4.json",
+            "crop_json_path": ".\\Data\\124_4_crop.json",
+            "normalized_path": ".\\Data\\124_4_normalized.png",
+            "orientation_field_path": ".\\Data\\124_4_orientation_field.png",
+            "binarized_path": ".\\Data\\124_4_binarized.png",
+            "skeleton_path": ".\\Data\\124_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\129_4.tif",
+            "json_path": ".\\Data\\129_4.json",
+            "crop_json_path": ".\\Data\\129_4_crop.json",
+            "normalized_path": ".\\Data\\129_4_normalized.png",
+            "orientation_field_path": ".\\Data\\129_4_orientation_field.png",
+            "binarized_path": ".\\Data\\129_4_binarized.png",
+            "skeleton_path": ".\\Data\\129_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\132_6.tif",
+            "json_path": ".\\Data\\132_6.json",
+            "crop_json_path": ".\\Data\\132_6_crop.json",
+            "normalized_path": ".\\Data\\132_6_normalized.png",
+            "orientation_field_path": ".\\Data\\132_6_orientation_field.png",
+            "binarized_path": ".\\Data\\132_6_binarized.png",
+            "skeleton_path": ".\\Data\\132_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\140_8.tif",
+            "json_path": ".\\Data\\140_8.json",
+            "crop_json_path": ".\\Data\\140_8_crop.json",
+            "normalized_path": ".\\Data\\140_8_normalized.png",
+            "orientation_field_path": ".\\Data\\140_8_orientation_field.png",
+            "binarized_path": ".\\Data\\140_8_binarized.png",
+            "skeleton_path": ".\\Data\\140_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\129_5.tif",
+            "json_path": ".\\Data\\129_5.json",
+            "crop_json_path": ".\\Data\\129_5_crop.json",
+            "normalized_path": ".\\Data\\129_5_normalized.png",
+            "orientation_field_path": ".\\Data\\129_5_orientation_field.png",
+            "binarized_path": ".\\Data\\129_5_binarized.png",
+            "skeleton_path": ".\\Data\\129_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\132_8.tif",
+            "json_path": ".\\Data\\132_8.json",
+            "crop_json_path": ".\\Data\\132_8_crop.json",
+            "normalized_path": ".\\Data\\132_8_normalized.png",
+            "orientation_field_path": ".\\Data\\132_8_orientation_field.png",
+            "binarized_path": ".\\Data\\132_8_binarized.png",
+            "skeleton_path": ".\\Data\\132_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\103_6.tif",
+            "json_path": ".\\Data\\103_6.json",
+            "crop_json_path": ".\\Data\\103_6_crop.json",
+            "normalized_path": ".\\Data\\103_6_normalized.png",
+            "orientation_field_path": ".\\Data\\103_6_orientation_field.png",
+            "binarized_path": ".\\Data\\103_6_binarized.png",
+            "skeleton_path": ".\\Data\\103_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\116_3.tif",
+            "json_path": ".\\Data\\116_3.json",
+            "crop_json_path": ".\\Data\\116_3_crop.json",
+            "normalized_path": ".\\Data\\116_3_normalized.png",
+            "orientation_field_path": ".\\Data\\116_3_orientation_field.png",
+            "binarized_path": ".\\Data\\116_3_binarized.png",
+            "skeleton_path": ".\\Data\\116_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\137_3.tif",
+            "json_path": ".\\Data\\137_3.json",
+            "crop_json_path": ".\\Data\\137_3_crop.json",
+            "normalized_path": ".\\Data\\137_3_normalized.png",
+            "orientation_field_path": ".\\Data\\137_3_orientation_field.png",
+            "binarized_path": ".\\Data\\137_3_binarized.png",
+            "skeleton_path": ".\\Data\\137_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\140_3.tif",
+            "json_path": ".\\Data\\140_3.json",
+            "crop_json_path": ".\\Data\\140_3_crop.json",
+            "normalized_path": ".\\Data\\140_3_normalized.png",
+            "orientation_field_path": ".\\Data\\140_3_orientation_field.png",
+            "binarized_path": ".\\Data\\140_3_binarized.png",
+            "skeleton_path": ".\\Data\\140_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\108_4.tif",
+            "json_path": ".\\Data\\108_4.json",
+            "crop_json_path": ".\\Data\\108_4_crop.json",
+            "normalized_path": ".\\Data\\108_4_normalized.png",
+            "orientation_field_path": ".\\Data\\108_4_orientation_field.png",
+            "binarized_path": ".\\Data\\108_4_binarized.png",
+            "skeleton_path": ".\\Data\\108_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\134_6.tif",
+            "json_path": ".\\Data\\134_6.json",
+            "crop_json_path": ".\\Data\\134_6_crop.json",
+            "normalized_path": ".\\Data\\134_6_normalized.png",
+            "orientation_field_path": ".\\Data\\134_6_orientation_field.png",
+            "binarized_path": ".\\Data\\134_6_binarized.png",
+            "skeleton_path": ".\\Data\\134_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\126_7.tif",
+            "json_path": ".\\Data\\126_7.json",
+            "crop_json_path": ".\\Data\\126_7_crop.json",
+            "normalized_path": ".\\Data\\126_7_normalized.png",
+            "orientation_field_path": ".\\Data\\126_7_orientation_field.png",
+            "binarized_path": ".\\Data\\126_7_binarized.png",
+            "skeleton_path": ".\\Data\\126_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\125_6.tif",
+            "json_path": ".\\Data\\125_6.json",
+            "crop_json_path": ".\\Data\\125_6_crop.json",
+            "normalized_path": ".\\Data\\125_6_normalized.png",
+            "orientation_field_path": ".\\Data\\125_6_orientation_field.png",
+            "binarized_path": ".\\Data\\125_6_binarized.png",
+            "skeleton_path": ".\\Data\\125_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\123_8.tif",
+            "json_path": ".\\Data\\123_8.json",
+            "crop_json_path": ".\\Data\\123_8_crop.json",
+            "normalized_path": ".\\Data\\123_8_normalized.png",
+            "orientation_field_path": ".\\Data\\123_8_orientation_field.png",
+            "binarized_path": ".\\Data\\123_8_binarized.png",
+            "skeleton_path": ".\\Data\\123_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\108_5.tif",
+            "json_path": ".\\Data\\108_5.json",
+            "crop_json_path": ".\\Data\\108_5_crop.json",
+            "normalized_path": ".\\Data\\108_5_normalized.png",
+            "orientation_field_path": ".\\Data\\108_5_orientation_field.png",
+            "binarized_path": ".\\Data\\108_5_binarized.png",
+            "skeleton_path": ".\\Data\\108_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\120_6.tif",
+            "json_path": ".\\Data\\120_6.json",
+            "crop_json_path": ".\\Data\\120_6_crop.json",
+            "normalized_path": ".\\Data\\120_6_normalized.png",
+            "orientation_field_path": ".\\Data\\120_6_orientation_field.png",
+            "binarized_path": ".\\Data\\120_6_binarized.png",
+            "skeleton_path": ".\\Data\\120_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\130_7.tif",
+            "json_path": ".\\Data\\130_7.json",
+            "crop_json_path": ".\\Data\\130_7_crop.json",
+            "normalized_path": ".\\Data\\130_7_normalized.png",
+            "orientation_field_path": ".\\Data\\130_7_orientation_field.png",
+            "binarized_path": ".\\Data\\130_7_binarized.png",
+            "skeleton_path": ".\\Data\\130_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\124_8.tif",
+            "json_path": ".\\Data\\124_8.json",
+            "crop_json_path": ".\\Data\\124_8_crop.json",
+            "normalized_path": ".\\Data\\124_8_normalized.png",
+            "orientation_field_path": ".\\Data\\124_8_orientation_field.png",
+            "binarized_path": ".\\Data\\124_8_binarized.png",
+            "skeleton_path": ".\\Data\\124_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\105_8.tif",
+            "json_path": ".\\Data\\105_8.json",
+            "crop_json_path": ".\\Data\\105_8_crop.json",
+            "normalized_path": ".\\Data\\105_8_normalized.png",
+            "orientation_field_path": ".\\Data\\105_8_orientation_field.png",
+            "binarized_path": ".\\Data\\105_8_binarized.png",
+            "skeleton_path": ".\\Data\\105_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\107_4.tif",
+            "json_path": ".\\Data\\107_4.json",
+            "crop_json_path": ".\\Data\\107_4_crop.json",
+            "normalized_path": ".\\Data\\107_4_normalized.png",
+            "orientation_field_path": ".\\Data\\107_4_orientation_field.png",
+            "binarized_path": ".\\Data\\107_4_binarized.png",
+            "skeleton_path": ".\\Data\\107_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\115_8.tif",
+            "json_path": ".\\Data\\115_8.json",
+            "crop_json_path": ".\\Data\\115_8_crop.json",
+            "normalized_path": ".\\Data\\115_8_normalized.png",
+            "orientation_field_path": ".\\Data\\115_8_orientation_field.png",
+            "binarized_path": ".\\Data\\115_8_binarized.png",
+            "skeleton_path": ".\\Data\\115_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\111_5.tif",
+            "json_path": ".\\Data\\111_5.json",
+            "crop_json_path": ".\\Data\\111_5_crop.json",
+            "normalized_path": ".\\Data\\111_5_normalized.png",
+            "orientation_field_path": ".\\Data\\111_5_orientation_field.png",
+            "binarized_path": ".\\Data\\111_5_binarized.png",
+            "skeleton_path": ".\\Data\\111_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\107_1.tif",
+            "json_path": ".\\Data\\107_1.json",
+            "crop_json_path": ".\\Data\\107_1_crop.json",
+            "normalized_path": ".\\Data\\107_1_normalized.png",
+            "orientation_field_path": ".\\Data\\107_1_orientation_field.png",
+            "binarized_path": ".\\Data\\107_1_binarized.png",
+            "skeleton_path": ".\\Data\\107_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\129_6.tif",
+            "json_path": ".\\Data\\129_6.json",
+            "crop_json_path": ".\\Data\\129_6_crop.json",
+            "normalized_path": ".\\Data\\129_6_normalized.png",
+            "orientation_field_path": ".\\Data\\129_6_orientation_field.png",
+            "binarized_path": ".\\Data\\129_6_binarized.png",
+            "skeleton_path": ".\\Data\\129_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\113_4.tif",
+            "json_path": ".\\Data\\113_4.json",
+            "crop_json_path": ".\\Data\\113_4_crop.json",
+            "normalized_path": ".\\Data\\113_4_normalized.png",
+            "orientation_field_path": ".\\Data\\113_4_orientation_field.png",
+            "binarized_path": ".\\Data\\113_4_binarized.png",
+            "skeleton_path": ".\\Data\\113_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\117_6.tif",
+            "json_path": ".\\Data\\117_6.json",
+            "crop_json_path": ".\\Data\\117_6_crop.json",
+            "normalized_path": ".\\Data\\117_6_normalized.png",
+            "orientation_field_path": ".\\Data\\117_6_orientation_field.png",
+            "binarized_path": ".\\Data\\117_6_binarized.png",
+            "skeleton_path": ".\\Data\\117_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\101_2.tif",
+            "json_path": ".\\Data\\101_2.json",
+            "crop_json_path": ".\\Data\\101_2_crop.json",
+            "normalized_path": ".\\Data\\101_2_normalized.png",
+            "orientation_field_path": ".\\Data\\101_2_orientation_field.png",
+            "binarized_path": ".\\Data\\101_2_binarized.png",
+            "skeleton_path": ".\\Data\\101_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\135_2.tif",
+            "json_path": ".\\Data\\135_2.json",
+            "crop_json_path": ".\\Data\\135_2_crop.json",
+            "normalized_path": ".\\Data\\135_2_normalized.png",
+            "orientation_field_path": ".\\Data\\135_2_orientation_field.png",
+            "binarized_path": ".\\Data\\135_2_binarized.png",
+            "skeleton_path": ".\\Data\\135_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\127_6.tif",
+            "json_path": ".\\Data\\127_6.json",
+            "crop_json_path": ".\\Data\\127_6_crop.json",
+            "normalized_path": ".\\Data\\127_6_normalized.png",
+            "orientation_field_path": ".\\Data\\127_6_orientation_field.png",
+            "binarized_path": ".\\Data\\127_6_binarized.png",
+            "skeleton_path": ".\\Data\\127_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\119_6.tif",
+            "json_path": ".\\Data\\119_6.json",
+            "crop_json_path": ".\\Data\\119_6_crop.json",
+            "normalized_path": ".\\Data\\119_6_normalized.png",
+            "orientation_field_path": ".\\Data\\119_6_orientation_field.png",
+            "binarized_path": ".\\Data\\119_6_binarized.png",
+            "skeleton_path": ".\\Data\\119_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\111_7.tif",
+            "json_path": ".\\Data\\111_7.json",
+            "crop_json_path": ".\\Data\\111_7_crop.json",
+            "normalized_path": ".\\Data\\111_7_normalized.png",
+            "orientation_field_path": ".\\Data\\111_7_orientation_field.png",
+            "binarized_path": ".\\Data\\111_7_binarized.png",
+            "skeleton_path": ".\\Data\\111_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\110_5.tif",
+            "json_path": ".\\Data\\110_5.json",
+            "crop_json_path": ".\\Data\\110_5_crop.json",
+            "normalized_path": ".\\Data\\110_5_normalized.png",
+            "orientation_field_path": ".\\Data\\110_5_orientation_field.png",
+            "binarized_path": ".\\Data\\110_5_binarized.png",
+            "skeleton_path": ".\\Data\\110_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\113_7.tif",
+            "json_path": ".\\Data\\113_7.json",
+            "crop_json_path": ".\\Data\\113_7_crop.json",
+            "normalized_path": ".\\Data\\113_7_normalized.png",
+            "orientation_field_path": ".\\Data\\113_7_orientation_field.png",
+            "binarized_path": ".\\Data\\113_7_binarized.png",
+            "skeleton_path": ".\\Data\\113_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\131_5.tif",
+            "json_path": ".\\Data\\131_5.json",
+            "crop_json_path": ".\\Data\\131_5_crop.json",
+            "normalized_path": ".\\Data\\131_5_normalized.png",
+            "orientation_field_path": ".\\Data\\131_5_orientation_field.png",
+            "binarized_path": ".\\Data\\131_5_binarized.png",
+            "skeleton_path": ".\\Data\\131_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\118_8.tif",
+            "json_path": ".\\Data\\118_8.json",
+            "crop_json_path": ".\\Data\\118_8_crop.json",
+            "normalized_path": ".\\Data\\118_8_normalized.png",
+            "orientation_field_path": ".\\Data\\118_8_orientation_field.png",
+            "binarized_path": ".\\Data\\118_8_binarized.png",
+            "skeleton_path": ".\\Data\\118_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\130_6.tif",
+            "json_path": ".\\Data\\130_6.json",
+            "crop_json_path": ".\\Data\\130_6_crop.json",
+            "normalized_path": ".\\Data\\130_6_normalized.png",
+            "orientation_field_path": ".\\Data\\130_6_orientation_field.png",
+            "binarized_path": ".\\Data\\130_6_binarized.png",
+            "skeleton_path": ".\\Data\\130_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\113_8.tif",
+            "json_path": ".\\Data\\113_8.json",
+            "crop_json_path": ".\\Data\\113_8_crop.json",
+            "normalized_path": ".\\Data\\113_8_normalized.png",
+            "orientation_field_path": ".\\Data\\113_8_orientation_field.png",
+            "binarized_path": ".\\Data\\113_8_binarized.png",
+            "skeleton_path": ".\\Data\\113_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\134_3.tif",
+            "json_path": ".\\Data\\134_3.json",
+            "crop_json_path": ".\\Data\\134_3_crop.json",
+            "normalized_path": ".\\Data\\134_3_normalized.png",
+            "orientation_field_path": ".\\Data\\134_3_orientation_field.png",
+            "binarized_path": ".\\Data\\134_3_binarized.png",
+            "skeleton_path": ".\\Data\\134_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\116_6.tif",
+            "json_path": ".\\Data\\116_6.json",
+            "crop_json_path": ".\\Data\\116_6_crop.json",
+            "normalized_path": ".\\Data\\116_6_normalized.png",
+            "orientation_field_path": ".\\Data\\116_6_orientation_field.png",
+            "binarized_path": ".\\Data\\116_6_binarized.png",
+            "skeleton_path": ".\\Data\\116_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\128_6.tif",
+            "json_path": ".\\Data\\128_6.json",
+            "crop_json_path": ".\\Data\\128_6_crop.json",
+            "normalized_path": ".\\Data\\128_6_normalized.png",
+            "orientation_field_path": ".\\Data\\128_6_orientation_field.png",
+            "binarized_path": ".\\Data\\128_6_binarized.png",
+            "skeleton_path": ".\\Data\\128_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\122_8.tif",
+            "json_path": ".\\Data\\122_8.json",
+            "crop_json_path": ".\\Data\\122_8_crop.json",
+            "normalized_path": ".\\Data\\122_8_normalized.png",
+            "orientation_field_path": ".\\Data\\122_8_orientation_field.png",
+            "binarized_path": ".\\Data\\122_8_binarized.png",
+            "skeleton_path": ".\\Data\\122_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\110_6.tif",
+            "json_path": ".\\Data\\110_6.json",
+            "crop_json_path": ".\\Data\\110_6_crop.json",
+            "normalized_path": ".\\Data\\110_6_normalized.png",
+            "orientation_field_path": ".\\Data\\110_6_orientation_field.png",
+            "binarized_path": ".\\Data\\110_6_binarized.png",
+            "skeleton_path": ".\\Data\\110_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\123_3.tif",
+            "json_path": ".\\Data\\123_3.json",
+            "crop_json_path": ".\\Data\\123_3_crop.json",
+            "normalized_path": ".\\Data\\123_3_normalized.png",
+            "orientation_field_path": ".\\Data\\123_3_orientation_field.png",
+            "binarized_path": ".\\Data\\123_3_binarized.png",
+            "skeleton_path": ".\\Data\\123_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\106_2.tif",
+            "json_path": ".\\Data\\106_2.json",
+            "crop_json_path": ".\\Data\\106_2_crop.json",
+            "normalized_path": ".\\Data\\106_2_normalized.png",
+            "orientation_field_path": ".\\Data\\106_2_orientation_field.png",
+            "binarized_path": ".\\Data\\106_2_binarized.png",
+            "skeleton_path": ".\\Data\\106_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\104_4.tif",
+            "json_path": ".\\Data\\104_4.json",
+            "crop_json_path": ".\\Data\\104_4_crop.json",
+            "normalized_path": ".\\Data\\104_4_normalized.png",
+            "orientation_field_path": ".\\Data\\104_4_orientation_field.png",
+            "binarized_path": ".\\Data\\104_4_binarized.png",
+            "skeleton_path": ".\\Data\\104_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\108_6.tif",
+            "json_path": ".\\Data\\108_6.json",
+            "crop_json_path": ".\\Data\\108_6_crop.json",
+            "normalized_path": ".\\Data\\108_6_normalized.png",
+            "orientation_field_path": ".\\Data\\108_6_orientation_field.png",
+            "binarized_path": ".\\Data\\108_6_binarized.png",
+            "skeleton_path": ".\\Data\\108_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\128_3.tif",
+            "json_path": ".\\Data\\128_3.json",
+            "crop_json_path": ".\\Data\\128_3_crop.json",
+            "normalized_path": ".\\Data\\128_3_normalized.png",
+            "orientation_field_path": ".\\Data\\128_3_orientation_field.png",
+            "binarized_path": ".\\Data\\128_3_binarized.png",
+            "skeleton_path": ".\\Data\\128_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\127_5.tif",
+            "json_path": ".\\Data\\127_5.json",
+            "crop_json_path": ".\\Data\\127_5_crop.json",
+            "normalized_path": ".\\Data\\127_5_normalized.png",
+            "orientation_field_path": ".\\Data\\127_5_orientation_field.png",
+            "binarized_path": ".\\Data\\127_5_binarized.png",
+            "skeleton_path": ".\\Data\\127_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\133_6.tif",
+            "json_path": ".\\Data\\133_6.json",
+            "crop_json_path": ".\\Data\\133_6_crop.json",
+            "normalized_path": ".\\Data\\133_6_normalized.png",
+            "orientation_field_path": ".\\Data\\133_6_orientation_field.png",
+            "binarized_path": ".\\Data\\133_6_binarized.png",
+            "skeleton_path": ".\\Data\\133_6_skeleton.png"
         }
     ],
     "val": [
         {
-            "image_path": "./Data\\111_8.tif",
-            "json_path": "./Data\\111_8.json"
+            "image_path": ".\\Data\\125_4.tif",
+            "json_path": ".\\Data\\125_4.json",
+            "crop_json_path": ".\\Data\\125_4_crop.json",
+            "normalized_path": ".\\Data\\125_4_normalized.png",
+            "orientation_field_path": ".\\Data\\125_4_orientation_field.png",
+            "binarized_path": ".\\Data\\125_4_binarized.png",
+            "skeleton_path": ".\\Data\\125_4_skeleton.png"
         },
         {
-            "image_path": "./Data\\130_4.tif",
-            "json_path": "./Data\\130_4.json"
+            "image_path": ".\\Data\\121_2.tif",
+            "json_path": ".\\Data\\121_2.json",
+            "crop_json_path": ".\\Data\\121_2_crop.json",
+            "normalized_path": ".\\Data\\121_2_normalized.png",
+            "orientation_field_path": ".\\Data\\121_2_orientation_field.png",
+            "binarized_path": ".\\Data\\121_2_binarized.png",
+            "skeleton_path": ".\\Data\\121_2_skeleton.png"
         },
         {
-            "image_path": "./Data\\105_4.tif",
-            "json_path": "./Data\\105_4.json"
+            "image_path": ".\\Data\\139_4.tif",
+            "json_path": ".\\Data\\139_4.json",
+            "crop_json_path": ".\\Data\\139_4_crop.json",
+            "normalized_path": ".\\Data\\139_4_normalized.png",
+            "orientation_field_path": ".\\Data\\139_4_orientation_field.png",
+            "binarized_path": ".\\Data\\139_4_binarized.png",
+            "skeleton_path": ".\\Data\\139_4_skeleton.png"
         },
         {
-            "image_path": "./Data\\113_4.tif",
-            "json_path": "./Data\\113_4.json"
+            "image_path": ".\\Data\\123_1.tif",
+            "json_path": ".\\Data\\123_1.json",
+            "crop_json_path": ".\\Data\\123_1_crop.json",
+            "normalized_path": ".\\Data\\123_1_normalized.png",
+            "orientation_field_path": ".\\Data\\123_1_orientation_field.png",
+            "binarized_path": ".\\Data\\123_1_binarized.png",
+            "skeleton_path": ".\\Data\\123_1_skeleton.png"
         },
         {
-            "image_path": "./Data\\129_5.tif",
-            "json_path": "./Data\\129_5.json"
+            "image_path": ".\\Data\\106_1.tif",
+            "json_path": ".\\Data\\106_1.json",
+            "crop_json_path": ".\\Data\\106_1_crop.json",
+            "normalized_path": ".\\Data\\106_1_normalized.png",
+            "orientation_field_path": ".\\Data\\106_1_orientation_field.png",
+            "binarized_path": ".\\Data\\106_1_binarized.png",
+            "skeleton_path": ".\\Data\\106_1_skeleton.png"
         },
         {
-            "image_path": "./Data\\117_7.tif",
-            "json_path": "./Data\\117_7.json"
+            "image_path": ".\\Data\\112_7.tif",
+            "json_path": ".\\Data\\112_7.json",
+            "crop_json_path": ".\\Data\\112_7_crop.json",
+            "normalized_path": ".\\Data\\112_7_normalized.png",
+            "orientation_field_path": ".\\Data\\112_7_orientation_field.png",
+            "binarized_path": ".\\Data\\112_7_binarized.png",
+            "skeleton_path": ".\\Data\\112_7_skeleton.png"
         },
         {
-            "image_path": "./Data\\131_2.tif",
-            "json_path": "./Data\\131_2.json"
+            "image_path": ".\\Data\\131_1.tif",
+            "json_path": ".\\Data\\131_1.json",
+            "crop_json_path": ".\\Data\\131_1_crop.json",
+            "normalized_path": ".\\Data\\131_1_normalized.png",
+            "orientation_field_path": ".\\Data\\131_1_orientation_field.png",
+            "binarized_path": ".\\Data\\131_1_binarized.png",
+            "skeleton_path": ".\\Data\\131_1_skeleton.png"
         },
         {
-            "image_path": "./Data\\102_4.tif",
-            "json_path": "./Data\\102_4.json"
+            "image_path": ".\\Data\\104_7.tif",
+            "json_path": ".\\Data\\104_7.json",
+            "crop_json_path": ".\\Data\\104_7_crop.json",
+            "normalized_path": ".\\Data\\104_7_normalized.png",
+            "orientation_field_path": ".\\Data\\104_7_orientation_field.png",
+            "binarized_path": ".\\Data\\104_7_binarized.png",
+            "skeleton_path": ".\\Data\\104_7_skeleton.png"
         },
         {
-            "image_path": "./Data\\137_4.tif",
-            "json_path": "./Data\\137_4.json"
+            "image_path": ".\\Data\\137_2.tif",
+            "json_path": ".\\Data\\137_2.json",
+            "crop_json_path": ".\\Data\\137_2_crop.json",
+            "normalized_path": ".\\Data\\137_2_normalized.png",
+            "orientation_field_path": ".\\Data\\137_2_orientation_field.png",
+            "binarized_path": ".\\Data\\137_2_binarized.png",
+            "skeleton_path": ".\\Data\\137_2_skeleton.png"
         },
         {
-            "image_path": "./Data\\108_8.tif",
-            "json_path": "./Data\\108_8.json"
+            "image_path": ".\\Data\\134_4.tif",
+            "json_path": ".\\Data\\134_4.json",
+            "crop_json_path": ".\\Data\\134_4_crop.json",
+            "normalized_path": ".\\Data\\134_4_normalized.png",
+            "orientation_field_path": ".\\Data\\134_4_orientation_field.png",
+            "binarized_path": ".\\Data\\134_4_binarized.png",
+            "skeleton_path": ".\\Data\\134_4_skeleton.png"
         },
         {
-            "image_path": "./Data\\121_2.tif",
-            "json_path": "./Data\\121_2.json"
+            "image_path": ".\\Data\\108_3.tif",
+            "json_path": ".\\Data\\108_3.json",
+            "crop_json_path": ".\\Data\\108_3_crop.json",
+            "normalized_path": ".\\Data\\108_3_normalized.png",
+            "orientation_field_path": ".\\Data\\108_3_orientation_field.png",
+            "binarized_path": ".\\Data\\108_3_binarized.png",
+            "skeleton_path": ".\\Data\\108_3_skeleton.png"
         },
         {
-            "image_path": "./Data\\126_8.tif",
-            "json_path": "./Data\\126_8.json"
+            "image_path": ".\\Data\\133_1.tif",
+            "json_path": ".\\Data\\133_1.json",
+            "crop_json_path": ".\\Data\\133_1_crop.json",
+            "normalized_path": ".\\Data\\133_1_normalized.png",
+            "orientation_field_path": ".\\Data\\133_1_orientation_field.png",
+            "binarized_path": ".\\Data\\133_1_binarized.png",
+            "skeleton_path": ".\\Data\\133_1_skeleton.png"
         },
         {
-            "image_path": "./Data\\114_7.tif",
-            "json_path": "./Data\\114_7.json"
+            "image_path": ".\\Data\\129_7.tif",
+            "json_path": ".\\Data\\129_7.json",
+            "crop_json_path": ".\\Data\\129_7_crop.json",
+            "normalized_path": ".\\Data\\129_7_normalized.png",
+            "orientation_field_path": ".\\Data\\129_7_orientation_field.png",
+            "binarized_path": ".\\Data\\129_7_binarized.png",
+            "skeleton_path": ".\\Data\\129_7_skeleton.png"
         },
         {
-            "image_path": "./Data\\128_4.tif",
-            "json_path": "./Data\\128_4.json"
+            "image_path": ".\\Data\\130_8.tif",
+            "json_path": ".\\Data\\130_8.json",
+            "crop_json_path": ".\\Data\\130_8_crop.json",
+            "normalized_path": ".\\Data\\130_8_normalized.png",
+            "orientation_field_path": ".\\Data\\130_8_orientation_field.png",
+            "binarized_path": ".\\Data\\130_8_binarized.png",
+            "skeleton_path": ".\\Data\\130_8_skeleton.png"
         },
         {
-            "image_path": "./Data\\118_8.tif",
-            "json_path": "./Data\\118_8.json"
+            "image_path": ".\\Data\\115_2.tif",
+            "json_path": ".\\Data\\115_2.json",
+            "crop_json_path": ".\\Data\\115_2_crop.json",
+            "normalized_path": ".\\Data\\115_2_normalized.png",
+            "orientation_field_path": ".\\Data\\115_2_orientation_field.png",
+            "binarized_path": ".\\Data\\115_2_binarized.png",
+            "skeleton_path": ".\\Data\\115_2_skeleton.png"
         },
         {
-            "image_path": "./Data\\120_2.tif",
-            "json_path": "./Data\\120_2.json"
+            "image_path": ".\\Data\\114_2.tif",
+            "json_path": ".\\Data\\114_2.json",
+            "crop_json_path": ".\\Data\\114_2_crop.json",
+            "normalized_path": ".\\Data\\114_2_normalized.png",
+            "orientation_field_path": ".\\Data\\114_2_orientation_field.png",
+            "binarized_path": ".\\Data\\114_2_binarized.png",
+            "skeleton_path": ".\\Data\\114_2_skeleton.png"
         },
         {
-            "image_path": "./Data\\110_6.tif",
-            "json_path": "./Data\\110_6.json"
+            "image_path": ".\\Data\\132_3.tif",
+            "json_path": ".\\Data\\132_3.json",
+            "crop_json_path": ".\\Data\\132_3_crop.json",
+            "normalized_path": ".\\Data\\132_3_normalized.png",
+            "orientation_field_path": ".\\Data\\132_3_orientation_field.png",
+            "binarized_path": ".\\Data\\132_3_binarized.png",
+            "skeleton_path": ".\\Data\\132_3_skeleton.png"
         },
         {
-            "image_path": "./Data\\127_8.tif",
-            "json_path": "./Data\\127_8.json"
+            "image_path": ".\\Data\\124_7.tif",
+            "json_path": ".\\Data\\124_7.json",
+            "crop_json_path": ".\\Data\\124_7_crop.json",
+            "normalized_path": ".\\Data\\124_7_normalized.png",
+            "orientation_field_path": ".\\Data\\124_7_orientation_field.png",
+            "binarized_path": ".\\Data\\124_7_binarized.png",
+            "skeleton_path": ".\\Data\\124_7_skeleton.png"
         },
         {
-            "image_path": "./Data\\123_3.tif",
-            "json_path": "./Data\\123_3.json"
+            "image_path": ".\\Data\\138_5.tif",
+            "json_path": ".\\Data\\138_5.json",
+            "crop_json_path": ".\\Data\\138_5_crop.json",
+            "normalized_path": ".\\Data\\138_5_normalized.png",
+            "orientation_field_path": ".\\Data\\138_5_orientation_field.png",
+            "binarized_path": ".\\Data\\138_5_binarized.png",
+            "skeleton_path": ".\\Data\\138_5_skeleton.png"
         },
         {
-            "image_path": "./Data\\107_1.tif",
-            "json_path": "./Data\\107_1.json"
+            "image_path": ".\\Data\\119_5.tif",
+            "json_path": ".\\Data\\119_5.json",
+            "crop_json_path": ".\\Data\\119_5_crop.json",
+            "normalized_path": ".\\Data\\119_5_normalized.png",
+            "orientation_field_path": ".\\Data\\119_5_orientation_field.png",
+            "binarized_path": ".\\Data\\119_5_binarized.png",
+            "skeleton_path": ".\\Data\\119_5_skeleton.png"
         },
         {
-            "image_path": "./Data\\103_5.tif",
-            "json_path": "./Data\\103_5.json"
+            "image_path": ".\\Data\\105_6.tif",
+            "json_path": ".\\Data\\105_6.json",
+            "crop_json_path": ".\\Data\\105_6_crop.json",
+            "normalized_path": ".\\Data\\105_6_normalized.png",
+            "orientation_field_path": ".\\Data\\105_6_orientation_field.png",
+            "binarized_path": ".\\Data\\105_6_binarized.png",
+            "skeleton_path": ".\\Data\\105_6_skeleton.png"
         },
         {
-            "image_path": "./Data\\136_4.tif",
-            "json_path": "./Data\\136_4.json"
+            "image_path": ".\\Data\\128_7.tif",
+            "json_path": ".\\Data\\128_7.json",
+            "crop_json_path": ".\\Data\\128_7_crop.json",
+            "normalized_path": ".\\Data\\128_7_normalized.png",
+            "orientation_field_path": ".\\Data\\128_7_orientation_field.png",
+            "binarized_path": ".\\Data\\128_7_binarized.png",
+            "skeleton_path": ".\\Data\\128_7_skeleton.png"
         },
         {
-            "image_path": "./Data\\135_7.tif",
-            "json_path": "./Data\\135_7.json"
+            "image_path": ".\\Data\\122_3.tif",
+            "json_path": ".\\Data\\122_3.json",
+            "crop_json_path": ".\\Data\\122_3_crop.json",
+            "normalized_path": ".\\Data\\122_3_normalized.png",
+            "orientation_field_path": ".\\Data\\122_3_orientation_field.png",
+            "binarized_path": ".\\Data\\122_3_binarized.png",
+            "skeleton_path": ".\\Data\\122_3_skeleton.png"
         },
         {
-            "image_path": "./Data\\132_3.tif",
-            "json_path": "./Data\\132_3.json"
+            "image_path": ".\\Data\\135_7.tif",
+            "json_path": ".\\Data\\135_7.json",
+            "crop_json_path": ".\\Data\\135_7_crop.json",
+            "normalized_path": ".\\Data\\135_7_normalized.png",
+            "orientation_field_path": ".\\Data\\135_7_orientation_field.png",
+            "binarized_path": ".\\Data\\135_7_binarized.png",
+            "skeleton_path": ".\\Data\\135_7_skeleton.png"
         },
         {
-            "image_path": "./Data\\116_1.tif",
-            "json_path": "./Data\\116_1.json"
+            "image_path": ".\\Data\\107_7.tif",
+            "json_path": ".\\Data\\107_7.json",
+            "crop_json_path": ".\\Data\\107_7_crop.json",
+            "normalized_path": ".\\Data\\107_7_normalized.png",
+            "orientation_field_path": ".\\Data\\107_7_orientation_field.png",
+            "binarized_path": ".\\Data\\107_7_binarized.png",
+            "skeleton_path": ".\\Data\\107_7_skeleton.png"
         },
         {
-            "image_path": "./Data\\109_2.tif",
-            "json_path": "./Data\\109_2.json"
+            "image_path": ".\\Data\\101_6.tif",
+            "json_path": ".\\Data\\101_6.json",
+            "crop_json_path": ".\\Data\\101_6_crop.json",
+            "normalized_path": ".\\Data\\101_6_normalized.png",
+            "orientation_field_path": ".\\Data\\101_6_orientation_field.png",
+            "binarized_path": ".\\Data\\101_6_binarized.png",
+            "skeleton_path": ".\\Data\\101_6_skeleton.png"
         },
         {
-            "image_path": "./Data\\133_5.tif",
-            "json_path": "./Data\\133_5.json"
+            "image_path": ".\\Data\\127_2.tif",
+            "json_path": ".\\Data\\127_2.json",
+            "crop_json_path": ".\\Data\\127_2_crop.json",
+            "normalized_path": ".\\Data\\127_2_normalized.png",
+            "orientation_field_path": ".\\Data\\127_2_orientation_field.png",
+            "binarized_path": ".\\Data\\127_2_binarized.png",
+            "skeleton_path": ".\\Data\\127_2_skeleton.png"
         },
         {
-            "image_path": "./Data\\140_8.tif",
-            "json_path": "./Data\\140_8.json"
+            "image_path": ".\\Data\\136_4.tif",
+            "json_path": ".\\Data\\136_4.json",
+            "crop_json_path": ".\\Data\\136_4_crop.json",
+            "normalized_path": ".\\Data\\136_4_normalized.png",
+            "orientation_field_path": ".\\Data\\136_4_orientation_field.png",
+            "binarized_path": ".\\Data\\136_4_binarized.png",
+            "skeleton_path": ".\\Data\\136_4_skeleton.png"
         },
         {
-            "image_path": "./Data\\112_6.tif",
-            "json_path": "./Data\\112_6.json"
+            "image_path": ".\\Data\\103_4.tif",
+            "json_path": ".\\Data\\103_4.json",
+            "crop_json_path": ".\\Data\\103_4_crop.json",
+            "normalized_path": ".\\Data\\103_4_normalized.png",
+            "orientation_field_path": ".\\Data\\103_4_orientation_field.png",
+            "binarized_path": ".\\Data\\103_4_binarized.png",
+            "skeleton_path": ".\\Data\\103_4_skeleton.png"
         },
         {
-            "image_path": "./Data\\101_1.tif",
-            "json_path": "./Data\\101_1.json"
+            "image_path": ".\\Data\\116_4.tif",
+            "json_path": ".\\Data\\116_4.json",
+            "crop_json_path": ".\\Data\\116_4_crop.json",
+            "normalized_path": ".\\Data\\116_4_normalized.png",
+            "orientation_field_path": ".\\Data\\116_4_orientation_field.png",
+            "binarized_path": ".\\Data\\116_4_binarized.png",
+            "skeleton_path": ".\\Data\\116_4_skeleton.png"
         },
         {
-            "image_path": "./Data\\125_2.tif",
-            "json_path": "./Data\\125_2.json"
+            "image_path": ".\\Data\\102_5.tif",
+            "json_path": ".\\Data\\102_5.json",
+            "crop_json_path": ".\\Data\\102_5_crop.json",
+            "normalized_path": ".\\Data\\102_5_normalized.png",
+            "orientation_field_path": ".\\Data\\102_5_orientation_field.png",
+            "binarized_path": ".\\Data\\102_5_binarized.png",
+            "skeleton_path": ".\\Data\\102_5_skeleton.png"
         },
         {
-            "image_path": "./Data\\115_2.tif",
-            "json_path": "./Data\\115_2.json"
+            "image_path": ".\\Data\\140_2.tif",
+            "json_path": ".\\Data\\140_2.json",
+            "crop_json_path": ".\\Data\\140_2_crop.json",
+            "normalized_path": ".\\Data\\140_2_normalized.png",
+            "orientation_field_path": ".\\Data\\140_2_orientation_field.png",
+            "binarized_path": ".\\Data\\140_2_binarized.png",
+            "skeleton_path": ".\\Data\\140_2_skeleton.png"
         },
         {
-            "image_path": "./Data\\106_8.tif",
-            "json_path": "./Data\\106_8.json"
+            "image_path": ".\\Data\\113_5.tif",
+            "json_path": ".\\Data\\113_5.json",
+            "crop_json_path": ".\\Data\\113_5_crop.json",
+            "normalized_path": ".\\Data\\113_5_normalized.png",
+            "orientation_field_path": ".\\Data\\113_5_orientation_field.png",
+            "binarized_path": ".\\Data\\113_5_binarized.png",
+            "skeleton_path": ".\\Data\\113_5_skeleton.png"
         },
         {
-            "image_path": "./Data\\138_3.tif",
-            "json_path": "./Data\\138_3.json"
+            "image_path": ".\\Data\\117_2.tif",
+            "json_path": ".\\Data\\117_2.json",
+            "crop_json_path": ".\\Data\\117_2_crop.json",
+            "normalized_path": ".\\Data\\117_2_normalized.png",
+            "orientation_field_path": ".\\Data\\117_2_orientation_field.png",
+            "binarized_path": ".\\Data\\117_2_binarized.png",
+            "skeleton_path": ".\\Data\\117_2_skeleton.png"
         },
         {
-            "image_path": "./Data\\134_3.tif",
-            "json_path": "./Data\\134_3.json"
+            "image_path": ".\\Data\\118_7.tif",
+            "json_path": ".\\Data\\118_7.json",
+            "crop_json_path": ".\\Data\\118_7_crop.json",
+            "normalized_path": ".\\Data\\118_7_normalized.png",
+            "orientation_field_path": ".\\Data\\118_7_orientation_field.png",
+            "binarized_path": ".\\Data\\118_7_binarized.png",
+            "skeleton_path": ".\\Data\\118_7_skeleton.png"
         },
         {
-            "image_path": "./Data\\122_6.tif",
-            "json_path": "./Data\\122_6.json"
+            "image_path": ".\\Data\\126_6.tif",
+            "json_path": ".\\Data\\126_6.json",
+            "crop_json_path": ".\\Data\\126_6_crop.json",
+            "normalized_path": ".\\Data\\126_6_normalized.png",
+            "orientation_field_path": ".\\Data\\126_6_orientation_field.png",
+            "binarized_path": ".\\Data\\126_6_binarized.png",
+            "skeleton_path": ".\\Data\\126_6_skeleton.png"
         },
         {
-            "image_path": "./Data\\124_2.tif",
-            "json_path": "./Data\\124_2.json"
+            "image_path": ".\\Data\\109_2.tif",
+            "json_path": ".\\Data\\109_2.json",
+            "crop_json_path": ".\\Data\\109_2_crop.json",
+            "normalized_path": ".\\Data\\109_2_normalized.png",
+            "orientation_field_path": ".\\Data\\109_2_orientation_field.png",
+            "binarized_path": ".\\Data\\109_2_binarized.png",
+            "skeleton_path": ".\\Data\\109_2_skeleton.png"
         },
         {
-            "image_path": "./Data\\119_3.tif",
-            "json_path": "./Data\\119_3.json"
+            "image_path": ".\\Data\\120_5.tif",
+            "json_path": ".\\Data\\120_5.json",
+            "crop_json_path": ".\\Data\\120_5_crop.json",
+            "normalized_path": ".\\Data\\120_5_normalized.png",
+            "orientation_field_path": ".\\Data\\120_5_orientation_field.png",
+            "binarized_path": ".\\Data\\120_5_binarized.png",
+            "skeleton_path": ".\\Data\\120_5_skeleton.png"
         },
         {
-            "image_path": "./Data\\104_2.tif",
-            "json_path": "./Data\\104_2.json"
+            "image_path": ".\\Data\\111_8.tif",
+            "json_path": ".\\Data\\111_8.json",
+            "crop_json_path": ".\\Data\\111_8_crop.json",
+            "normalized_path": ".\\Data\\111_8_normalized.png",
+            "orientation_field_path": ".\\Data\\111_8_orientation_field.png",
+            "binarized_path": ".\\Data\\111_8_binarized.png",
+            "skeleton_path": ".\\Data\\111_8_skeleton.png"
         },
         {
-            "image_path": "./Data\\139_7.tif",
-            "json_path": "./Data\\139_7.json"
+            "image_path": ".\\Data\\110_2.tif",
+            "json_path": ".\\Data\\110_2.json",
+            "crop_json_path": ".\\Data\\110_2_crop.json",
+            "normalized_path": ".\\Data\\110_2_normalized.png",
+            "orientation_field_path": ".\\Data\\110_2_orientation_field.png",
+            "binarized_path": ".\\Data\\110_2_binarized.png",
+            "skeleton_path": ".\\Data\\110_2_skeleton.png"
         }
     ],
     "test": [
         {
-            "image_path": "./Data\\136_2.tif",
-            "json_path": "./Data\\136_2.json"
-        },
-        {
-            "image_path": "./Data\\105_1.tif",
-            "json_path": "./Data\\105_1.json"
-        },
-        {
-            "image_path": "./Data\\120_5.tif",
-            "json_path": "./Data\\120_5.json"
-        },
-        {
-            "image_path": "./Data\\138_8.tif",
-            "json_path": "./Data\\138_8.json"
-        },
-        {
-            "image_path": "./Data\\110_2.tif",
-            "json_path": "./Data\\110_2.json"
-        },
-        {
-            "image_path": "./Data\\104_5.tif",
-            "json_path": "./Data\\104_5.json"
-        },
-        {
-            "image_path": "./Data\\131_8.tif",
-            "json_path": "./Data\\131_8.json"
-        },
-        {
-            "image_path": "./Data\\140_4.tif",
-            "json_path": "./Data\\140_4.json"
-        },
-        {
-            "image_path": "./Data\\121_5.tif",
-            "json_path": "./Data\\121_5.json"
-        },
-        {
-            "image_path": "./Data\\135_6.tif",
-            "json_path": "./Data\\135_6.json"
-        },
-        {
-            "image_path": "./Data\\115_7.tif",
-            "json_path": "./Data\\115_7.json"
-        },
-        {
-            "image_path": "./Data\\106_6.tif",
-            "json_path": "./Data\\106_6.json"
-        },
-        {
-            "image_path": "./Data\\107_8.tif",
-            "json_path": "./Data\\107_8.json"
-        },
-        {
-            "image_path": "./Data\\108_3.tif",
-            "json_path": "./Data\\108_3.json"
-        },
-        {
-            "image_path": "./Data\\109_3.tif",
-            "json_path": "./Data\\109_3.json"
-        },
-        {
-            "image_path": "./Data\\119_5.tif",
-            "json_path": "./Data\\119_5.json"
-        },
-        {
-            "image_path": "./Data\\102_6.tif",
-            "json_path": "./Data\\102_6.json"
-        },
-        {
-            "image_path": "./Data\\130_6.tif",
-            "json_path": "./Data\\130_6.json"
-        },
-        {
-            "image_path": "./Data\\130_3.tif",
-            "json_path": "./Data\\130_3.json"
-        },
-        {
-            "image_path": "./Data\\119_2.tif",
-            "json_path": "./Data\\119_2.json"
-        },
-        {
-            "image_path": "./Data\\136_1.tif",
-            "json_path": "./Data\\136_1.json"
-        },
-        {
-            "image_path": "./Data\\114_1.tif",
-            "json_path": "./Data\\114_1.json"
-        },
-        {
-            "image_path": "./Data\\138_1.tif",
-            "json_path": "./Data\\138_1.json"
-        },
-        {
-            "image_path": "./Data\\111_5.tif",
-            "json_path": "./Data\\111_5.json"
-        },
-        {
-            "image_path": "./Data\\125_4.tif",
-            "json_path": "./Data\\125_4.json"
-        },
-        {
-            "image_path": "./Data\\104_1.tif",
-            "json_path": "./Data\\104_1.json"
-        },
-        {
-            "image_path": "./Data\\117_2.tif",
-            "json_path": "./Data\\117_2.json"
-        },
-        {
-            "image_path": "./Data\\112_8.tif",
-            "json_path": "./Data\\112_8.json"
-        },
-        {
-            "image_path": "./Data\\129_4.tif",
-            "json_path": "./Data\\129_4.json"
-        },
-        {
-            "image_path": "./Data\\139_1.tif",
-            "json_path": "./Data\\139_1.json"
-        },
-        {
-            "image_path": "./Data\\129_1.tif",
-            "json_path": "./Data\\129_1.json"
-        },
-        {
-            "image_path": "./Data\\126_2.tif",
-            "json_path": "./Data\\126_2.json"
-        },
-        {
-            "image_path": "./Data\\101_2.tif",
-            "json_path": "./Data\\101_2.json"
-        },
-        {
-            "image_path": "./Data\\124_8.tif",
-            "json_path": "./Data\\124_8.json"
-        },
-        {
-            "image_path": "./Data\\113_1.tif",
-            "json_path": "./Data\\113_1.json"
-        },
-        {
-            "image_path": "./Data\\114_2.tif",
-            "json_path": "./Data\\114_2.json"
-        },
-        {
-            "image_path": "./Data\\107_3.tif",
-            "json_path": "./Data\\107_3.json"
-        },
-        {
-            "image_path": "./Data\\117_6.tif",
-            "json_path": "./Data\\117_6.json"
-        },
-        {
-            "image_path": "./Data\\101_8.tif",
-            "json_path": "./Data\\101_8.json"
-        },
-        {
-            "image_path": "./Data\\103_1.tif",
-            "json_path": "./Data\\103_1.json"
-        },
-        {
-            "image_path": "./Data\\125_5.tif",
-            "json_path": "./Data\\125_5.json"
-        },
-        {
-            "image_path": "./Data\\102_7.tif",
-            "json_path": "./Data\\102_7.json"
-        },
-        {
-            "image_path": "./Data\\113_7.tif",
-            "json_path": "./Data\\113_7.json"
-        },
-        {
-            "image_path": "./Data\\123_2.tif",
-            "json_path": "./Data\\123_2.json"
-        },
-        {
-            "image_path": "./Data\\118_1.tif",
-            "json_path": "./Data\\118_1.json"
-        },
-        {
-            "image_path": "./Data\\132_4.tif",
-            "json_path": "./Data\\132_4.json"
-        },
-        {
-            "image_path": "./Data\\105_7.tif",
-            "json_path": "./Data\\105_7.json"
-        },
-        {
-            "image_path": "./Data\\112_2.tif",
-            "json_path": "./Data\\112_2.json"
-        },
-        {
-            "image_path": "./Data\\111_6.tif",
-            "json_path": "./Data\\111_6.json"
-        },
-        {
-            "image_path": "./Data\\134_1.tif",
-            "json_path": "./Data\\134_1.json"
-        },
-        {
-            "image_path": "./Data\\126_3.tif",
-            "json_path": "./Data\\126_3.json"
-        },
-        {
-            "image_path": "./Data\\133_3.tif",
-            "json_path": "./Data\\133_3.json"
-        },
-        {
-            "image_path": "./Data\\116_5.tif",
-            "json_path": "./Data\\116_5.json"
-        },
-        {
-            "image_path": "./Data\\116_7.tif",
-            "json_path": "./Data\\116_7.json"
-        },
-        {
-            "image_path": "./Data\\137_1.tif",
-            "json_path": "./Data\\137_1.json"
-        },
-        {
-            "image_path": "./Data\\110_4.tif",
-            "json_path": "./Data\\110_4.json"
-        },
-        {
-            "image_path": "./Data\\135_8.tif",
-            "json_path": "./Data\\135_8.json"
-        },
-        {
-            "image_path": "./Data\\109_1.tif",
-            "json_path": "./Data\\109_1.json"
-        },
-        {
-            "image_path": "./Data\\127_1.tif",
-            "json_path": "./Data\\127_1.json"
-        },
-        {
-            "image_path": "./Data\\132_1.tif",
-            "json_path": "./Data\\132_1.json"
-        },
-        {
-            "image_path": "./Data\\122_7.tif",
-            "json_path": "./Data\\122_7.json"
-        },
-        {
-            "image_path": "./Data\\137_2.tif",
-            "json_path": "./Data\\137_2.json"
-        },
-        {
-            "image_path": "./Data\\133_8.tif",
-            "json_path": "./Data\\133_8.json"
-        },
-        {
-            "image_path": "./Data\\123_7.tif",
-            "json_path": "./Data\\123_7.json"
-        },
-        {
-            "image_path": "./Data\\115_8.tif",
-            "json_path": "./Data\\115_8.json"
-        },
-        {
-            "image_path": "./Data\\128_7.tif",
-            "json_path": "./Data\\128_7.json"
-        },
-        {
-            "image_path": "./Data\\108_5.tif",
-            "json_path": "./Data\\108_5.json"
-        },
-        {
-            "image_path": "./Data\\118_6.tif",
-            "json_path": "./Data\\118_6.json"
-        },
-        {
-            "image_path": "./Data\\128_5.tif",
-            "json_path": "./Data\\128_5.json"
-        },
-        {
-            "image_path": "./Data\\124_6.tif",
-            "json_path": "./Data\\124_6.json"
-        },
-        {
-            "image_path": "./Data\\122_1.tif",
-            "json_path": "./Data\\122_1.json"
-        },
-        {
-            "image_path": "./Data\\103_7.tif",
-            "json_path": "./Data\\103_7.json"
-        },
-        {
-            "image_path": "./Data\\121_8.tif",
-            "json_path": "./Data\\121_8.json"
-        },
-        {
-            "image_path": "./Data\\140_5.tif",
-            "json_path": "./Data\\140_5.json"
-        },
-        {
-            "image_path": "./Data\\127_6.tif",
-            "json_path": "./Data\\127_6.json"
-        },
-        {
-            "image_path": "./Data\\106_5.tif",
-            "json_path": "./Data\\106_5.json"
-        },
-        {
-            "image_path": "./Data\\131_5.tif",
-            "json_path": "./Data\\131_5.json"
-        },
-        {
-            "image_path": "./Data\\120_3.tif",
-            "json_path": "./Data\\120_3.json"
-        },
-        {
-            "image_path": "./Data\\134_4.tif",
-            "json_path": "./Data\\134_4.json"
-        },
-        {
-            "image_path": "./Data\\139_5.tif",
-            "json_path": "./Data\\139_5.json"
+            "image_path": ".\\Data\\140_5.tif",
+            "json_path": ".\\Data\\140_5.json",
+            "crop_json_path": ".\\Data\\140_5_crop.json",
+            "normalized_path": ".\\Data\\140_5_normalized.png",
+            "orientation_field_path": ".\\Data\\140_5_orientation_field.png",
+            "binarized_path": ".\\Data\\140_5_binarized.png",
+            "skeleton_path": ".\\Data\\140_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\124_1.tif",
+            "json_path": ".\\Data\\124_1.json",
+            "crop_json_path": ".\\Data\\124_1_crop.json",
+            "normalized_path": ".\\Data\\124_1_normalized.png",
+            "orientation_field_path": ".\\Data\\124_1_orientation_field.png",
+            "binarized_path": ".\\Data\\124_1_binarized.png",
+            "skeleton_path": ".\\Data\\124_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\115_5.tif",
+            "json_path": ".\\Data\\115_5.json",
+            "crop_json_path": ".\\Data\\115_5_crop.json",
+            "normalized_path": ".\\Data\\115_5_normalized.png",
+            "orientation_field_path": ".\\Data\\115_5_orientation_field.png",
+            "binarized_path": ".\\Data\\115_5_binarized.png",
+            "skeleton_path": ".\\Data\\115_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\127_7.tif",
+            "json_path": ".\\Data\\127_7.json",
+            "crop_json_path": ".\\Data\\127_7_crop.json",
+            "normalized_path": ".\\Data\\127_7_normalized.png",
+            "orientation_field_path": ".\\Data\\127_7_orientation_field.png",
+            "binarized_path": ".\\Data\\127_7_binarized.png",
+            "skeleton_path": ".\\Data\\127_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\107_5.tif",
+            "json_path": ".\\Data\\107_5.json",
+            "crop_json_path": ".\\Data\\107_5_crop.json",
+            "normalized_path": ".\\Data\\107_5_normalized.png",
+            "orientation_field_path": ".\\Data\\107_5_orientation_field.png",
+            "binarized_path": ".\\Data\\107_5_binarized.png",
+            "skeleton_path": ".\\Data\\107_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\129_3.tif",
+            "json_path": ".\\Data\\129_3.json",
+            "crop_json_path": ".\\Data\\129_3_crop.json",
+            "normalized_path": ".\\Data\\129_3_normalized.png",
+            "orientation_field_path": ".\\Data\\129_3_orientation_field.png",
+            "binarized_path": ".\\Data\\129_3_binarized.png",
+            "skeleton_path": ".\\Data\\129_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\128_1.tif",
+            "json_path": ".\\Data\\128_1.json",
+            "crop_json_path": ".\\Data\\128_1_crop.json",
+            "normalized_path": ".\\Data\\128_1_normalized.png",
+            "orientation_field_path": ".\\Data\\128_1_orientation_field.png",
+            "binarized_path": ".\\Data\\128_1_binarized.png",
+            "skeleton_path": ".\\Data\\128_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\113_6.tif",
+            "json_path": ".\\Data\\113_6.json",
+            "crop_json_path": ".\\Data\\113_6_crop.json",
+            "normalized_path": ".\\Data\\113_6_normalized.png",
+            "orientation_field_path": ".\\Data\\113_6_orientation_field.png",
+            "binarized_path": ".\\Data\\113_6_binarized.png",
+            "skeleton_path": ".\\Data\\113_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\136_5.tif",
+            "json_path": ".\\Data\\136_5.json",
+            "crop_json_path": ".\\Data\\136_5_crop.json",
+            "normalized_path": ".\\Data\\136_5_normalized.png",
+            "orientation_field_path": ".\\Data\\136_5_orientation_field.png",
+            "binarized_path": ".\\Data\\136_5_binarized.png",
+            "skeleton_path": ".\\Data\\136_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\115_3.tif",
+            "json_path": ".\\Data\\115_3.json",
+            "crop_json_path": ".\\Data\\115_3_crop.json",
+            "normalized_path": ".\\Data\\115_3_normalized.png",
+            "orientation_field_path": ".\\Data\\115_3_orientation_field.png",
+            "binarized_path": ".\\Data\\115_3_binarized.png",
+            "skeleton_path": ".\\Data\\115_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\116_2.tif",
+            "json_path": ".\\Data\\116_2.json",
+            "crop_json_path": ".\\Data\\116_2_crop.json",
+            "normalized_path": ".\\Data\\116_2_normalized.png",
+            "orientation_field_path": ".\\Data\\116_2_orientation_field.png",
+            "binarized_path": ".\\Data\\116_2_binarized.png",
+            "skeleton_path": ".\\Data\\116_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\103_1.tif",
+            "json_path": ".\\Data\\103_1.json",
+            "crop_json_path": ".\\Data\\103_1_crop.json",
+            "normalized_path": ".\\Data\\103_1_normalized.png",
+            "orientation_field_path": ".\\Data\\103_1_orientation_field.png",
+            "binarized_path": ".\\Data\\103_1_binarized.png",
+            "skeleton_path": ".\\Data\\103_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\133_4.tif",
+            "json_path": ".\\Data\\133_4.json",
+            "crop_json_path": ".\\Data\\133_4_crop.json",
+            "normalized_path": ".\\Data\\133_4_normalized.png",
+            "orientation_field_path": ".\\Data\\133_4_orientation_field.png",
+            "binarized_path": ".\\Data\\133_4_binarized.png",
+            "skeleton_path": ".\\Data\\133_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\111_2.tif",
+            "json_path": ".\\Data\\111_2.json",
+            "crop_json_path": ".\\Data\\111_2_crop.json",
+            "normalized_path": ".\\Data\\111_2_normalized.png",
+            "orientation_field_path": ".\\Data\\111_2_orientation_field.png",
+            "binarized_path": ".\\Data\\111_2_binarized.png",
+            "skeleton_path": ".\\Data\\111_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\119_8.tif",
+            "json_path": ".\\Data\\119_8.json",
+            "crop_json_path": ".\\Data\\119_8_crop.json",
+            "normalized_path": ".\\Data\\119_8_normalized.png",
+            "orientation_field_path": ".\\Data\\119_8_orientation_field.png",
+            "binarized_path": ".\\Data\\119_8_binarized.png",
+            "skeleton_path": ".\\Data\\119_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\131_8.tif",
+            "json_path": ".\\Data\\131_8.json",
+            "crop_json_path": ".\\Data\\131_8_crop.json",
+            "normalized_path": ".\\Data\\131_8_normalized.png",
+            "orientation_field_path": ".\\Data\\131_8_orientation_field.png",
+            "binarized_path": ".\\Data\\131_8_binarized.png",
+            "skeleton_path": ".\\Data\\131_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\122_1.tif",
+            "json_path": ".\\Data\\122_1.json",
+            "crop_json_path": ".\\Data\\122_1_crop.json",
+            "normalized_path": ".\\Data\\122_1_normalized.png",
+            "orientation_field_path": ".\\Data\\122_1_orientation_field.png",
+            "binarized_path": ".\\Data\\122_1_binarized.png",
+            "skeleton_path": ".\\Data\\122_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\107_3.tif",
+            "json_path": ".\\Data\\107_3.json",
+            "crop_json_path": ".\\Data\\107_3_crop.json",
+            "normalized_path": ".\\Data\\107_3_normalized.png",
+            "orientation_field_path": ".\\Data\\107_3_orientation_field.png",
+            "binarized_path": ".\\Data\\107_3_binarized.png",
+            "skeleton_path": ".\\Data\\107_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\138_3.tif",
+            "json_path": ".\\Data\\138_3.json",
+            "crop_json_path": ".\\Data\\138_3_crop.json",
+            "normalized_path": ".\\Data\\138_3_normalized.png",
+            "orientation_field_path": ".\\Data\\138_3_orientation_field.png",
+            "binarized_path": ".\\Data\\138_3_binarized.png",
+            "skeleton_path": ".\\Data\\138_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\117_7.tif",
+            "json_path": ".\\Data\\117_7.json",
+            "crop_json_path": ".\\Data\\117_7_crop.json",
+            "normalized_path": ".\\Data\\117_7_normalized.png",
+            "orientation_field_path": ".\\Data\\117_7_orientation_field.png",
+            "binarized_path": ".\\Data\\117_7_binarized.png",
+            "skeleton_path": ".\\Data\\117_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\131_6.tif",
+            "json_path": ".\\Data\\131_6.json",
+            "crop_json_path": ".\\Data\\131_6_crop.json",
+            "normalized_path": ".\\Data\\131_6_normalized.png",
+            "orientation_field_path": ".\\Data\\131_6_orientation_field.png",
+            "binarized_path": ".\\Data\\131_6_binarized.png",
+            "skeleton_path": ".\\Data\\131_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\124_3.tif",
+            "json_path": ".\\Data\\124_3.json",
+            "crop_json_path": ".\\Data\\124_3_crop.json",
+            "normalized_path": ".\\Data\\124_3_normalized.png",
+            "orientation_field_path": ".\\Data\\124_3_orientation_field.png",
+            "binarized_path": ".\\Data\\124_3_binarized.png",
+            "skeleton_path": ".\\Data\\124_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\123_7.tif",
+            "json_path": ".\\Data\\123_7.json",
+            "crop_json_path": ".\\Data\\123_7_crop.json",
+            "normalized_path": ".\\Data\\123_7_normalized.png",
+            "orientation_field_path": ".\\Data\\123_7_orientation_field.png",
+            "binarized_path": ".\\Data\\123_7_binarized.png",
+            "skeleton_path": ".\\Data\\123_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\126_1.tif",
+            "json_path": ".\\Data\\126_1.json",
+            "crop_json_path": ".\\Data\\126_1_crop.json",
+            "normalized_path": ".\\Data\\126_1_normalized.png",
+            "orientation_field_path": ".\\Data\\126_1_orientation_field.png",
+            "binarized_path": ".\\Data\\126_1_binarized.png",
+            "skeleton_path": ".\\Data\\126_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\110_3.tif",
+            "json_path": ".\\Data\\110_3.json",
+            "crop_json_path": ".\\Data\\110_3_crop.json",
+            "normalized_path": ".\\Data\\110_3_normalized.png",
+            "orientation_field_path": ".\\Data\\110_3_orientation_field.png",
+            "binarized_path": ".\\Data\\110_3_binarized.png",
+            "skeleton_path": ".\\Data\\110_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\101_4.tif",
+            "json_path": ".\\Data\\101_4.json",
+            "crop_json_path": ".\\Data\\101_4_crop.json",
+            "normalized_path": ".\\Data\\101_4_normalized.png",
+            "orientation_field_path": ".\\Data\\101_4_orientation_field.png",
+            "binarized_path": ".\\Data\\101_4_binarized.png",
+            "skeleton_path": ".\\Data\\101_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\134_7.tif",
+            "json_path": ".\\Data\\134_7.json",
+            "crop_json_path": ".\\Data\\134_7_crop.json",
+            "normalized_path": ".\\Data\\134_7_normalized.png",
+            "orientation_field_path": ".\\Data\\134_7_orientation_field.png",
+            "binarized_path": ".\\Data\\134_7_binarized.png",
+            "skeleton_path": ".\\Data\\134_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\111_1.tif",
+            "json_path": ".\\Data\\111_1.json",
+            "crop_json_path": ".\\Data\\111_1_crop.json",
+            "normalized_path": ".\\Data\\111_1_normalized.png",
+            "orientation_field_path": ".\\Data\\111_1_orientation_field.png",
+            "binarized_path": ".\\Data\\111_1_binarized.png",
+            "skeleton_path": ".\\Data\\111_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\136_3.tif",
+            "json_path": ".\\Data\\136_3.json",
+            "crop_json_path": ".\\Data\\136_3_crop.json",
+            "normalized_path": ".\\Data\\136_3_normalized.png",
+            "orientation_field_path": ".\\Data\\136_3_orientation_field.png",
+            "binarized_path": ".\\Data\\136_3_binarized.png",
+            "skeleton_path": ".\\Data\\136_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\105_5.tif",
+            "json_path": ".\\Data\\105_5.json",
+            "crop_json_path": ".\\Data\\105_5_crop.json",
+            "normalized_path": ".\\Data\\105_5_normalized.png",
+            "orientation_field_path": ".\\Data\\105_5_orientation_field.png",
+            "binarized_path": ".\\Data\\105_5_binarized.png",
+            "skeleton_path": ".\\Data\\105_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\130_5.tif",
+            "json_path": ".\\Data\\130_5.json",
+            "crop_json_path": ".\\Data\\130_5_crop.json",
+            "normalized_path": ".\\Data\\130_5_normalized.png",
+            "orientation_field_path": ".\\Data\\130_5_orientation_field.png",
+            "binarized_path": ".\\Data\\130_5_binarized.png",
+            "skeleton_path": ".\\Data\\130_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\140_1.tif",
+            "json_path": ".\\Data\\140_1.json",
+            "crop_json_path": ".\\Data\\140_1_crop.json",
+            "normalized_path": ".\\Data\\140_1_normalized.png",
+            "orientation_field_path": ".\\Data\\140_1_orientation_field.png",
+            "binarized_path": ".\\Data\\140_1_binarized.png",
+            "skeleton_path": ".\\Data\\140_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\108_1.tif",
+            "json_path": ".\\Data\\108_1.json",
+            "crop_json_path": ".\\Data\\108_1_crop.json",
+            "normalized_path": ".\\Data\\108_1_normalized.png",
+            "orientation_field_path": ".\\Data\\108_1_orientation_field.png",
+            "binarized_path": ".\\Data\\108_1_binarized.png",
+            "skeleton_path": ".\\Data\\108_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\122_6.tif",
+            "json_path": ".\\Data\\122_6.json",
+            "crop_json_path": ".\\Data\\122_6_crop.json",
+            "normalized_path": ".\\Data\\122_6_normalized.png",
+            "orientation_field_path": ".\\Data\\122_6_orientation_field.png",
+            "binarized_path": ".\\Data\\122_6_binarized.png",
+            "skeleton_path": ".\\Data\\122_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\133_8.tif",
+            "json_path": ".\\Data\\133_8.json",
+            "crop_json_path": ".\\Data\\133_8_crop.json",
+            "normalized_path": ".\\Data\\133_8_normalized.png",
+            "orientation_field_path": ".\\Data\\133_8_orientation_field.png",
+            "binarized_path": ".\\Data\\133_8_binarized.png",
+            "skeleton_path": ".\\Data\\133_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\101_3.tif",
+            "json_path": ".\\Data\\101_3.json",
+            "crop_json_path": ".\\Data\\101_3_crop.json",
+            "normalized_path": ".\\Data\\101_3_normalized.png",
+            "orientation_field_path": ".\\Data\\101_3_orientation_field.png",
+            "binarized_path": ".\\Data\\101_3_binarized.png",
+            "skeleton_path": ".\\Data\\101_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\114_7.tif",
+            "json_path": ".\\Data\\114_7.json",
+            "crop_json_path": ".\\Data\\114_7_crop.json",
+            "normalized_path": ".\\Data\\114_7_normalized.png",
+            "orientation_field_path": ".\\Data\\114_7_orientation_field.png",
+            "binarized_path": ".\\Data\\114_7_binarized.png",
+            "skeleton_path": ".\\Data\\114_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\125_7.tif",
+            "json_path": ".\\Data\\125_7.json",
+            "crop_json_path": ".\\Data\\125_7_crop.json",
+            "normalized_path": ".\\Data\\125_7_normalized.png",
+            "orientation_field_path": ".\\Data\\125_7_orientation_field.png",
+            "binarized_path": ".\\Data\\125_7_binarized.png",
+            "skeleton_path": ".\\Data\\125_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\106_8.tif",
+            "json_path": ".\\Data\\106_8.json",
+            "crop_json_path": ".\\Data\\106_8_crop.json",
+            "normalized_path": ".\\Data\\106_8_normalized.png",
+            "orientation_field_path": ".\\Data\\106_8_orientation_field.png",
+            "binarized_path": ".\\Data\\106_8_binarized.png",
+            "skeleton_path": ".\\Data\\106_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\106_5.tif",
+            "json_path": ".\\Data\\106_5.json",
+            "crop_json_path": ".\\Data\\106_5_crop.json",
+            "normalized_path": ".\\Data\\106_5_normalized.png",
+            "orientation_field_path": ".\\Data\\106_5_orientation_field.png",
+            "binarized_path": ".\\Data\\106_5_binarized.png",
+            "skeleton_path": ".\\Data\\106_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\137_7.tif",
+            "json_path": ".\\Data\\137_7.json",
+            "crop_json_path": ".\\Data\\137_7_crop.json",
+            "normalized_path": ".\\Data\\137_7_normalized.png",
+            "orientation_field_path": ".\\Data\\137_7_orientation_field.png",
+            "binarized_path": ".\\Data\\137_7_binarized.png",
+            "skeleton_path": ".\\Data\\137_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\132_4.tif",
+            "json_path": ".\\Data\\132_4.json",
+            "crop_json_path": ".\\Data\\132_4_crop.json",
+            "normalized_path": ".\\Data\\132_4_normalized.png",
+            "orientation_field_path": ".\\Data\\132_4_orientation_field.png",
+            "binarized_path": ".\\Data\\132_4_binarized.png",
+            "skeleton_path": ".\\Data\\132_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\123_6.tif",
+            "json_path": ".\\Data\\123_6.json",
+            "crop_json_path": ".\\Data\\123_6_crop.json",
+            "normalized_path": ".\\Data\\123_6_normalized.png",
+            "orientation_field_path": ".\\Data\\123_6_orientation_field.png",
+            "binarized_path": ".\\Data\\123_6_binarized.png",
+            "skeleton_path": ".\\Data\\123_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\120_2.tif",
+            "json_path": ".\\Data\\120_2.json",
+            "crop_json_path": ".\\Data\\120_2_crop.json",
+            "normalized_path": ".\\Data\\120_2_normalized.png",
+            "orientation_field_path": ".\\Data\\120_2_orientation_field.png",
+            "binarized_path": ".\\Data\\120_2_binarized.png",
+            "skeleton_path": ".\\Data\\120_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\104_2.tif",
+            "json_path": ".\\Data\\104_2.json",
+            "crop_json_path": ".\\Data\\104_2_crop.json",
+            "normalized_path": ".\\Data\\104_2_normalized.png",
+            "orientation_field_path": ".\\Data\\104_2_orientation_field.png",
+            "binarized_path": ".\\Data\\104_2_binarized.png",
+            "skeleton_path": ".\\Data\\104_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\109_6.tif",
+            "json_path": ".\\Data\\109_6.json",
+            "crop_json_path": ".\\Data\\109_6_crop.json",
+            "normalized_path": ".\\Data\\109_6_normalized.png",
+            "orientation_field_path": ".\\Data\\109_6_orientation_field.png",
+            "binarized_path": ".\\Data\\109_6_binarized.png",
+            "skeleton_path": ".\\Data\\109_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\139_3.tif",
+            "json_path": ".\\Data\\139_3.json",
+            "crop_json_path": ".\\Data\\139_3_crop.json",
+            "normalized_path": ".\\Data\\139_3_normalized.png",
+            "orientation_field_path": ".\\Data\\139_3_orientation_field.png",
+            "binarized_path": ".\\Data\\139_3_binarized.png",
+            "skeleton_path": ".\\Data\\139_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\103_5.tif",
+            "json_path": ".\\Data\\103_5.json",
+            "crop_json_path": ".\\Data\\103_5_crop.json",
+            "normalized_path": ".\\Data\\103_5_normalized.png",
+            "orientation_field_path": ".\\Data\\103_5_orientation_field.png",
+            "binarized_path": ".\\Data\\103_5_binarized.png",
+            "skeleton_path": ".\\Data\\103_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\137_8.tif",
+            "json_path": ".\\Data\\137_8.json",
+            "crop_json_path": ".\\Data\\137_8_crop.json",
+            "normalized_path": ".\\Data\\137_8_normalized.png",
+            "orientation_field_path": ".\\Data\\137_8_orientation_field.png",
+            "binarized_path": ".\\Data\\137_8_binarized.png",
+            "skeleton_path": ".\\Data\\137_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\119_2.tif",
+            "json_path": ".\\Data\\119_2.json",
+            "crop_json_path": ".\\Data\\119_2_crop.json",
+            "normalized_path": ".\\Data\\119_2_normalized.png",
+            "orientation_field_path": ".\\Data\\119_2_orientation_field.png",
+            "binarized_path": ".\\Data\\119_2_binarized.png",
+            "skeleton_path": ".\\Data\\119_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\104_8.tif",
+            "json_path": ".\\Data\\104_8.json",
+            "crop_json_path": ".\\Data\\104_8_crop.json",
+            "normalized_path": ".\\Data\\104_8_normalized.png",
+            "orientation_field_path": ".\\Data\\104_8_orientation_field.png",
+            "binarized_path": ".\\Data\\104_8_binarized.png",
+            "skeleton_path": ".\\Data\\104_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\128_8.tif",
+            "json_path": ".\\Data\\128_8.json",
+            "crop_json_path": ".\\Data\\128_8_crop.json",
+            "normalized_path": ".\\Data\\128_8_normalized.png",
+            "orientation_field_path": ".\\Data\\128_8_orientation_field.png",
+            "binarized_path": ".\\Data\\128_8_binarized.png",
+            "skeleton_path": ".\\Data\\128_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\135_8.tif",
+            "json_path": ".\\Data\\135_8.json",
+            "crop_json_path": ".\\Data\\135_8_crop.json",
+            "normalized_path": ".\\Data\\135_8_normalized.png",
+            "orientation_field_path": ".\\Data\\135_8_orientation_field.png",
+            "binarized_path": ".\\Data\\135_8_binarized.png",
+            "skeleton_path": ".\\Data\\135_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\110_4.tif",
+            "json_path": ".\\Data\\110_4.json",
+            "crop_json_path": ".\\Data\\110_4_crop.json",
+            "normalized_path": ".\\Data\\110_4_normalized.png",
+            "orientation_field_path": ".\\Data\\110_4_orientation_field.png",
+            "binarized_path": ".\\Data\\110_4_binarized.png",
+            "skeleton_path": ".\\Data\\110_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\139_2.tif",
+            "json_path": ".\\Data\\139_2.json",
+            "crop_json_path": ".\\Data\\139_2_crop.json",
+            "normalized_path": ".\\Data\\139_2_normalized.png",
+            "orientation_field_path": ".\\Data\\139_2_orientation_field.png",
+            "binarized_path": ".\\Data\\139_2_binarized.png",
+            "skeleton_path": ".\\Data\\139_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\116_5.tif",
+            "json_path": ".\\Data\\116_5.json",
+            "crop_json_path": ".\\Data\\116_5_crop.json",
+            "normalized_path": ".\\Data\\116_5_normalized.png",
+            "orientation_field_path": ".\\Data\\116_5_orientation_field.png",
+            "binarized_path": ".\\Data\\116_5_binarized.png",
+            "skeleton_path": ".\\Data\\116_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\127_8.tif",
+            "json_path": ".\\Data\\127_8.json",
+            "crop_json_path": ".\\Data\\127_8_crop.json",
+            "normalized_path": ".\\Data\\127_8_normalized.png",
+            "orientation_field_path": ".\\Data\\127_8_orientation_field.png",
+            "binarized_path": ".\\Data\\127_8_binarized.png",
+            "skeleton_path": ".\\Data\\127_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\112_8.tif",
+            "json_path": ".\\Data\\112_8.json",
+            "crop_json_path": ".\\Data\\112_8_crop.json",
+            "normalized_path": ".\\Data\\112_8_normalized.png",
+            "orientation_field_path": ".\\Data\\112_8_orientation_field.png",
+            "binarized_path": ".\\Data\\112_8_binarized.png",
+            "skeleton_path": ".\\Data\\112_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\130_1.tif",
+            "json_path": ".\\Data\\130_1.json",
+            "crop_json_path": ".\\Data\\130_1_crop.json",
+            "normalized_path": ".\\Data\\130_1_normalized.png",
+            "orientation_field_path": ".\\Data\\130_1_orientation_field.png",
+            "binarized_path": ".\\Data\\130_1_binarized.png",
+            "skeleton_path": ".\\Data\\130_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\121_7.tif",
+            "json_path": ".\\Data\\121_7.json",
+            "crop_json_path": ".\\Data\\121_7_crop.json",
+            "normalized_path": ".\\Data\\121_7_normalized.png",
+            "orientation_field_path": ".\\Data\\121_7_orientation_field.png",
+            "binarized_path": ".\\Data\\121_7_binarized.png",
+            "skeleton_path": ".\\Data\\121_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\118_1.tif",
+            "json_path": ".\\Data\\118_1.json",
+            "crop_json_path": ".\\Data\\118_1_crop.json",
+            "normalized_path": ".\\Data\\118_1_normalized.png",
+            "orientation_field_path": ".\\Data\\118_1_orientation_field.png",
+            "binarized_path": ".\\Data\\118_1_binarized.png",
+            "skeleton_path": ".\\Data\\118_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\125_1.tif",
+            "json_path": ".\\Data\\125_1.json",
+            "crop_json_path": ".\\Data\\125_1_crop.json",
+            "normalized_path": ".\\Data\\125_1_normalized.png",
+            "orientation_field_path": ".\\Data\\125_1_orientation_field.png",
+            "binarized_path": ".\\Data\\125_1_binarized.png",
+            "skeleton_path": ".\\Data\\125_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\102_8.tif",
+            "json_path": ".\\Data\\102_8.json",
+            "crop_json_path": ".\\Data\\102_8_crop.json",
+            "normalized_path": ".\\Data\\102_8_normalized.png",
+            "orientation_field_path": ".\\Data\\102_8_orientation_field.png",
+            "binarized_path": ".\\Data\\102_8_binarized.png",
+            "skeleton_path": ".\\Data\\102_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\126_8.tif",
+            "json_path": ".\\Data\\126_8.json",
+            "crop_json_path": ".\\Data\\126_8_crop.json",
+            "normalized_path": ".\\Data\\126_8_normalized.png",
+            "orientation_field_path": ".\\Data\\126_8_orientation_field.png",
+            "binarized_path": ".\\Data\\126_8_binarized.png",
+            "skeleton_path": ".\\Data\\126_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\121_5.tif",
+            "json_path": ".\\Data\\121_5.json",
+            "crop_json_path": ".\\Data\\121_5_crop.json",
+            "normalized_path": ".\\Data\\121_5_normalized.png",
+            "orientation_field_path": ".\\Data\\121_5_orientation_field.png",
+            "binarized_path": ".\\Data\\121_5_binarized.png",
+            "skeleton_path": ".\\Data\\121_5_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\109_3.tif",
+            "json_path": ".\\Data\\109_3.json",
+            "crop_json_path": ".\\Data\\109_3_crop.json",
+            "normalized_path": ".\\Data\\109_3_normalized.png",
+            "orientation_field_path": ".\\Data\\109_3_orientation_field.png",
+            "binarized_path": ".\\Data\\109_3_binarized.png",
+            "skeleton_path": ".\\Data\\109_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\105_4.tif",
+            "json_path": ".\\Data\\105_4.json",
+            "crop_json_path": ".\\Data\\105_4_crop.json",
+            "normalized_path": ".\\Data\\105_4_normalized.png",
+            "orientation_field_path": ".\\Data\\105_4_orientation_field.png",
+            "binarized_path": ".\\Data\\105_4_binarized.png",
+            "skeleton_path": ".\\Data\\105_4_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\113_1.tif",
+            "json_path": ".\\Data\\113_1.json",
+            "crop_json_path": ".\\Data\\113_1_crop.json",
+            "normalized_path": ".\\Data\\113_1_normalized.png",
+            "orientation_field_path": ".\\Data\\113_1_orientation_field.png",
+            "binarized_path": ".\\Data\\113_1_binarized.png",
+            "skeleton_path": ".\\Data\\113_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\108_8.tif",
+            "json_path": ".\\Data\\108_8.json",
+            "crop_json_path": ".\\Data\\108_8_crop.json",
+            "normalized_path": ".\\Data\\108_8_normalized.png",
+            "orientation_field_path": ".\\Data\\108_8_orientation_field.png",
+            "binarized_path": ".\\Data\\108_8_binarized.png",
+            "skeleton_path": ".\\Data\\108_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\118_3.tif",
+            "json_path": ".\\Data\\118_3.json",
+            "crop_json_path": ".\\Data\\118_3_crop.json",
+            "normalized_path": ".\\Data\\118_3_normalized.png",
+            "orientation_field_path": ".\\Data\\118_3_orientation_field.png",
+            "binarized_path": ".\\Data\\118_3_binarized.png",
+            "skeleton_path": ".\\Data\\118_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\129_1.tif",
+            "json_path": ".\\Data\\129_1.json",
+            "crop_json_path": ".\\Data\\129_1_crop.json",
+            "normalized_path": ".\\Data\\129_1_normalized.png",
+            "orientation_field_path": ".\\Data\\129_1_orientation_field.png",
+            "binarized_path": ".\\Data\\129_1_binarized.png",
+            "skeleton_path": ".\\Data\\129_1_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\132_7.tif",
+            "json_path": ".\\Data\\132_7.json",
+            "crop_json_path": ".\\Data\\132_7_crop.json",
+            "normalized_path": ".\\Data\\132_7_normalized.png",
+            "orientation_field_path": ".\\Data\\132_7_orientation_field.png",
+            "binarized_path": ".\\Data\\132_7_binarized.png",
+            "skeleton_path": ".\\Data\\132_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\134_2.tif",
+            "json_path": ".\\Data\\134_2.json",
+            "crop_json_path": ".\\Data\\134_2_crop.json",
+            "normalized_path": ".\\Data\\134_2_normalized.png",
+            "orientation_field_path": ".\\Data\\134_2_orientation_field.png",
+            "binarized_path": ".\\Data\\134_2_binarized.png",
+            "skeleton_path": ".\\Data\\134_2_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\120_8.tif",
+            "json_path": ".\\Data\\120_8.json",
+            "crop_json_path": ".\\Data\\120_8_crop.json",
+            "normalized_path": ".\\Data\\120_8_normalized.png",
+            "orientation_field_path": ".\\Data\\120_8_orientation_field.png",
+            "binarized_path": ".\\Data\\120_8_binarized.png",
+            "skeleton_path": ".\\Data\\120_8_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\135_3.tif",
+            "json_path": ".\\Data\\135_3.json",
+            "crop_json_path": ".\\Data\\135_3_crop.json",
+            "normalized_path": ".\\Data\\135_3_normalized.png",
+            "orientation_field_path": ".\\Data\\135_3_orientation_field.png",
+            "binarized_path": ".\\Data\\135_3_binarized.png",
+            "skeleton_path": ".\\Data\\135_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\117_3.tif",
+            "json_path": ".\\Data\\117_3.json",
+            "crop_json_path": ".\\Data\\117_3_crop.json",
+            "normalized_path": ".\\Data\\117_3_normalized.png",
+            "orientation_field_path": ".\\Data\\117_3_orientation_field.png",
+            "binarized_path": ".\\Data\\117_3_binarized.png",
+            "skeleton_path": ".\\Data\\117_3_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\102_7.tif",
+            "json_path": ".\\Data\\102_7.json",
+            "crop_json_path": ".\\Data\\102_7_crop.json",
+            "normalized_path": ".\\Data\\102_7_normalized.png",
+            "orientation_field_path": ".\\Data\\102_7_orientation_field.png",
+            "binarized_path": ".\\Data\\102_7_binarized.png",
+            "skeleton_path": ".\\Data\\102_7_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\138_6.tif",
+            "json_path": ".\\Data\\138_6.json",
+            "crop_json_path": ".\\Data\\138_6_crop.json",
+            "normalized_path": ".\\Data\\138_6_normalized.png",
+            "orientation_field_path": ".\\Data\\138_6_orientation_field.png",
+            "binarized_path": ".\\Data\\138_6_binarized.png",
+            "skeleton_path": ".\\Data\\138_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\112_6.tif",
+            "json_path": ".\\Data\\112_6.json",
+            "crop_json_path": ".\\Data\\112_6_crop.json",
+            "normalized_path": ".\\Data\\112_6_normalized.png",
+            "orientation_field_path": ".\\Data\\112_6_orientation_field.png",
+            "binarized_path": ".\\Data\\112_6_binarized.png",
+            "skeleton_path": ".\\Data\\112_6_skeleton.png"
+        },
+        {
+            "image_path": ".\\Data\\114_4.tif",
+            "json_path": ".\\Data\\114_4.json",
+            "crop_json_path": ".\\Data\\114_4_crop.json",
+            "normalized_path": ".\\Data\\114_4_normalized.png",
+            "orientation_field_path": ".\\Data\\114_4_orientation_field.png",
+            "binarized_path": ".\\Data\\114_4_binarized.png",
+            "skeleton_path": ".\\Data\\114_4_skeleton.png"
         }
     ]
 }
