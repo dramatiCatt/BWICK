@@ -72,6 +72,7 @@ def test_authentication():
             
 
     AUTHENTICATION_THRESHOLD = 0.4
+    AUTHENTICATION_NUM = 20
 
     truth_table = np.zeros(shape=(DATATSETS_NUM * FINGERPRINTS_NUM * TEST_IMG_PER_FINGERPRINT, FINGERPRINTS_NUM), dtype=bool)
     result_table = np.zeros_like(truth_table)
@@ -85,7 +86,8 @@ def test_authentication():
                     for collection_idx, collection in enumerate(dataset_collection):
                         start = time.perf_counter()
 
-                        is_good = fpa.authenticate(test_minutiae, collection, AUTHENTICATION_THRESHOLD)
+                        # is_good = fpa.authenticate(test_minutiae, collection, AUTHENTICATION_THRESHOLD)
+                        is_good = fpa.authenticate(test_minutiae, collection, AUTHENTICATION_NUM)
 
                         end = time.perf_counter()
 

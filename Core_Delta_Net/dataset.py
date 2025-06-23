@@ -38,7 +38,7 @@ class FingerprintDataset(Dataset[tuple[np.ndarray[tuple[int, ...], np.dtype[np.f
             self.target_image_path = "binarized_path"
             self.target_json_path = "crop_json_path"
         elif data_type == "skeleton":
-            self.target_image_path = "normalized_path"
+            self.target_image_path = "skeleton_path"
             self.target_json_path = "crop_json_path"
 
     def __len__(self):
