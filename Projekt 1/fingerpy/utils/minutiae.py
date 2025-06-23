@@ -115,7 +115,7 @@ def count_neightbours(skeleton: cv2.typing.MatLike) -> np.ndarray:
     return cv2.filter2D(skeleton, ddepth=-1, kernel=kernel, borderType=cv2.BORDER_CONSTANT)
 
 @timer
-def get_neightbours_coords(skeleton: cv2.typing.MatLike) -> np.ndarray:
+def get_neightbours_coords(skeleton: cv2.typing.MatLike) -> tuple[np.ndarray, np.ndarray]:
     NEIGHBOR_OFFSETS = [
         (-1, -1), (-1, 0), (-1, 1),
         ( 0, -1),          ( 0, 1),
@@ -123,33 +123,54 @@ def get_neightbours_coords(skeleton: cv2.typing.MatLike) -> np.ndarray:
     ]
 
     height, width = skeleton.shape
-    neightbours = np.zeros(shape=(height, width, 8, 2), dtype=int)
+    Y_grid, X_grid = np.indices(skeleton.shape)
 
-    for y in range(height):
-        for x in range(width):
-            i = 0
-            for dy, dx in NEIGHBOR_OFFSETS:
-                ny, nx = y + dy, x + dx
-                if 0 <= ny < height and 0 <= nx < width:
-                    neightbours[y, x, i] = [ny, nx]
-                    i += 1
+    all_potential_neightbors = np.full((height, width, len(NEIGHBOR_OFFSETS), 2), -1)
+
+    for i, (dy, dx) in enumerate(NEIGHBOR_OFFSETS):
+        ny_potential = Y_grid + dy
+        nx_potential = X_grid + dx
+
+        all_potential_neightbors[:, :, i, 0] = ny_potential
+        all_potential_neightbors[:, :, i, 1] = nx_potential
+
+    mask_y_valid = (all_potential_neightbors[:, :, :, 0] >= 0) & (all_potential_neightbors[:, :, :, 0] < height)
+    mask_x_valid = (all_potential_neightbors[:, :, :, 1] >= 0) & (all_potential_neightbors[:, :, :, 1] < width)
+
+    mask_valid_coords = mask_y_valid & mask_x_valid
     
-    return neightbours
+    return all_potential_neightbors, mask_valid_coords
 
 @timer
-def trace_ridge(skeleton: cv2.typing.MatLike, start_y: int, start_x: int, max_length: int, 
-                neightbours_count: np.ndarray, neightbours_coords: np.ndarray) -> list[tuple[int, int]]:
+def trace_ridge(start_y: int, start_x: int, max_length: int,
+                skeleton: cv2.typing.MatLike,
+                neightbours_coords: np.ndarray, neightbours_count: np.ndarray,
+                neightbours_valid_mask: np.ndarray) -> list[tuple[int, int]]:
     path = []
     current_y, current_x = start_y, start_x
     previous_y, previous_x = -1, -1
 
+    if skeleton[current_y, current_x] == 0:
+        return path
+
+    if neightbours_count[current_y, current_x] == 0 and max_length > 0:
+        path.append((current_y, current_x))
+        return path
+
     for _ in range(max_length):
-        path.append([current_y, current_x])
+        path.append((current_y, current_x))
         found_next = False
         
-        for i in range(neightbours_count[current_y, current_x]):
-            ny, nx = neightbours_coords[current_y, current_x, i]
-            if (ny, nx) == (previous_y, previous_x):
+        neightbours_for_pixel = neightbours_coords[current_y, current_x]
+        mask_for_pixel = neightbours_valid_mask[current_y, current_x]
+
+        for i in np.where(mask_for_pixel)[0]:
+            ny, nx = neightbours_for_pixel[i]
+
+            if skeleton[ny, nx] == 0:
+                continue
+
+            if ny == previous_y and nx == previous_x:
                 continue
 
             if neightbours_count[ny, nx] > 2:
@@ -167,7 +188,9 @@ def trace_ridge(skeleton: cv2.typing.MatLike, start_y: int, start_x: int, max_le
 
 @timer
 def find_all_ridge_pixels(start_y: int, start_x: int, visited: np.ndarray, 
-                          neightbours_count: np.ndarray, neightbours_coords: np.ndarray) -> list[tuple[int, int]]:
+                          skeleton: cv2.typing.MatLike,
+                          neightbours_coords: np.ndarray, 
+                          neightbours_valid_mask: np.ndarray) -> list[tuple[int, int]]:
     q = deque([(start_y, start_x)])
     visited[start_y, start_x] = True
     ridge_pixels = [(start_y, start_x)]
@@ -175,11 +198,16 @@ def find_all_ridge_pixels(start_y: int, start_x: int, visited: np.ndarray,
     while q:
         cy, cx = q.popleft()
         
-        for i in range(neightbours_count[cy, cx]):
+        for i in np.where(neightbours_valid_mask[cy, cx])[0]:
             ny, nx = neightbours_coords[cy, cx, i]
-            if visited[ny, nx]:
+            
+            if skeleton[ny, nx] == 0:
                 continue
 
+            if visited[ny, nx]:
+                continue
+            
+            visited[ny, nx] = True
             q.append((ny, nx))
             ridge_pixels.append((ny, nx))
     return ridge_pixels
@@ -245,12 +273,11 @@ def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.Mat
     minutiae_to_remove = set()
 
     # 0. Ridges Map
-    print("Ridges Map")
     ridge_map = np.zeros_like(skeleton, dtype=int)
     current_ridge_id = 1
 
     neightbours_count = count_neightbours(skeleton)
-    neightbours_coords = get_neightbours_coords(skeleton)
+    neightbours_coords, neightbours_valid_mask = get_neightbours_coords(skeleton)
     
     visited_pixels = np.zeros_like(skeleton, dtype=bool)
 
@@ -261,7 +288,7 @@ def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.Mat
             if skeleton[r, c] != 1 or visited_pixels[r, c]:
                 continue
 
-            ridge_pixels = find_all_ridge_pixels(r, c, visited_pixels, neightbours_count, neightbours_coords)
+            ridge_pixels = find_all_ridge_pixels(r, c, visited_pixels, skeleton, neightbours_coords, neightbours_valid_mask)
                 
             for py, px in ridge_pixels:
                 ridge_map[py, px] = current_ridge_id
@@ -272,12 +299,11 @@ def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.Mat
         m.ridge_id = ridge_map[int(m.y), int(m.x)]
 
     # 1. Spur Removal
-    print("Spur Removal")
     for m in minutiae_list:
         if m.type_name != MINUTIAE_ENDING:
             continue
 
-        path = trace_ridge(skeleton, int(m.y), int(m.x), min_ridge_length + 1, neightbours_count, neightbours_coords)
+        path = trace_ridge(int(m.y), int(m.x), min_ridge_length + 1, skeleton, neightbours_coords, neightbours_count, neightbours_valid_mask)
 
         if len(path) <= min_ridge_length:
             minutiae_to_remove.add(m)
@@ -288,22 +314,23 @@ def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.Mat
         # Na razie uproszczenie: jeśli jest to krótki grzbiet, usuwamy.
 
     # 2. Double Minutiae and Bridge Removal
-    print("Double Minutiae and Bridge Removal")
     for i, m1 in enumerate(minutiae_list):
         if m1 in minutiae_to_remove:
             continue
 
-        for j, m2 in enumerate(minutiae_list, start=i + 1):
+        for j in range(i + 1, len(minutiae_list)):
+            m2 = minutiae_list[j]
+
             if m2 in minutiae_to_remove:
                 continue
-
+            
             dist = euclidean_distance(m1.x, m1.y, m2.x, m2.y)
-
-            if dist >= max_bridge_dist:
-                continue
 
             if m1.type_name == m2.type_name and dist < min_distance_between_minutiae:
                 minutiae_to_remove.add(m2)
+                continue
+
+            if dist >= max_bridge_dist:
                 continue
 
             if m1.type_name == MINUTIAE_ENDING and m2.type_name == MINUTIAE_ENDING and \
@@ -326,7 +353,6 @@ def postprocess_minutiae(minutiae_list: list[Minutiae], skeleton: cv2.typing.Mat
                     minutiae_to_remove.add(m2)
 
     # New Minutiae List
-    print("New Minutiae List")
     processed_minutiae = []
     for m in minutiae_list:
         if m in minutiae_to_remove:
@@ -396,10 +422,7 @@ def extract_minutiae(skeleton: cv2.typing.MatLike, reliability_map: cv2.typing.M
                 )
             )
 
-    print("Przed: " ,len(minutiae))
-    minutiae = postprocess_minutiae(minutiae, skel)
-    print("Po: ", len(minutiae))
-    return minutiae
+    return postprocess_minutiae(minutiae, skel, 15, 15, 15)
 
 @timer
 def normalize_minutiae(minutiae: list[Minutiae], core: np.ndarray, core_angle: float) -> list[Minutiae]:
