@@ -344,19 +344,29 @@ def create_and_save_templates(save_path: str, fingerprints_paths: list[str]) -> 
     return templates
 
 @timer
+def check_auth_threashold(minutiae_num: int, fingerprint_minutiae_num: int, auth_threashold: float | int) -> bool:
+    if isinstance(auth_threashold, float):
+        match_percent = 0.0
+        if fingerprint_minutiae_num != 0:
+            match_percent = minutiae_num / fingerprint_minutiae_num
+
+        return match_percent >= auth_threashold
+    elif isinstance(auth_threashold, int):
+        return minutiae_num >= auth_threashold
+
+@timer
 def authenticate(fingerprint_minutiae: list[minuti.Minutiae], fingerprint_templates: list[FingerprintTemplate], auth_threashold: float | int) -> bool:
     best_match = 0
+    fingerprint_minutiae_num = len(fingerprint_minutiae)
     for template in fingerprint_templates:
         transformed_minutiae = minuti.transform_minutiae_set_Stolarek(fingerprint_minutiae, template.minutiae, 
                                                                       0.24 * np.pi, 15, 5, 15, 5, 0.5 * np.pi, 0.25 * np.pi)
         matched = minuti.compare_minutiae_sets(transformed_minutiae, template.minutiae)
-        best_match = max(best_match, matched)
 
-    if isinstance(auth_threashold, float):
-        match_percent = 0.0
-        if len(fingerprint_minutiae) != 0:
-            match_percent = best_match / len(fingerprint_minutiae)
+        if matched > best_match:
+            if check_auth_threashold(matched, fingerprint_minutiae_num, auth_threashold):
+                return True
 
-        return match_percent >= auth_threashold
-    elif isinstance(auth_threashold, int):
-        return best_match >= auth_threashold
+            best_match = matched
+
+    return False

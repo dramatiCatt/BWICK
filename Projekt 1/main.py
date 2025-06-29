@@ -125,6 +125,9 @@ def test_authentication():
     print(f"True Negative: {true_negative_num}, expected: {(FINGERPRINTS_NUM ** 2 - FINGERPRINTS_NUM) * TEST_IMG_PER_FINGERPRINT * DATATSETS_NUM}")
     print(f"False Positive: {false_positive_num}, expected: 0")
     print(f"False Negative: {false_negative_num}, expected: 0")
+    print(f"False Accept Rate (FAR): {false_positive_num / (false_positive_num + true_negative_num)}")
+    print(f"False Reject Rate (FRR): {false_negative_num / (false_negative_num + true_positive_num)}")
+    print(f"Genuine Accept Rate (GAR): {true_positive_num / (true_positive_num + false_negative_num)}")
     print(f"Accuracy: {accuracy * 100.0} %")
 
 def main() -> None:
