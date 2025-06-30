@@ -172,9 +172,10 @@ class Fingerprint():
 
         # NORMALIZE MINUTAE
         core_angle = math.get_point_mean_angle(core_point, self._orientation_field, 5)
-        normalized_minutiae = minuti.normalize_minutiae(minutiae, core_point, core_angle)
+        # normalized_minutiae = minuti.normalize_minutiae(minutiae, core_point, core_angle)
 
-        return FingerprintTemplate(normalized_minutiae, core_point, delta_point, core_angle)
+        return FingerprintTemplate(minutiae, core_point, delta_point, core_angle)
+        # return FingerprintTemplate(normalized_minutiae, core_point, delta_point, core_angle)
     
     @timer
     def _generate_polymonial(self) -> None:

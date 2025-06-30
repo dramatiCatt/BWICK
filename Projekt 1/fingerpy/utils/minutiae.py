@@ -6,7 +6,6 @@ from scipy.spatial import KDTree
 from typing import Self
 import numba
 from collections import deque
-from .imgprocessing import show_img
 
 MINUTIAE_ENDING = 'ending'
 MINUTIAE_BIFURCATION = 'bifurcation'

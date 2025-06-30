@@ -22,7 +22,7 @@ def test_authentication():
 
     IMG_PER_FINGERPRINT = 8
     FINGERPRINTS_NUM = 10
-    DATATSETS_NUM = 4
+    DATATSETS_NUM = 1
 
     TEST_DATA_PERCENT = 0.3
     TEST_IMG_PER_FINGERPRINT = int(TEST_DATA_PERCENT * IMG_PER_FINGERPRINT)
@@ -71,23 +71,29 @@ def test_authentication():
             fingerprints_templates_collections.append(fingerprints_templates_collections_in_dataset)
             
 
-    AUTHENTICATION_THRESHOLD = 0.4
+    AUTHENTICATION_THRESHOLD = 0.23
     AUTHENTICATION_NUM = 20
 
     truth_table = np.zeros(shape=(DATATSETS_NUM, FINGERPRINTS_NUM * TEST_IMG_PER_FINGERPRINT, FINGERPRINTS_NUM), dtype=bool)
     result_table = np.zeros_like(truth_table)
 
-    for dataset_idx, dataset_test_fingerprints_paths in enumerate(test_fingerprints_data_paths):       
+    for dataset_idx, dataset_test_fingerprints_paths in enumerate(test_fingerprints_data_paths):
+        if dataset_idx >= DATATSETS_NUM:
+            break
+
         for fingerprint_idx, test_fingerprints_paths in enumerate(dataset_test_fingerprints_paths):
             for test_idx, test_path in enumerate(test_fingerprints_paths):
                 test_minutiae = fpa.FingerprintTemplate.from_img_file(test_path).minutiae
                 
                 for collection_dataset_idx, dataset_collection in enumerate(fingerprints_templates_collections):
+                    if collection_dataset_idx >= DATATSETS_NUM:
+                        break
+
                     for collection_idx, collection in enumerate(dataset_collection):
                         start = time.perf_counter()
 
-                        # is_good = fpa.authenticate(test_minutiae, collection, AUTHENTICATION_THRESHOLD)
-                        is_good = fpa.authenticate(test_minutiae, collection, AUTHENTICATION_NUM)
+                        is_good = fpa.authenticate(test_minutiae, collection, AUTHENTICATION_THRESHOLD)
+                        # is_good = fpa.authenticate(test_minutiae, collection, AUTHENTICATION_NUM)
 
                         end = time.perf_counter()
 
@@ -128,7 +134,7 @@ def test_authentication():
 
         print()
         print(f"Dataset {dataset_idx + 1}")
-        print(f"Results num: {len(result_table)}")
+        print(f"Results num: {len(dataset_result_table)}")
         print(f"True Positive: {true_positive_num}, expected: {FINGERPRINTS_NUM * TEST_IMG_PER_FINGERPRINT}")
         print(f"True Negative: {true_negative_num}, expected: {(FINGERPRINTS_NUM ** 2 - FINGERPRINTS_NUM) * TEST_IMG_PER_FINGERPRINT}")
         print(f"False Positive: {false_positive_num}, expected: 0")
